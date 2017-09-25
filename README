@@ -1,0 +1,25 @@
+README for Spyderbot
+
+Dependencies
+Pypot: https://poppy-project.github.io/pypot/
+
+
+** -- ** 
+
+Motor ID's 2 (Base), 3 (Neck), 4 (Head)
+
+** -- **
+
+
+
+
+To Do:
+
+Easing function working with multiple motors
+Integrate Easing into it's own file
+Make global speed variable easily changeable
+Integrate printer code
+Setup node server (Pi)
+
+
+Completed:
