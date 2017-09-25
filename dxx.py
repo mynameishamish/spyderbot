@@ -32,7 +32,7 @@ spyder_config = {
 }
 import time
 import numpy
-
+import easing
 import pypot.robot
 
 amp = 30
@@ -116,17 +116,65 @@ def easing(motor, e_fn, final_position, duration):
 
         time.sleep(0.02)
 
-easing(robot.m1, easeInOutQuad, 44, .5)
-easing(robot.m2, easeInOutQuad, 44, 1.01)
-easing(robot.m3, easeInOutQuad, 38, 1.01)
+# robot.m2.moving_speed = 50
+# robot.m3.moving_speed = 50
+#
+# robot.m2.goal_position = 7
+# robot.m3.goal_position = 0
+#
+# time.sleep(2)
+#
+# easing(robot.m1, easeInOutQuad, 44, .5)
+# easing(robot.m2, easeInOutQuad, 44, 1.01)
+# easing(robot.m3, easeInOutQuad, 38, 1.01)
+#
+# time.sleep(1)
+#
+# easing(robot.m2, easeInOutQuad, 7, 1.01)
+# easing(robot.m3, easeInOutQuad, 0.1, 1.01)
+#
+# time.sleep(1)
+
+
+
+
+## Wakeup position ## (Looking firectly into the screen)
+robot.m2.moving_speed = 10
+robot.m3.moving_speed = 30
+
+robot.m2.goal_position = 45
+
+time.sleep(1)
+robot.m3.goal_position = 78
+
+time.sleep(5)
+
+
+
+## 'Seated' position ##
+robot.m2.moving_speed = 30
+robot.m3.moving_speed = 60
+
+robot.m2.goal_position = 7
+robot.m3.goal_position = 0
 
 time.sleep(2)
 
-easing(robot.m2, easeInOutQuad, 7, 1)
-easing(robot.m3, easeInOutQuad, 0.1, 1)
 
+
+## 'Sleep' position ##
+robot.m2.moving_speed = 10
+robot.m3.moving_speed = 10
+
+robot.m2.goal_position = 2
+robot.m3.goal_position = -7
+
+time.sleep(3)
 
 #easing(robot.m1, easeInOutBack, 90, .5)
+
+
+
 
 
 # #recording
