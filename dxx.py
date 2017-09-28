@@ -147,8 +147,10 @@ robot.m2.goal_position = 45
 time.sleep(1)
 robot.m3.goal_position = 78
 
-time.sleep(5)
 
+time.sleep(5)
+print("Motor 2 should be at 45 and is at position: ", robot.m2.present_position)
+print("Motor 3 should be at 78 and is at position: ", robot.m3.present_position)
 
 
 ## 'Seated' position ##
@@ -159,6 +161,10 @@ robot.m2.goal_position = 7
 robot.m3.goal_position = 0
 
 time.sleep(2)
+
+print("Motor 2 should be at 7 and is at position: ", robot.m2.present_position)
+print("Motor 3 should be at 0 and is at position: ", robot.m3.present_position)
+print("Motor 3 is at temp = ", robot.m3.present_temperature)
 
 
 
