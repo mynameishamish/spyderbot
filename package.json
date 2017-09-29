@@ -1,0 +1,16 @@
+{
+  "name": "Spyderbot",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Spyderbot",
+  "main": "server.js",
+  "author": "Hamish Tennent c/o Nikmart",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.125.0",
+    "express": "^4.13.3",
+    "node-pre-gyp": "0.6.x",
+    "serialport": "^5.0.0",
+    "socket.io": "^2.0.3"
+  }
+}

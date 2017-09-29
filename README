@@ -1,5 +1,21 @@
 README for Spyderbot
 
+# Utilising Nikmart's Interaction Engine Node Setup #
+
+
+# Interaction Engine #
+
+To run this example:
+
+1. clone the repo
+3. run `node server.js` 
+
+# --- #
+
+
+
+
+
 Dependencies
 Pypot: https://poppy-project.github.io/pypot/
 
@@ -9,7 +25,7 @@ http://www.trossenrobotics.com/dynamixel-ax-12-robot-actuator.aspx
 http://www.trossenrobotics.com/usb2ax
 
 
-** -- ** 
+** -- **
 
 Motor ID's 2 (Base), 3 (Neck), 4 (Head)
 
