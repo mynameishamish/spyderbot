@@ -139,12 +139,12 @@ def easing(motor, e_fn, final_position, duration):
 
 
 ## Wakeup position ## (Looking firectly into the screen)
-robot.m2.moving_speed = 10
-robot.m3.moving_speed = 30
+robot.m2.moving_speed = 60
+robot.m3.moving_speed = 90
 
 robot.m2.goal_position = 45
 
-time.sleep(1)
+time.sleep(.2)
 robot.m3.goal_position = 78
 
 
