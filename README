@@ -8,7 +8,21 @@ README for Spyderbot
 To run this example:
 
 1. clone the repo
-3. run `node server.js` 
+3. run `node server.js`
+
+# --- #
+
+Please note motor ranges before building new positions, and try not to overextend (keeping motor between MID pos and MAX pos) for too long in any one behaviour (> 5 sec). Otherwise, motors will overload and shut down on you. The fix? Nicer motors. This does not apply to motor 2 (base).
+
+Motor               MIN (Rest)    MID (Alert)   MAX (Up)
+Base (2 or m1)      -70           0             70
+Neck (3 or m2)      20.3          15.5          50
+Head (3 of m4)      -6            23.3          62
+
+# --- #
+
+CURRENT STATUS:
+All definitions/positions are a bit all over the place (currently in rest.py), need to integrate everything into one clean file that can be imported
 
 # --- #
 
