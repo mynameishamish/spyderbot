@@ -22,7 +22,9 @@ Head (3 of m4)      -6            23.3          62
 # --- #
 
 CURRENT STATUS:
-All definitions/positions are a bit all over the place (currently in rest.py), need to integrate everything into one clean file that can be imported
+All definitions/positions are a bit all over the place (currently in rest.py/motions.py), need to integrate everything into one clean file that can be imported. Definitions should be able to be called from motions.py. For the current moment, you need to code in some time after calling the motion to allow the motion to complete (time.sleep(x)). See rest.py for example.
+
+You need to pass in 3 speeds when calling positions from motions.py -  A good range is to start with is from 10-40, then work up or down from there.
 
 # --- #
 
