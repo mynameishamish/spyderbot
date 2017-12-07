@@ -13,19 +13,19 @@ spyder_config = {
         'm1': {
             'orientation': 'direct',
             'type': 'AX-12A', 'id': 2,
-            'angle_limit': [-70.0, 70.0],
+            'angle_limit': [-90.0, 90.0],
             'offset': 0.0
         },
         'm2': {
             'orientation': 'direct',
             'type': 'AX-12A', 'id': 3,
-            'angle_limit': [20.3, 50.0],
+            'angle_limit': [4.0, 50.0],
             'offset': 0.0
         },
         'm3': {
             'orientation': 'direct',
             'type': 'AX-12A', 'id': 4,
-            'angle_limit': [-6.0, 62.0],
+            'angle_limit': [0.0, 38.0],
             'offset': 0.0
         }
     }
@@ -33,7 +33,7 @@ spyder_config = {
 import time
 import numpy
 import pypot.robot
-import motions
+# import motions
 
 from Adafruit_Thermal import *
 
@@ -50,40 +50,15 @@ robot = pypot.robot.from_config(spyder_config)
 # Put the robot in its initial position
 for m in robot.motors: # Note that we always provide an alias for all motors.
     m.compliant = False
-    m.moving_speed = 40
+    m.moving_speed = 20
     # m.goal_position = 0
 
 # Wait for the robot to actually reach the base position.
 time.sleep(2)
 # pos = 0
 
-
-rest(10,10,10)
-
-time.sleep(5)
-
-robot.m1.goal_position = -70
-robot.m2.goal_position = 15.5
-robot.m3.goal_position = 23.3
-print("Alert")
-
-time.sleep(3)
-
-robot.m1.goal_position = 70
-robot.m2.goal_position = 50
-robot.m3.goal_position = 62
-print("Up")
-
-time.sleep(2)
-
-printer.println('Hello')
-printer.feed(10)
-
-time.sleep(5)
-
 robot.m1.goal_position = 0
 robot.m2.goal_position = 20.3
-robot.m3.goal_position = -6
-print("Rest")
+robot.m3.goal_position = 0
 
 time.sleep(3)
