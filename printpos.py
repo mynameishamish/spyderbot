@@ -48,9 +48,3 @@ for m in robot.motors: # Note that we always provide an alias for all motors.
 print("Motor 1 is at position: ", robot.m1.present_position)
 print("Motor 2 is at position: ", robot.m2.present_position)
 print("Motor 3 is at position: ", robot.m3.present_position)
-
-
-# robot.m1.goal_position = 40
-# robot.m2.goal_position = 10
-# robot.m3.goal_position = 10
-# time.sleep(2)

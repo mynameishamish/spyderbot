@@ -1,4 +1,0 @@
-#!/bin/bash
-ENSCRIPT="--no-header --font=Courier16 --word-wrap"
-export ENSCRIPT
-/usr/bin/enscript -p - $1 | /usr/bin/lpr

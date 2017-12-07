@@ -1,2 +1,0 @@
-is this printing with the right font?
-とりあえず正しい判断だ

@@ -32,7 +32,7 @@ spyder_config = {
 }
 import time
 import numpy
-
+import easing
 import pypot.robot
 
 amp = 30
@@ -49,52 +49,40 @@ for m in robot.motors: # Note that we always provide an alias for all motors.
 time.sleep(2)
 # pos = 0
 
-# print(robot.m1.present_position)
-# robot.m1.goal_position = pos
-# time.sleep(.02)
-# print(robot.m1.present_position)
+
+# #recording
+import time
+import pypot.robot
 
 
-# # Do the sinusoidal motions for 10 seconds
-# t0 = time.time()
-
-# while True:
-#     t = time.time() - t0
-
-#     if t > 10:
-#         break
-
-#     pos = amp * numpy.sin(2 * numpy.pi * freq * t)
-
-#     robot.m1.goal_position = pos
+from pypot.primitive.move import MoveRecorder, Move, MovePlayer
 
 
-#     time.sleep(0.02)
-def easeInQuad(t):
-    return t**2
-
-def easeInOutBack(t, s=1.70158):
-    t *= 2
-    if t < 1:
-        s *= 1.525
-        return 0.5 * (t * t * ((s + 1) * t - s))
-    else:
-        t -= 2
-        s *= 1.525
-        return 0.5 * (t * t * ((s + 1) * t + s) + 2)
-
-def easing(motor, e_fn, final_position, duration):
-
-    t0=time.time()
-    while True:
-        present_pos= motor.present_position
-        if present_pos>=final_position:
-            break
-        t_current=time.time()-t0
-        pos =e_fn(t_current)
-        motor.goal_position=pos
-        print(present_pos)
-
-        time.sleep(0.02)
-
-easing(robot.m1, easeInOutBack, 90, 2)
+#feed in robot, framerate, motors
+# move_recorder = MoveRecorder(robot, 70, robot.motors)
+# #make motors compliant
+# robot.compliant = True
+# #record for 10 seconds
+# print("RECORD")
+# move_recorder.start()
+# time.sleep(7)
+# move_recorder.stop()
+# print("STOPPING")
+#
+# time.sleep(2)
+# # playback
+# with open('trial1.move', 'w') as f:
+#     move_recorder.move.save(f)
+# print("PLAYING")
+#
+# with open('trial1.move') as f:
+#     m = Move.load(f)
+#
+#
+# robot.compliant = False
+#
+# move_player = MovePlayer(robot, m)
+# #starting playback, sleep for duration of playback otherwise you will get a thread issue
+# move_player.start()
+# time.sleep(7)
+# print("PLAYED")
