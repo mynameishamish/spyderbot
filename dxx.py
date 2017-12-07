@@ -116,6 +116,22 @@ def easing(motor, e_fn, final_position, duration):
 
         time.sleep(0.02)
 
+def easingMultiple(motion, duration):
+    t0=time.time()
+    d= duration
+    for m in motion:
+        m[3]= m[3]-m[2]
+    while True:
+        t=float(time.time()-t0)
+        if t>=d:
+            break
+        for m in motion:
+            fn= m[1]
+            pos = fn(t, m[2], m[3], d)
+            m[0].goal_position=pos
+
+        time.sleep(0.02)
+
 # robot.m2.moving_speed = 50
 # robot.m3.moving_speed = 50
 #
@@ -136,48 +152,55 @@ def easing(motor, e_fn, final_position, duration):
 # time.sleep(1)
 
 
+# robot.m1.moving_speed = 30
+# robot.m1.goal_position = 0
+# time.sleep(1)
+# robot.m1.goal_position = 20
+# time.sleep(1)
+# robot.m1.goal_position = 0
+# time.sleep(1)
 
 
-## Wakeup position ## (Looking firectly into the screen)
-robot.m2.moving_speed = 60
-robot.m3.moving_speed = 90
-
-robot.m2.goal_position = 45
-
-time.sleep(.2)
-robot.m3.goal_position = 78
-
-
-time.sleep(5)
-print("Motor 2 should be at 45 and is at position: ", robot.m2.present_position)
-print("Motor 3 should be at 78 and is at position: ", robot.m3.present_position)
-
-
-## 'Seated' position ##
-robot.m2.moving_speed = 30
-robot.m3.moving_speed = 60
-
-robot.m2.goal_position = 7
-robot.m3.goal_position = 0
-
-time.sleep(2)
-
-print("Motor 2 should be at 7 and is at position: ", robot.m2.present_position)
-print("Motor 3 should be at 0 and is at position: ", robot.m3.present_position)
-print("Motor 3 is at temp = ", robot.m3.present_temperature)
-
-
-
-## 'Sleep' position ##
-robot.m2.moving_speed = 10
-robot.m3.moving_speed = 10
-
-robot.m2.goal_position = 2
-robot.m3.goal_position = -7
-
-time.sleep(3)
-
-#easing(robot.m1, easeInOutBack, 90, .5)
+# ## Wakeup position ## (Looking firectly into the screen)
+# robot.m2.moving_speed = 60
+# robot.m3.moving_speed = 90
+#
+# robot.m2.goal_position = 45
+#
+# time.sleep(.2)
+# robot.m3.goal_position = 78
+# 
+#
+# time.sleep(5)
+# print("Motor 2 should be at 45 and is at position: ", robot.m2.present_position)
+# print("Motor 3 should be at 78 and is at position: ", robot.m3.present_position)
+#
+#
+# ## 'Seated' position ##
+# robot.m2.moving_speed = 30
+# robot.m3.moving_speed = 60
+#
+# robot.m2.goal_position = 7
+# robot.m3.goal_position = 0
+#
+# time.sleep(2)
+#
+# print("Motor 2 should be at 7 and is at position: ", robot.m2.present_position)
+# print("Motor 3 should be at 0 and is at position: ", robot.m3.present_position)
+# print("Motor 3 is at temp = ", robot.m3.present_temperature)
+#
+#
+#
+# ## 'Sleep' position ##
+# robot.m2.moving_speed = 10
+# robot.m3.moving_speed = 10
+#
+# robot.m2.goal_position = 2
+# robot.m3.goal_position = -7
+#
+# time.sleep(3)
+#
+# #easing(robot.m1, easeInOutBack, 90, .5)
 
 
 
