@@ -14,6 +14,8 @@ robot.m2.goal_position = 40
 
 time.sleep(1)
 
+print("starting")
+
 resting(2, 2, 2)
 
 up(2, 2, 2)

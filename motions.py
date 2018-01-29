@@ -32,8 +32,20 @@ spyder_config = {
 }
 import time
 import numpy
-import pypot.robot
 from easing import *
+import math
+
+import pypot.robot
+
+robot = pypot.robot.from_config(spyder_config)
+
+# Put the robot in its initial position
+for m in robot.motors: # Note that we always provide an alias for all motors.
+    m.compliant = False
+    m.moving_speed = 40
+    # m.goal_position = 0
+
+
 
 def easing(motor, e_fn, final_position, duration):
 
@@ -68,16 +80,25 @@ def easingMultiple(motion, duration):
 
         time.sleep(0.01)
 
-robot = pypot.robot.from_config(spyder_config)
+
 
 
 # Go to rest positions
 robot.m1.moving_speed = 20
 robot.m2.moving_speed = 20
 robot.m3.moving_speed = 20
-robot.m1.goal_position = 0
-robot.m2.goal_position = 20.3
-robot.m3.goal_position = -6
+# robot.m1.goal_position = 10
+robot.m2.goal_position = 25.3
+robot.m3.goal_position = 10
+
+time.sleep(2)
+
+robot.m2.goal_position = 35.3
+robot.m3.goal_position = 20
+
+time.sleep(2)
+
+
 
 # Position definitions, just pass in moving_speed for each motor
 
@@ -114,6 +135,8 @@ def up(z, x, c):
     time.sleep(2)
 
 
-resting(20, 20, 20)
+resting(2, 2, 2)
+
+alert(2, 2, 2)
 
 time.sleep(2)

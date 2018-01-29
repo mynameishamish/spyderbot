@@ -120,8 +120,8 @@ time.sleep(1)
 
 easingMultiple(motionforward, 2)
 
-printer.println("Hello World")
-printer.feed(5)
+# printer.println("Hello World")
+# printer.feed(5)
 
 time.sleep(.1)
 
