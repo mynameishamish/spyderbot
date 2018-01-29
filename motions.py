@@ -85,7 +85,7 @@ def resting(z, x, c):
     robot.m1.moving_speed = z
     robot.m2.moving_speed = x
     robot.m3.moving_speed = c
-    robot.m1.goal_position = 0
+    # robot.m1.goal_position = 0
     robot.m2.goal_position = 20.3
     robot.m3.goal_position = -6
     time.sleep(2)
@@ -97,19 +97,21 @@ def alert(z, x, c):
     robot.m1.moving_speed = z
     robot.m2.moving_speed = x
     robot.m3.moving_speed = c
-    robot.m1.goal_position = -70
+    # robot.m1.goal_position = -70
     robot.m2.goal_position = 18.5
     robot.m3.goal_position = 23.3
     print("Alert")
+    time.sleep(2)
 
 def up(z, x, c):
     robot.m1.moving_speed = z
     robot.m2.moving_speed = x
     robot.m3.moving_speed = c
-    robot.m1.goal_position = 70
+    # robot.m1.goal_position = 70
     robot.m2.goal_position = 50
     robot.m3.goal_position = 62
     print("Up")
+    time.sleep(2)
 
 
 resting(20, 20, 20)
