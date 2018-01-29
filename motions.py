@@ -33,15 +33,42 @@ spyder_config = {
 import time
 import numpy
 import pypot.robot
+import pypot.robot
+from easing import *
 
-from Adafruit_Thermal import *
-printer = Adafruit_Thermal("/dev/ttyUSB0", 19200, timeout=99999999)
-printer.begin()
-printer.feed(2)
+def easing(motor, e_fn, final_position, duration):
 
+    t0=time.time()
+    d= duration
+    b= motor.present_position
+    c=final_position-b
 
-amp = 30
-freq = 0.5
+    while True:
+        t=float(time.time()-t0)
+        if t>=d:
+            break
+        pos =e_fn(t, b, c, d)
+        motor.goal_position=pos
+        print(motor.present_position)
+
+        time.sleep(0.01)
+
+def easingMultiple(motion, duration):
+    t0=time.time()
+    d= duration
+    for m in motion:
+        m[3]= m[3]-m[2]
+    while True:
+        t=float(time.time()-t0)
+        if t>=d:
+            break
+        for m in motion:
+            fn= m[1]
+            pos = fn(t, m[2], m[3], d)
+            m[0].goal_position=pos
+
+        time.sleep(0.01)
+
 robot = pypot.robot.from_config(spyder_config)
 
 
