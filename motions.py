@@ -83,20 +83,20 @@ def easingMultiple(motion, duration):
 
 
 
-# Go to rest positions
-robot.m1.moving_speed = 20
-robot.m2.moving_speed = 20
-robot.m3.moving_speed = 20
-# robot.m1.goal_position = 10
-robot.m2.goal_position = 25.3
-robot.m3.goal_position = 10
-
-time.sleep(2)
-
-robot.m2.goal_position = 35.3
-robot.m3.goal_position = 20
-
-time.sleep(2)
+# # Go to rest positions
+# robot.m1.moving_speed = 20
+# robot.m2.moving_speed = 20
+# robot.m3.moving_speed = 20
+# # robot.m1.goal_position = 10
+# robot.m2.goal_position = 25.3
+# robot.m3.goal_position = 10
+#
+# time.sleep(2)
+#
+# robot.m2.goal_position = 35.3
+# robot.m3.goal_position = 20
+#
+# time.sleep(2)
 
 
 
@@ -134,9 +134,9 @@ def up(z, x, c):
     print("Up")
     time.sleep(2)
 
-
-resting(2, 2, 2)
-
-alert(2, 2, 2)
-
-time.sleep(2)
+# 
+# resting(30, 30, 30)
+#
+# alert(30, 30, 30)
+#
+# time.sleep(2)

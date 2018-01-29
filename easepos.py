@@ -103,31 +103,33 @@ def easingMultiple(motion, duration):
         time.sleep(0.01)
 
 
-# robot.m1.goal_position = -50
+robot.m1.goal_position = 0
 robot.m2.goal_position = 40
 robot.m3.goal_position = -6
 print("Rest")
 
 time.sleep(3)
 
-easingMultiple(motionalert1, 3)
+easeInBack
 
-time.sleep(1)
-
-easingMultiple(motionalert2, 2)
-
-time.sleep(1)
-
-easingMultiple(motionforward, 2)
-
-# printer.println("Hello World")
-# printer.feed(5)
-
-time.sleep(.1)
-
+# easingMultiple(motionalert1, 3)
+#
+# time.sleep(1)
+#
+# easingMultiple(motionalert2, 2)
+#
+# time.sleep(1)
+#
+# easingMultiple(motionforward, 2)
+#
+# # printer.println("Hello World")
+# # printer.feed(5)
+#
+# time.sleep(.1)
+#
 # robot.m1.goal_position = -50
-robot.m2.goal_position = 40
-robot.m3.goal_position = -6
-print("Rest")
-
-time.sleep(3)
+# robot.m2.goal_position = 40
+# robot.m3.goal_position = -6
+# print("Rest")
+#
+# time.sleep(3)
