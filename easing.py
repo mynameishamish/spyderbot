@@ -1,8 +1,6 @@
-
-# ported from http://www.gizma.com/easing/
-# by http://th0ma5w.github.io
-#
-# untested :P
+# t: current time, b: start postion, c: change in value, d: duration
+# Current: Quad, Cubic, Quart, Quint, Sine, Expo, Circ, Back
+# Missing: Elastic, Bounce
 
 
 import math
@@ -104,3 +102,38 @@ def easeInOutCirc(t, b, c, d):
 		return -c/2 * (math.sqrt(1 - t*t) - 1) + b
 	t -= 2
 	return c/2 * (math.sqrt(1 - t*t) + 1) + b
+
+### not originaly included, untested
+
+def easeInBack(t, b, c, d):
+	s = 1.70158
+	t /= (d)+.0001
+	return c*t*t*((s+1)*t - s) + b
+
+def easeOutBack(t, b, c, d):
+	 t/=d+.0001
+	 t-=1
+	 s = 3.5
+	 return c*(t*t*((s+1)*t + s)+ 1) + b
+
+def easeInOutBack(t, b, c, d):
+	s = 1.70158
+	t /= (d/2)+.0001
+	if t < 1:
+		return (c/2)*(t*t*(((s*=(1.525))+1)*t - s)) + b
+	return (c/2)*((t-=2)*t*(((s*=(1.525))+1)*t + s) + 2) + b
+
+def easeInCubic(t, b, c, d):
+	t /= (d)+.0001
+	return c*t*t*t + b
+
+
+def easeOutCubic(t, b, c, d):
+	t /= (d)+.0001
+	t -=1
+	return c*(t*t*t + 1) + b
+
+def linear(t, b, c, d):
+	return c*t/(d+.0001) + b
+
+
