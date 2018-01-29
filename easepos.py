@@ -32,20 +32,10 @@ spyder_config = {
 }
 import time
 import numpy
-from easing import easeInOutQuart
+from easing import *
 import math
 
 import pypot.robot
-
-from Adafruit_Thermal import *
-
-printer = Adafruit_Thermal("/dev/ttyUSB0", 19200, timeout=99999999)
-printer.begin()
-printer.feed(-5)
-
-
-amp = 30
-freq = 0.5
 
 robot = pypot.robot.from_config(spyder_config)
 
@@ -55,31 +45,6 @@ for m in robot.motors: # Note that we always provide an alias for all motors.
     m.moving_speed = 40
     # m.goal_position = 0
 
-
-
-def easeInQuad(t):
-    return t**2
-
-def easeInOutBack(t, s=1.70158):
-    t *= 2
-    if t < 1:
-        s *= 1.525
-        return 0.5 * (t * t * ((s + 1) * t - s))
-    else:
-        t -= 2
-        s *= 1.525
-        return 0.5 * (t * t * ((s + 1) * t + s) + 2)
-#
-
-def easeInOutQuad(t, b, c, d):
-	t /= float(d/2)
-	if t < 1:
-		return c/2*t*t + b
-	t-=1
-	return -c/2 * (t*(t-2) - 1) + b
-
-def easeInOutSine(t, b, c, d):
-	return -c/2 * (math.cos(math.pi*t/d) - 1) + b
 
 def easing(motor, e_fn, final_position, duration):
 
@@ -97,7 +62,7 @@ def easing(motor, e_fn, final_position, duration):
         print(motor.present_position)
 
 
-        time.sleep(0.02)
+        time.sleep(0.01)
 
 
 
