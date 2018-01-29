@@ -116,12 +116,12 @@ def easeOutBack(t, b, c, d):
 	 s = 3.5
 	 return c*(t*t*((s+1)*t + s)+ 1) + b
 
-def easeInOutBack(t, b, c, d):
-	s = 1.70158
-	t /= (d/2)+.0001
-	if t < 1:
-		return (c/2)*(t*t*(((s*=(1.525))+1)*t - s)) + b
-	return (c/2)*((t-=2)*t*(((s*=(1.525))+1)*t + s) + 2) + b
+# def easeInOutBack(t, b, c, d):
+# 	s = 1.70158
+# 	t /= (d/2)+.0001
+# 	if t < 1:
+# 		return (c/2)*(t*t*(((s*=(1.525))+1)*t - s)) + b
+# 	return (c/2)*((t-=2)*t*(((s*=(1.525))+1)*t + s) + 2) + b
 
 def easeInCubic(t, b, c, d):
 	t /= (d)+.0001
@@ -135,5 +135,3 @@ def easeOutCubic(t, b, c, d):
 
 def linear(t, b, c, d):
 	return c*t/(d+.0001) + b
-
-

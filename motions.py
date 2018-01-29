@@ -33,7 +33,6 @@ spyder_config = {
 import time
 import numpy
 import pypot.robot
-import pypot.robot
 from easing import *
 
 def easing(motor, e_fn, final_position, duration):
@@ -91,8 +90,8 @@ def resting(z, x, c):
     robot.m3.goal_position = -6
     time.sleep(2)
     print("Rest")
-    printer.println("Rest")
-    printer.feed(3)
+    # printer.println("Rest")
+    # printer.feed(3)
 
 def alert(z, x, c):
     robot.m1.moving_speed = z
