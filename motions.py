@@ -94,6 +94,25 @@ def easingMultiple(motion, duration):
         time.sleep(0.01)
 
 
+
+
+# # Go to rest positions
+# robot.m1.moving_speed = 20
+# robot.m2.moving_speed = 20
+# robot.m3.moving_speed = 20
+# # robot.m1.goal_position = 10
+# robot.m2.goal_position = 25.3
+# robot.m3.goal_position = 10
+#
+# time.sleep(2)
+#
+# robot.m2.goal_position = 35.3
+# robot.m3.goal_position = 20
+#
+# time.sleep(2)
+
+
+
 # Position definitions, just pass in moving_speed for each motor
 
 def resting(z, x, c):
@@ -127,3 +146,10 @@ def up(z, x, c):
     robot.m3.goal_position = 62
     print("Up")
     time.sleep(2)
+
+# 
+# resting(30, 30, 30)
+#
+# alert(30, 30, 30)
+#
+# time.sleep(2)
