@@ -1,4 +1,4 @@
-spyder_config = {
+ spyder_config = {
     'controllers': {
         'my_dxl_controller': {
             'sync_read': False,

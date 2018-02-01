@@ -2,12 +2,13 @@ spyder_config = {
     'controllers': {
         'my_dxl_controller': {
             'sync_read': False,
-            'attached_motors': ['base'],
+            'attached_motors': ['base', 'new'],
             'port': 'auto'
         }
     },
     'motorgroups': {
-        'base': ['m1', 'm2', 'm3']
+        'base': ['m1', 'm2', 'm3'],
+        'new': ['m4', 'm5']
     },
     'motors': {
         'm1': {
@@ -26,6 +27,18 @@ spyder_config = {
             'orientation': 'direct',
             'type': 'AX-12A', 'id': 4,
             'angle_limit': [0.0, 38.0],
+            'offset': 0.0
+        },
+        'm4': {
+            'orientation': 'direct',
+            'type': 'AX-18A', 'id': 5,
+            'angle_limit': [-90.0, 90.0],
+            'offset': 0.0
+        },
+        'm5': {
+            'orientation': 'direct',
+            'type': 'AX-18A', 'id': 6,
+            'angle_limit': [-90.0, 90.0],
             'offset': 0.0
         }
     }

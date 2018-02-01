@@ -41,20 +41,54 @@ motionforward= [
     [robot.m2 , x, robot.m2.present_position, 45] ,
     [robot.m3 , x, robot.m3.present_position, 59]]
 
+motionnew1= [
+    [robot.m4 , x, robot.m4.present_position, 30] ,
+    [robot.m5 , x, robot.m5.present_position, 40.3]]
 
+motionnew2= [
+    [robot.m4 , x, robot.m4.present_position, 90] ,
+    [robot.m5 , x, robot.m5.present_position, 90]]
 
-print("rest")
-easingMultiple(motionrest, 1)
-time.sleep(1)
+# print("rest")
+# easingMultiple(motionrest, 1)
+# time.sleep(1)
+#
+# print("alert")
+# easingMultiple(motionalert, 1)
+# time.sleep(2)
+#
+# print("motionforward")
+# easingMultiple(motionforward, 1)
+# time.sleep(2)
+#
+# print("rest")
+# easingMultiple(motionrest, 1)
+# time.sleep(1)
 
-print("alert")
-easingMultiple(motionalert, 1)
+robot.m4.goal_position = 20.3
+robot.m5.goal_position = -6
+
 time.sleep(2)
 
-print("motionforward")
-easingMultiple(motionforward, 1)
-time.sleep(2)
-
-print("rest")
-easingMultiple(motionrest, 1)
+print("new1")
+easingMultiple(motionnew1, 2)
 time.sleep(1)
+
+print("new2")
+easingMultiple(motionnew2, 2)
+time.sleep(4)
+
+print("done")
+
+robot.m4.moving_speed = 500
+robot.m5.moving_speed = 500
+
+robot.m4.goal_position = 90
+robot.m5.goal_position = 90
+
+time.sleep(3)
+
+robot.m4.goal_position = -90
+robot.m5.goal_position = -90
+
+time.sleep(3)
