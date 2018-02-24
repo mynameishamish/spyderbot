@@ -2,43 +2,30 @@ spyder_config = {
     'controllers': {
         'my_dxl_controller': {
             'sync_read': False,
-            'attached_motors': ['base', 'new'],
+            'attached_motors': ['base'],
             'port': 'auto'
         }
     },
     'motorgroups': {
         'base': ['m1', 'm2', 'm3'],
-        'new': ['m4', 'm5']
     },
     'motors': {
         'm1': {
             'orientation': 'direct',
-            'type': 'AX-12A', 'id': 2,
-            'angle_limit': [-90.0, 90.0],
+            'type': 'AX-12A', 'id': 3,
+            'angle_limit': [-48.0, 40.0],
             'offset': 0.0
         },
         'm2': {
             'orientation': 'direct',
-            'type': 'AX-12A', 'id': 3,
-            'angle_limit': [4.0, 50.0],
+            'type': 'AX-12A', 'id': 5,
+            'angle_limit': [-77.0, -42.0],
             'offset': 0.0
         },
         'm3': {
             'orientation': 'direct',
-            'type': 'AX-12A', 'id': 4,
-            'angle_limit': [0.0, 38.0],
-            'offset': 0.0
-        },
-        'm4': {
-            'orientation': 'direct',
-            'type': 'AX-18A', 'id': 5,
-            'angle_limit': [-90.0, 90.0],
-            'offset': 0.0
-        },
-        'm5': {
-            'orientation': 'direct',
-            'type': 'AX-18A', 'id': 6,
-            'angle_limit': [-90.0, 90.0],
+            'type': 'AX-12A', 'id': 6,
+            'angle_limit': [73.0, 149.0],
             'offset': 0.0
         }
     }
@@ -100,9 +87,9 @@ def resting(z, x, c):
     robot.m1.moving_speed = z
     robot.m2.moving_speed = x
     robot.m3.moving_speed = c
-    # robot.m1.goal_position = 0
-    robot.m2.goal_position = 20.3
-    robot.m3.goal_position = -6
+    robot.m1.goal_position = -4
+    robot.m2.goal_position = -77
+    robot.m3.goal_position = 73
     time.sleep(2)
     print("Rest")
     # printer.println("Rest")
@@ -112,18 +99,38 @@ def alert(z, x, c):
     robot.m1.moving_speed = z
     robot.m2.moving_speed = x
     robot.m3.moving_speed = c
-    # robot.m1.goal_position = -70
-    robot.m2.goal_position = 18.5
-    robot.m3.goal_position = 23.3
+    robot.m1.goal_position = -4
+    robot.m2.goal_position = -65
+    robot.m3.goal_position = 135
     print("Alert")
     time.sleep(2)
 
-def up(z, x, c):
+def forward(z, x, c):
     robot.m1.moving_speed = z
     robot.m2.moving_speed = x
     robot.m3.moving_speed = c
-    # robot.m1.goal_position = 70
-    robot.m2.goal_position = 50
-    robot.m3.goal_position = 62
-    print("Up")
+    robot.m1.goal_position = -4
+    robot.m2.goal_position = -45
+    robot.m3.goal_position = 149
+    print("Forward")
     time.sleep(2)
+
+def offer(z, x, c):
+    robot.m1.moving_speed = z
+    robot.m2.moving_speed = x
+    robot.m3.moving_speed = c
+    robot.m1.goal_position = -4
+    robot.m2.goal_position = -26
+    robot.m3.goal_position = 112
+    print("Offer")
+    time.sleep(2)
+
+
+
+offer(40,40,40)
+
+time.sleep(2000)
+
+resting(40,40,40)
+
+time.sleep(2)

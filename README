@@ -3,6 +3,9 @@ README for Spyderbot
 # Utilising Nikmart's Interaction Engine Node Setup #
 
 
+ssh hostname: spyderbot
+
+
 # Interaction Engine #
 
 To run this example:
@@ -15,9 +18,15 @@ To run this example:
 Please note motor ranges before building new positions, and try not to overextend (keeping motor between MID pos and MAX pos) for too long in any one behaviour (> 5 sec). Otherwise, motors will overload and shut down on you. The fix? Nicer motors. This does not apply to motor 2 (base).
 
 Motor               MIN (Rest)    MID (Alert)   MAX (Up)
-Base (2 or m1)      -70           0             70
-Neck (3 or m2)      20.3          15.5          50
-Head (3 of m4)      -6            23.3          62
+Base (m1)           -4            -4            -4
+Neck (m2)           -77           -65           -26
+Head (m3)           73            135           149
+
+# --- #
+
+Base Positions
+                    P1 (Right)    P2 (Forward)  P3 (Left)
+Base (m1)           -48           -4            40
 
 # --- #
 
