@@ -124,13 +124,3 @@ def offer(z, x, c):
     robot.m3.goal_position = 112
     print("Offer")
     time.sleep(2)
-
-
-
-offer(40,40,40)
-
-time.sleep(2000)
-
-resting(40,40,40)
-
-time.sleep(2)
