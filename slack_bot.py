@@ -12,9 +12,6 @@ import urllib, json
 #Channel History: Convert user ids in text to usernames
 #Print attachments and images
 
-# oauth_access_token = 'xoxp-110015888069-309804068407-326068190487-73b65a6821428569302351a3938805ba'
-# bot_user_token = 'xoxb-313398944640-3ciNnMPDGoP4e5HSFxd5m0ir'
-
 oauth_access_token = os.environ.get('oauth_access_token')
 print oauth_access_token
 bot_user_token = os.environ.get('bot_user_token')
