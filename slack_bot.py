@@ -10,7 +10,7 @@ import urllib, json
 
 #TODO: 
 #Channel History: Convert user ids in text to usernames
-#Print attachments and images
+#Print attachments and images - Have access to image permalink and url
 
 oauth_access_token = os.environ.get('oauth_access_token')
 print oauth_access_token
@@ -151,6 +151,10 @@ def print_previous_message(messages):
     #The "previous" message is located at index 1 because the message at index 0 asks to print
     previous_message = messages[1]
     previous_message_text = messages[1]["text"] 
+
+    if "file" in previous_message:
+        previous_message_file_permalink = previous_message["file"]["permalink"]
+        previous_message_file_url = previous_message["file"]["url_private"]
 
     if "user" in previous_message:
         user = previous_message["user"] 
