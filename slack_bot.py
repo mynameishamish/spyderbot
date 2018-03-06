@@ -5,10 +5,19 @@ from slackclient import SlackClient
 from Adafruit_Thermal import *
 import urllib, json
 
+import time
+import math
+import numpy
+
+from easing import *
+from motions import *
+
+x = easeInOutSine
+
 #READ ME:
 #Install SlackClient to run this code (pip install SlackClient)
 
-#TODO: 
+#TODO:
 #Channel History: Convert user ids in text to usernames
 #Print attachments and images - Have access to image permalink and url
 
@@ -20,7 +29,7 @@ print bot_user_token
 slack_client = SlackClient(bot_user_token)
 spyderbot_id = None
 
-RTM_READ_DELAY = 1 
+RTM_READ_DELAY = 1
 PRINT_COMMAND = "print"
 DELETE_COMMAND = "delete"
 MENTION_REGEX = "^<@(|[WU].+?)>(.*)"
@@ -36,7 +45,7 @@ def parse_bot_commands(slack_events):
 def parse_direct_mention(message_text):
     matches = re.search(MENTION_REGEX, message_text)
     if matches:
-        return (matches.group(1), matches.group(2).strip()) 
+        return (matches.group(1), matches.group(2).strip())
     else:
         return (None, None)
 
@@ -97,7 +106,7 @@ def print_channel_info(channel):
             if bot_info == None:
                 return "An error occured getting bot info, sorry!"
             user_name = bots_info["bot"]["name"]
-        
+
         members_user_names.append(user_name)
 
     creator_user_info = get_user_info(creator)
@@ -143,22 +152,22 @@ def print_previous_message(messages):
     if messages == None:
         return "An error occured, sorry!"
 
-    #the requestor is the user who asked to "print previous" 
+    #the requestor is the user who asked to "print previous"
     #always a user never a bot
-    requestor = messages[0]["user"] 
+    requestor = messages[0]["user"]
     requestor_user_info = get_user_info(requestor)
 
     #The "previous" message is located at index 1 because the message at index 0 asks to print
     previous_message = messages[1]
-    previous_message_text = messages[1]["text"] 
+    previous_message_text = messages[1]["text"]
 
     if "file" in previous_message:
         previous_message_file_permalink = previous_message["file"]["permalink"]
         previous_message_file_url = previous_message["file"]["url_private"]
 
     if "user" in previous_message:
-        user = previous_message["user"] 
-        user_info = get_user_info(user)     
+        user = previous_message["user"]
+        user_info = get_user_info(user)
         if user_info == None:
             return "An error occured getting user info, sorry!"
         user = user_info["user"]["real_name"]
@@ -168,6 +177,7 @@ def print_previous_message(messages):
 
     if requestor_user_info == None:
         return "An error occured getting user info, sorry!"
+
 
     return "@" + requestor_user_info["user"]["real_name"] + " asked me to print @" + user + " saying \"" + previous_message_text + "\""
 
@@ -185,7 +195,7 @@ def print_channel_history(messages):
             if user_info == None:
                 return "An error occured getting user info, sorry!"
 
-            user_name = user_info["user"]["real_name"]            
+            user_name = user_info["user"]["real_name"]
             response += "@" + user_name + ": " + m["text"] + "\n"
         if "bot_id" in m:
             response += "@" + m["username"] + ": " + m["text"] + "\n"
@@ -194,7 +204,7 @@ def print_channel_history(messages):
 
 def handle_print_command(command, channel):
     command_split = command.split()
-    
+
     if len(command_split) > 1:
         if command_split[1] == "previous":
             messages = get_messages(channel)
@@ -231,7 +241,7 @@ def handle_delete_command(messages):
 def execute_print(channel, response):
 
     #First argument depends on type of system: Linux, Windows, etc.
-    printer = Adafruit_Thermal("COM3", 19200, timeout=5)
+    printer = Adafruit_Thermal("/dev/ttyUSB0", 19200, timeout=5)
 
     try:
         printer.println(response)
@@ -267,7 +277,12 @@ def handle_command(command, channel):
     )
 
 if __name__ == "__main__":
-    if slack_client.rtm_connect(with_team_state=False):
+    if slack_client.rtm_connect(with_team_state = False):
+        
+        print("alert")
+        easingMultiple(motionalert, .75)
+        time.sleep(2)
+
         print("Spyder Bot connected and running!")
 
         spyderbot_id = slack_client.api_call("auth.test")["user_id"]

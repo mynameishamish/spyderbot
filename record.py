@@ -1,39 +1,11 @@
-spyder_config = {
-    'controllers': {
-        'my_dxl_controller': {
-            'sync_read': False,
-            'attached_motors': ['base'],
-            'port': 'auto'
-        }
-    },
-    'motorgroups': {
-        'base': ['m1', 'm2', 'm3']
-    },
-    'motors': {
-        'm1': {
-            'orientation': 'direct',
-            'type': 'AX-12A', 'id': 2,
-            'angle_limit': [-90.0, 90.0],
-            'offset': 0.0
-        },
-        'm2': {
-            'orientation': 'direct',
-            'type': 'AX-12A', 'id': 3,
-            'angle_limit': [4.0, 50.0],
-            'offset': 0.0
-        },
-        'm3': {
-            'orientation': 'direct',
-            'type': 'AX-12A', 'id': 4,
-            'angle_limit': [0.0, 38.0],
-            'offset': 0.0
-        }
-    }
-}
 import time
 import numpy
-import easing
+import math
+from easing import *
+from motions import *
+
 import pypot.robot
+
 
 amp = 30
 freq = 0.5
@@ -58,31 +30,31 @@ import pypot.robot
 from pypot.primitive.move import MoveRecorder, Move, MovePlayer
 
 
-#feed in robot, framerate, motors
-# move_recorder = MoveRecorder(robot, 70, robot.motors)
-# #make motors compliant
-# robot.compliant = True
-# #record for 10 seconds
-# print("RECORD")
-# move_recorder.start()
-# time.sleep(7)
-# move_recorder.stop()
-# print("STOPPING")
-#
-# time.sleep(2)
-# # playback
-# with open('trial1.move', 'w') as f:
-#     move_recorder.move.save(f)
-# print("PLAYING")
-#
-# with open('trial1.move') as f:
-#     m = Move.load(f)
-#
-#
-# robot.compliant = False
-#
-# move_player = MovePlayer(robot, m)
-# #starting playback, sleep for duration of playback otherwise you will get a thread issue
-# move_player.start()
-# time.sleep(7)
-# print("PLAYED")
+feed in robot, framerate, motors
+move_recorder = MoveRecorder(robot, 70, robot.motors)
+#make motors compliant
+robot.compliant = True
+#record for 10 seconds
+print("RECORD")
+move_recorder.start()
+time.sleep(7)
+move_recorder.stop()
+print("STOPPING")
+
+time.sleep(2)
+# playback
+with open('trial1.move', 'w') as f:
+    move_recorder.move.save(f)
+print("PLAYING")
+
+with open('trial1.move') as f:
+    m = Move.load(f)
+
+
+robot.compliant = False
+
+move_player = MovePlayer(robot, m)
+#starting playback, sleep for duration of playback otherwise you will get a thread issue
+move_player.start()
+time.sleep(7)
+print("PLAYED")

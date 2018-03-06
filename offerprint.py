@@ -71,21 +71,14 @@ print("alert")
 easingMultiple(motionalert, .75)
 time.sleep(2)
 
-print("forward")
-easingMultiple(motionforward, .5)
+print("offer")
+easingMultiple(motionoffer, .5)
 time.sleep(2)
 
 print("rest")
 easingMultiple(motionrest, .5)
 time.sleep(2)
 
-print("offer")
-easingMultiple(motionoffer, .5)
-time.sleep(2)
-
 # print("rest")
 # easingMultiple(motionrest, 1.5)
 # time.sleep(1)
-
-
-print("done")
