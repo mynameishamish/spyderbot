@@ -5,14 +5,14 @@ from slackclient import SlackClient
 from Adafruit_Thermal import *
 import urllib, json
 
-import time
-import math
-import numpy
-
-from easing import *
-from motions import *
-
-x = easeInOutSine
+# import time
+# import math
+# import numpy
+#
+# from easing import *
+# from motions import *
+#
+# x = easeInOutSine
 
 #READ ME:
 #Install SlackClient to run this code (pip install SlackClient)
@@ -268,7 +268,7 @@ def handle_command(command, channel):
         messages = get_messages(channel)
         response = handle_delete_command(messages)
 
-    #execute_print(channel, response)
+    execute_print(channel, response)
 
     slack_client.api_call(
         "chat.postMessage",
@@ -278,10 +278,10 @@ def handle_command(command, channel):
 
 if __name__ == "__main__":
     if slack_client.rtm_connect(with_team_state = False):
-        
-        print("alert")
-        easingMultiple(motionalert, .75)
-        time.sleep(2)
+
+        # print("alert")
+        # easingMultiple(motionalert, .75)
+        # time.sleep(2)
 
         print("Spyder Bot connected and running!")
 
