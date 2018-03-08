@@ -280,9 +280,9 @@ def handle_command(command, channel):
 if __name__ == "__main__":
     if slack_client.rtm_connect(with_team_state = False):
 
-        print("alert")
-        easingMultiple(motionalert, .75)
-        time.sleep(2)
+        # print("alert")
+        # easingMultiple(motionalert, .75)
+        # time.sleep(2)
 
         print("Spyder Bot connected and running!")
 
