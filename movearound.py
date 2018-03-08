@@ -46,6 +46,10 @@ x = easeInOutSine
 # easingMultiple(motionrest, 1)
 # time.sleep(1)
 
+print("forward")
+easingMultiple(motionforward, .25)
+time.sleep(.5)
+
 print("offer")
 easingMultiple(motionoffer, .5)
 time.sleep(.5)
