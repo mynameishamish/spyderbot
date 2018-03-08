@@ -5,15 +5,15 @@ from slackclient import SlackClient
 from Adafruit_Thermal import *
 import urllib, json
 
-import time
-import math
-import numpy
-
-from easing import *
-from motions import *
-
-x = easeInOutSine
-
+# import time
+# import math
+# import numpy
+#
+# from easing import *
+# from motions import *
+#
+# x = easeInOutSine
+#
 printer = Adafruit_Thermal("/dev/ttyUSB0", 19200, timeout=5)
 
 #READ ME:
