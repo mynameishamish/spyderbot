@@ -5,14 +5,16 @@ from slackclient import SlackClient
 from Adafruit_Thermal import *
 import urllib, json
 
-# import time
-# import math
-# import numpy
-#
-# from easing import *
-# from motions import *
-#
-# x = easeInOutSine
+import time
+import math
+import numpy
+
+from easing import *
+from motions import *
+
+x = easeInOutSine
+
+printer = Adafruit_Thermal("/dev/ttyUSB0", 19200, timeout=5)
 
 #READ ME:
 #Install SlackClient to run this code (pip install SlackClient)
@@ -241,11 +243,10 @@ def handle_delete_command(messages):
 def execute_print(channel, response):
 
     #First argument depends on type of system: Linux, Windows, etc.
-    printer = Adafruit_Thermal("/dev/ttyUSB0", 19200, timeout=5)
 
     try:
         printer.println(response)
-        printer.feed(-20)
+        printer.feed(6)
     except:
         slack_client.api_call(
             "chat.postMessage",
@@ -279,9 +280,9 @@ def handle_command(command, channel):
 if __name__ == "__main__":
     if slack_client.rtm_connect(with_team_state = False):
 
-        # print("alert")
-        # easingMultiple(motionalert, .75)
-        # time.sleep(2)
+        print("alert")
+        easingMultiple(motionalert, .75)
+        time.sleep(2)
 
         print("Spyder Bot connected and running!")
 
