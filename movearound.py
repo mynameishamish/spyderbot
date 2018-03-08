@@ -55,7 +55,7 @@ easingMultiple(motionoffer, .5)
 time.sleep(2)
 
 printer.println("Hecking")
-printer.feed(-50)
+printer.feed(5)
 
 time.sleep(2)
 print("moving home")
