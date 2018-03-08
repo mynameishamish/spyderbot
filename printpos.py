@@ -40,10 +40,6 @@ freq = 0.5
 
 robot = pypot.robot.from_config(spyder_config)
 
-# Put the robot in its initial position
-for m in robot.motors: # Note that we always provide an alias for all motors.
-    m.compliant = False
-    # m.goal_position = 0
 
 print("Motor 1 is at position: ", robot.m1.present_position)
 print("Motor 2 is at position: ", robot.m2.present_position)

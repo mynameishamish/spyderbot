@@ -5,6 +5,14 @@ import numpy
 
 from easing import *
 from motions import *
+from Adafruit_Thermal import *
+
+
+printer = Adafruit_Thermal("/dev/ttyUSB0", 19200, timeout=5)
+
+x = easeInOutSine
+
+
 
 
 #
@@ -20,31 +28,6 @@ from motions import *
 #
 # print("finished")
 
-x = easeInOutSine
-
-# EasePos Stuff Below
-
-print("starting Easepos")
-
-motionrest= [
-    [robot.m1 , x, robot.m1.present_position, -4] ,
-    [robot.m2 , x, robot.m2.present_position, -77] ,
-    [robot.m3 , x, robot.m3.present_position, -73]]
-
-motionalert= [
-    [robot.m1 , x, robot.m1.present_position, -4] ,
-    [robot.m2 , x, robot.m2.present_position, -65] ,
-    [robot.m3 , x, robot.m3.present_position, 135]]
-
-motionforward= [
-    [robot.m1 , x, robot.m1.present_position, -4] ,
-    [robot.m2 , x, robot.m2.present_position, -45] ,
-    [robot.m3 , x, robot.m3.present_position, 149]]
-
-motionoffer= [
-    [robot.m1 , x, robot.m1.present_position, -4] ,
-    [robot.m2 , x, robot.m2.present_position, -26] ,
-    [robot.m3 , x, robot.m3.present_position, 112]]
 
 
 # print("rest")
@@ -63,26 +46,17 @@ motionoffer= [
 # easingMultiple(motionrest, 1)
 # time.sleep(1)
 
-resting(30,30,30)
-
-time.sleep(2)
-
-print("alert")
-easingMultiple(motionalert, .75)
-time.sleep(2)
-
-print("forward")
-easingMultiple(motionforward, .5)
-time.sleep(2)
-
-print("rest")
-easingMultiple(motionrest, .5)
-time.sleep(2)
-
 print("offer")
 easingMultiple(motionoffer, .5)
-time.sleep(2)
+time.sleep(.5)
 
+printer.println("Hecking")
+printer.feed(-50)
+
+time.sleep(2)
+print("moving home")
+easingMultiple(motionrest, .5)
+time.sleep(1)
 # print("rest")
 # easingMultiple(motionrest, 1.5)
 # time.sleep(1)

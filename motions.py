@@ -25,7 +25,7 @@ spyder_config = {
         'm3': {
             'orientation': 'direct',
             'type': 'AX-12A', 'id': 6,
-            'angle_limit': [73.0, 149.0],
+            'angle_limit': [85.0, 149.0],
             'offset': 0.0
         }
     }
@@ -39,11 +39,37 @@ import pypot.robot
 
 robot = pypot.robot.from_config(spyder_config)
 
+x = easeInOutSine
+
+
 # Put the robot in its initial position
 for m in robot.motors: # Note that we always provide an alias for all motors.
     m.compliant = False
     m.moving_speed = 40
     # m.goal_position = 0
+
+
+motionrest= [
+    [robot.m1 , x, robot.m1.present_position, -4] ,
+    [robot.m2 , x, robot.m2.present_position, -77] ,
+    [robot.m3 , x, robot.m3.present_position, 85]]
+
+motionalert= [
+    [robot.m1 , x, robot.m1.present_position, -4] ,
+    [robot.m2 , x, robot.m2.present_position, -65] ,
+    [robot.m3 , x, robot.m3.present_position, 135]]
+
+motionforward= [
+    [robot.m1 , x, robot.m1.present_position, -4] ,
+    [robot.m2 , x, robot.m2.present_position, -45] ,
+    [robot.m3 , x, robot.m3.present_position, 149]]
+
+motionoffer= [
+    [robot.m1 , x, robot.m1.present_position, -4] ,
+    [robot.m2 , x, robot.m2.present_position, -26] ,
+    [robot.m3 , x, robot.m3.present_position, 112]]
+
+
 
 
 
@@ -89,7 +115,7 @@ def resting(z, x, c):
     robot.m3.moving_speed = c
     robot.m1.goal_position = -4
     robot.m2.goal_position = -77
-    robot.m3.goal_position = 73
+    robot.m3.goal_position = 85
     time.sleep(2)
     print("Rest")
     # printer.println("Rest")
