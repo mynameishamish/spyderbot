@@ -14,7 +14,7 @@ import urllib, json
 #
 # x = easeInOutSine
 #
-printer = Adafruit_Thermal("/dev/ttyUSB0", 19200, timeout=5)
+# printer = Adafruit_Thermal("/dev/serial0", 19200, timeout=5)
 
 #READ ME:
 #Install SlackClient to run this code (pip install SlackClient)
@@ -278,6 +278,7 @@ def handle_command(command, channel):
     )
 
 if __name__ == "__main__":
+    print __name__
     if slack_client.rtm_connect(with_team_state = False):
 
         # print("alert")
