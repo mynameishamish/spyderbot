@@ -31,7 +31,7 @@ print bot_user_token
 slack_client = SlackClient(bot_user_token)
 spyderbot_id = None
 
-RTM_READ_DELAY = 1
+RTM_READ_DELAY = 5
 PRINT_COMMAND = "print"
 DELETE_COMMAND = "delete"
 MENTION_REGEX = "^<@(|[WU].+?)>(.*)"
