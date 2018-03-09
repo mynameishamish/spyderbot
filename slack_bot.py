@@ -278,8 +278,7 @@ def handle_command(command, channel):
     )
 
 if __name__ == "__main__":
-    # if slack_client.rtm_connect(with_team_state = False):
-    if slack_client.rtm_connect():
+    if slack_client.rtm_connect(with_team_state = False):
 
         # print("alert")
         # easingMultiple(motionalert, .75)
