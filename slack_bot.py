@@ -4,6 +4,7 @@ import re
 from slackclient import SlackClient
 from Adafruit_Thermal import *
 import urllib, json
+import websocket
 
 # import time
 # import math
@@ -31,7 +32,9 @@ print bot_user_token
 slack_client = SlackClient(bot_user_token)
 spyderbot_id = None
 
-RTM_READ_DELAY = 5
+websocket.enableTrace(True)
+
+RTM_READ_DELAY = 1
 PRINT_COMMAND = "print"
 DELETE_COMMAND = "delete"
 MENTION_REGEX = "^<@(|[WU].+?)>(.*)"
@@ -278,6 +281,7 @@ def handle_command(command, channel):
     )
 
 if __name__ == "__main__":
+    print(slack_client.rtm_connect)
     if slack_client.rtm_connect(with_team_state = False):
 
         # print("alert")
