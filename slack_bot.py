@@ -23,11 +23,15 @@ import websocket
 #TODO:
 #Channel History: Convert user ids in text to usernames
 #Print attachments and images - Have access to image permalink and url
+#print "this" message
 
-oauth_access_token = os.environ.get('oauth_access_token')
-print oauth_access_token
-bot_user_token = os.environ.get('bot_user_token')
-print bot_user_token
+# oauth_access_token = os.environ.get('oauth_access_token')
+# print oauth_access_token
+# bot_user_token = os.environ.get('bot_user_token')
+# print bot_user_token
+
+oauth_access_token = 'xoxp-110015888069-309804068407-326068190487-73b65a6821428569302351a3938805ba'
+bot_user_token = 'xoxb-313398944640-3ciNnMPDGoP4e5HSFxd5m0ir'
 
 slack_client = SlackClient(bot_user_token)
 spyderbot_id = None
@@ -54,35 +58,28 @@ def parse_direct_mention(message_text):
     else:
         return (None, None)
 
-def get_user_info(user):
-    user_info = slack_client.api_call(
-      "users.info",
+def user_id_map():
+    users_list = slack_client.api_call(
+      "users.list",
       token=oauth_access_token,
-      user=user
     )
 
-    if "error" in user_info:
-        print "the users.info error was: " + str(user_info["error"])
+    if "error" in users_list:
+        print "the users.list error was: " + str(users_list["error"])
         return None
 
-    return user_info
+    users_map = {}
+    print len(users_list["members"])
+    for user in users_list["members"]:
+        if user["is_bot"]:
+            users_map[user["id"]] = user["profile"]["real_name"]
+        else:
+            users_map[user["id"]] = user["profile"]["display_name"]
 
-def get_bot_info(bot):
-
-    bot_info = slack_client.api_call(
-      "users.info",
-      token=oauth_access_token,
-      bot=bot
-    )
-
-    if "error" in bots_info:
-        print "the bots.info error was: " + str(user_info["error"])
-        return None
-
-    return bot_info
+    return users_map
 
 
-def print_channel_info(channel):
+def print_channel_info(channel, users_map):
     #channels.info will only work in a channel, not a direct chat
     channel_info = slack_client.api_call(
       "channels.info",
@@ -101,24 +98,9 @@ def print_channel_info(channel):
     members_user_names = []
 
     for mem in members:
-        if mem[0] == "U":
-            user_info = get_user_info(mem)
-            if user_info == None:
-                return "An error occured getting user info, sorry!"
-            user_name = user_info["user"]["real_name"]
-        elif mem[0] == "B":
-            bot_info = get_bot_info(mem)
-            if bot_info == None:
-                return "An error occured getting bot info, sorry!"
-            user_name = bots_info["bot"]["name"]
+        members_user_names.append(users_map[mem])
 
-        members_user_names.append(user_name)
-
-    creator_user_info = get_user_info(creator)
-    if creator_user_info == None:
-            return "An error occured getting user info, sorry!"
-
-    info = "The channel is called #" + name + " and was created by @" + creator_user_info["user"]["real_name"]
+    info = "The channel is called #" + name + " and was created by @" + users_map[creator]
 
     if topic == "":
         info += ". There is no topic set for the channel"
@@ -152,7 +134,7 @@ def get_messages(channel):
     return messages
 
 
-def print_previous_message(messages):
+def print_previous_message(messages, users_map):
 
     if messages == None:
         return "An error occured, sorry!"
@@ -160,7 +142,6 @@ def print_previous_message(messages):
     #the requestor is the user who asked to "print previous"
     #always a user never a bot
     requestor = messages[0]["user"]
-    requestor_user_info = get_user_info(requestor)
 
     #The "previous" message is located at index 1 because the message at index 0 asks to print
     previous_message = messages[1]
@@ -171,22 +152,14 @@ def print_previous_message(messages):
         previous_message_file_url = previous_message["file"]["url_private"]
 
     if "user" in previous_message:
-        user = previous_message["user"]
-        user_info = get_user_info(user)
-        if user_info == None:
-            return "An error occured getting user info, sorry!"
-        user = user_info["user"]["real_name"]
+        user_name = users_map[previous_message["user"]]
 
     if "bot_id" in previous_message:
-        user = previous_message["username"]
+        user_name = previous_message["username"]
 
-    if requestor_user_info == None:
-        return "An error occured getting user info, sorry!"
+    return "@" + users_map[requestor] + " asked me to print @" + user_name + " saying \"" + previous_message_text + "\""
 
-
-    return "@" + requestor_user_info["user"]["real_name"] + " asked me to print @" + user + " saying \"" + previous_message_text + "\""
-
-def print_channel_history(messages):
+def print_channel_history(messages, users_map):
 
     if messages == None:
         return "An error occured, sorry!"
@@ -195,30 +168,24 @@ def print_channel_history(messages):
 
     for m in reversed(messages):
         if "user" in m:
-            user_info = get_user_info(m["user"])
-
-            if user_info == None:
-                return "An error occured getting user info, sorry!"
-
-            user_name = user_info["user"]["real_name"]
-            response += "@" + user_name + ": " + m["text"] + "\n"
+            response += "@" + users_map[m["user"]] + ": " + m["text"] + "\n"
         if "bot_id" in m:
             response += "@" + m["username"] + ": " + m["text"] + "\n"
 
     return response
 
-def handle_print_command(command, channel):
+def handle_print_command(command, channel, users_map):
     command_split = command.split()
 
     if len(command_split) > 1:
         if command_split[1] == "previous":
             messages = get_messages(channel)
-            response = print_previous_message(messages)
+            response = print_previous_message(messages, users_map)
         if command_split[1] == "channel_info":
-            response = print_channel_info(channel)
+            response = print_channel_info(channel, users_map)
         if command_split[1] == "channel_history":
             messages = get_messages(channel)
-            response = print_channel_history(messages)
+            response = print_channel_history(messages, users_map)
     else:
         response = "You need to specify what to print. Try previous, channel_info, or channel_history"
 
@@ -257,17 +224,13 @@ def execute_print(channel, response):
             text="An error occured, could not print to spyderbot."
         )
 
-
-#X asked me to print Y saying ....
-#Printing images and attachements
-
-def handle_command(command, channel):
+def handle_command(command, channel, users_map):
 
     default_response = "Something went wrong, check exception traceback."
 
     response = None
     if command.startswith(PRINT_COMMAND):
-        response = handle_print_command(command, channel)
+        response = handle_print_command(command, channel, users_map)
     if command.startswith(DELETE_COMMAND):
         messages = get_messages(channel)
         response = handle_delete_command(messages)
@@ -291,10 +254,12 @@ if __name__ == "__main__":
         print("Spyder Bot connected and running!")
 
         spyderbot_id = slack_client.api_call("auth.test")["user_id"]
+
+        users_map = user_id_map()
         while True:
             command, channel = parse_bot_commands(slack_client.rtm_read())
             if command:
-                handle_command(command, channel)
+                handle_command(command, channel, users_map)
             time.sleep(RTM_READ_DELAY)
     else:
         print("Connection failed. Exception traceback printed above.")
