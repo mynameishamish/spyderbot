@@ -21,16 +21,17 @@ import websocket
 #Install SlackClient to run this code (pip install SlackClient)
 
 #TODO:
-#Channel History: Convert user ids in text to usernames
+#Channel History: Convert user ids in text to usernames - DONE
 #Print attachments and images - Have access to image permalink and url
 #print "this" message - DONE
 
-oauth_access_token = os.environ.get('oauth_access_token')
-print oauth_access_token
-bot_user_token = os.environ.get('bot_user_token')
-print bot_user_token
+# oauth_access_token = os.environ.get('oauth_access_token')
+# print oauth_access_token
+# bot_user_token = os.environ.get('bot_user_token')
+# print bot_user_token
 
-
+oauth_access_token = 'xoxp-110015888069-309804068407-326068190487-73b65a6821428569302351a3938805ba'
+bot_user_token = 'xoxb-313398944640-3ciNnMPDGoP4e5HSFxd5m0ir'
 
 slack_client = SlackClient(bot_user_token)
 spyderbot_id = None
@@ -132,6 +133,25 @@ def get_messages(channel):
     return messages
 
 
+def parse_message(message, users_map):
+
+    start_idx = 0
+    new_message = ""
+
+    user_ids = [m.start() for m in re.finditer('<@', message)]
+
+    for id_pos in user_ids:
+
+        id_end = message.find(">", id_pos)
+
+        user_name = users_map[message[id_pos+2:id_end]]
+
+        new_message += message[start_idx:id_pos] + " @" + user_name
+        start_idx = id_end+1
+
+    return new_message + message[start_idx:]
+
+
 def print_previous_message(messages, users_map):
 
     if messages == None:
@@ -157,7 +177,9 @@ def print_previous_message(messages, users_map):
     if "bot_id" in previous_message:
         user_name = previous_message["username"]
 
-    return "@" + users_map[requestor] + " asked me to print @" + user_name + " saying \"" + previous_message_text + "\""
+    message_parsed = parse_message(previous_message_text, users_map)
+
+    return "@" + users_map[requestor] + " asked me to print @" + user_name + " saying \"" + message_parsed + "\""
 
 def print_channel_history(messages, users_map):
 
@@ -167,10 +189,13 @@ def print_channel_history(messages, users_map):
     response = ""
 
     for m in reversed(messages):
+
+        parsed_message = parse_message(m["text"], users_map)
+
         if "user" in m:
-            response += "@" + users_map[m["user"]] + ": " + m["text"] + "\n"
+            response += "@" + users_map[m["user"]] + ": " + parsed_message + "\n"
         if "bot_id" in m:
-            response += "@" + m["username"] + ": " + m["text"] + "\n"
+            response += "@" + m["username"] + ": " + parsed_message + "\n"
 
     return response
 
