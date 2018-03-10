@@ -23,7 +23,7 @@ import websocket
 #TODO:
 #Channel History: Convert user ids in text to usernames
 #Print attachments and images - Have access to image permalink and url
-#print "this" message
+#print "this" message - DONE
 
 oauth_access_token = os.environ.get('oauth_access_token')
 print oauth_access_token
@@ -68,7 +68,6 @@ def user_id_map():
         return None
 
     users_map = {}
-    print len(users_list["members"])
     for user in users_list["members"]:
         if user["is_bot"]:
             users_map[user["id"]] = user["profile"]["real_name"]
@@ -146,6 +145,8 @@ def print_previous_message(messages, users_map):
     previous_message = messages[1]
     previous_message_text = messages[1]["text"]
 
+    print previous_message_text
+
     if "file" in previous_message:
         previous_message_file_permalink = previous_message["file"]["permalink"]
         previous_message_file_url = previous_message["file"]["url_private"]
@@ -173,6 +174,16 @@ def print_channel_history(messages, users_map):
 
     return response
 
+
+def print_latest(curr, messages, users_map):
+
+
+    requestor = messages[0]["user"]
+
+    response = "@" + users_map[requestor] + " asked me to print \"" + curr + "\""
+
+    return response
+
 def handle_print_command(command, channel, users_map):
     command_split = command.split()
 
@@ -185,6 +196,10 @@ def handle_print_command(command, channel, users_map):
         if command_split[1] == "channel_history":
             messages = get_messages(channel)
             response = print_channel_history(messages, users_map)
+        if command_split[1] == "this:":
+            #currently pulling all messages to get the latest user - can do better
+            messages = get_messages(channel)
+            response = print_latest(" ".join(command_split[2:]), messages, users_map) 
     else:
         response = "You need to specify what to print. Try previous, channel_info, or channel_history"
 
