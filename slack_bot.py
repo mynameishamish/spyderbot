@@ -3,6 +3,8 @@ import time
 import re
 from slackclient import SlackClient
 from Adafruit_Thermal import *
+from PIL import Image
+import urllib, cStringIO
 import urllib, json
 import websocket
 
@@ -19,6 +21,7 @@ import websocket
 
 #READ ME:
 #Install SlackClient to run this code (pip install SlackClient)
+#Install PIL (pip install Pillow)
 
 #TODO:
 #Channel History: Convert user ids in text to usernames - DONE
@@ -131,6 +134,27 @@ def get_messages(channel):
     return messages
 
 
+def print_image(message):
+
+    # message_file_url = message["file"]["url_private"]
+    # print message_file_url
+    # print type(message_file_url)
+
+    file = cStringIO.StringIO(urllib.urlopen("https://files.slack.com/files-pri/T380FS421-F9PAQ484W/image.png").read())
+
+    im = Image.open(file)
+
+    try:
+        printer.printImage(im)
+        printer.feed(6)
+    except:
+        slack_client.api_call(
+            "chat.postMessage",
+            channel=channel,
+            text="An error occured, could not print image to spyderbot."
+        )
+
+
 def parse_message(message, users_map):
 
     start_idx = 0
@@ -166,8 +190,11 @@ def print_previous_message(messages, users_map):
     print previous_message_text
 
     if "file" in previous_message:
-        previous_message_file_permalink = previous_message["file"]["permalink"]
-        previous_message_file_url = previous_message["file"]["url_private"]
+        image_types = ["png", "jpg"]
+        if previous_message["file"]["filetype"] in image_types:
+            print_image(previous_message)
+
+    #print_image(previous_message)
 
     if "user" in previous_message:
         user_name = users_map[previous_message["user"]]
