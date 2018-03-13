@@ -1,11 +1,13 @@
+from Adafruit_Thermal import *
+from cStringIO import StringIO
+import io
 import os
-import time
+from PIL import Image
 import re
 from slackclient import SlackClient
-from Adafruit_Thermal import *
-from PIL import Image
-import urllib, cStringIO
+import time
 import urllib, json
+import urllib2 as urllib2            
 import websocket
 
 # import time
@@ -136,18 +138,25 @@ def get_messages(channel):
 
 def print_image(message):
 
-    # message_file_url = message["file"]["url_private"]
+    # message_file_url = message["file"]["thumb_80"]
     # print message_file_url
     # print type(message_file_url)
 
-    file = cStringIO.StringIO(urllib.urlopen("https://files.slack.com/files-pri/T380FS421-F9PAQ484W/image.png").read())
+    #thumbnail makes more sense to print?
+    url = 'https://files.slack.com/files-tmb/T380FS421-F9PAQ484W-0f2f30719f/image_80.png'
+    #permalink = 'https://robotsingroupslab.slack.com/files/U93PN20BZ/F9PAQ484W/image.png'
+    #url_private = "https://files.slack.com/files-pri/T380FS421-F9PAQ484W/image.png"
 
-    im = Image.open(file)
+    try:                    
+        img_file = urllib2.urlopen(url)
+        img = StringIO(img_file.read())
+        resized_image = Image.open(img)
 
-    try:
-        printer.printImage(im)
+        print "image ok"
+        printer.printImage(resized_image)
         printer.feed(6)
-    except:
+    except Exception as e:
+        print(e)
         slack_client.api_call(
             "chat.postMessage",
             channel=channel,
@@ -187,13 +196,12 @@ def print_previous_message(messages, users_map):
     previous_message = messages[1]
     previous_message_text = messages[1]["text"]
 
-    print previous_message_text
-
     if "file" in previous_message:
         image_types = ["png", "jpg"]
         if previous_message["file"]["filetype"] in image_types:
             print_image(previous_message)
 
+    ####### Use to test image printing even if image isn't in message #######
     #print_image(previous_message)
 
     if "user" in previous_message:
