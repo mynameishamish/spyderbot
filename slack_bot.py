@@ -7,19 +7,19 @@ import re
 from slackclient import SlackClient
 import time
 import urllib, json
-import urllib2 as urllib2            
+import urllib2 as urllib2
 import websocket
 
-# import time
-# import math
-# import numpy
-#
-# from easing import *
-# from motions import *
-#
-# x = easeInOutSine
-#
-# printer = Adafruit_Thermal("/dev/serial0", 19200, timeout=5)
+import time
+import math
+import numpy
+
+from easing import *
+from motions import *
+
+x = easeInOutSine
+
+printer = Adafruit_Thermal("/dev/serial0", 19200, timeout=5)
 
 #READ ME:
 #Install SlackClient to run this code (pip install SlackClient)
@@ -150,7 +150,7 @@ def print_image(message):
 
     #Try locally saving
     #Try to find picture metadata
-    try:                    
+    try:
         img_file = urllib2.urlopen(url)
         img = StringIO(img_file.read())
         #failing here
@@ -261,7 +261,7 @@ def handle_print_command(command, channel, users_map):
         if command_split[1] == "this:":
             #currently pulling all messages to get the latest user - can do better
             messages = get_messages(channel)
-            response = print_latest(" ".join(command_split[2:]), messages, users_map) 
+            response = print_latest(" ".join(command_split[2:]), messages, users_map)
     else:
         response = "You need to specify what to print. Try previous, channel_info, or channel_history"
 
