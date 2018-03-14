@@ -30,11 +30,13 @@ import websocket
 #Print attachments and images - Have access to image permalink and url
 #print "this" message - DONE
 
-oauth_access_token = os.environ.get('oauth_access_token')
-print oauth_access_token
-bot_user_token = os.environ.get('bot_user_token')
-print bot_user_token
+# oauth_access_token = os.environ.get('oauth_access_token')
+# print oauth_access_token
+# bot_user_token = os.environ.get('bot_user_token')
+# print bot_user_token
 
+oauth_access_token = 'xoxp-110015888069-309804068407-326068190487-73b65a6821428569302351a3938805ba'
+bot_user_token = 'xoxb-313398944640-3ciNnMPDGoP4e5HSFxd5m0ir'
 
 slack_client = SlackClient(bot_user_token)
 spyderbot_id = None
@@ -147,9 +149,13 @@ def print_image(message):
     #permalink = 'https://robotsingroupslab.slack.com/files/U93PN20BZ/F9PAQ484W/image.png'
     #url_private = "https://files.slack.com/files-pri/T380FS421-F9PAQ484W/image.png"
 
+
+    #Try locally saving
+    #Try to find picture metadata
     try:                    
         img_file = urllib2.urlopen(url)
         img = StringIO(img_file.read())
+        #failing here
         resized_image = Image.open(img)
 
         print "image ok"
