@@ -2,8 +2,10 @@ from Adafruit_Thermal import *
 from cStringIO import StringIO
 import io
 import os
+from oauthlib.common import add_params_to_uri
 from PIL import Image
 import re
+import requests
 from slackclient import SlackClient
 import time
 import urllib, json
@@ -21,14 +23,14 @@ x = easeInOutSine
 
 printer = Adafruit_Thermal("/dev/serial0", 19200, timeout=5)
 
+
 #READ ME:
 #Install SlackClient to run this code (pip install SlackClient)
 #Install PIL (pip install Pillow)
+#Install OauthLib (pip install oauthlib)
 
 #TODO:
-#Channel History: Convert user ids in text to usernames - DONE
 #Print attachments and images - Have access to image permalink and url
-#print "this" message - DONE
 
 oauth_access_token = os.environ.get('oauth_access_token')
 print oauth_access_token
@@ -142,18 +144,15 @@ def print_image(message):
     # print message_file_url
     # print type(message_file_url)
 
-    #thumbnail makes more sense to print?
-    url = 'https://files.slack.com/files-tmb/T380FS421-F9PAQ484W-0f2f30719f/image_80.png'
-    #permalink = 'https://robotsingroupslab.slack.com/files/U93PN20BZ/F9PAQ484W/image.png'
-    #url_private = "https://files.slack.com/files-pri/T380FS421-F9PAQ484W/image.png"
-
-
-    #Try locally saving
-    #Try to find picture metadata
+    #must use url_private
+    url = 'https://files.slack.com/files-pri/T380FS421-F9PAQ484W/image.png'
+    
     try:
-        img_file = urllib2.urlopen(url)
-        img = StringIO(img_file.read())
-        #failing here
+        bearer = "Bearer " + oauth_access_token
+        headers = {"Authorization":bearer}
+
+        response = requests.get(url, headers=headers, stream=True)
+        img = StringIO(response.content)
         resized_image = Image.open(img)
 
         print "image ok"
@@ -273,7 +272,7 @@ def handle_delete_command(messages):
     ts_list = []
 
     for m in messages:
-        if "username" in m and m["username"] == "Spyderbot-python":
+        if "username" in m and m["username"] == "Spyderbot":
             if "ts" in m:
                 ts_list.append(m["ts"])
 
