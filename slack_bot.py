@@ -30,7 +30,7 @@ printer = Adafruit_Thermal("/dev/serial0", 19200, timeout=5)
 #Install OauthLib (pip install oauthlib)
 
 #TODO:
-#Print attachments and images - Have access to image permalink and url
+#Print attachments and images - DONE (maybe)
 
 oauth_access_token = os.environ.get('oauth_access_token')
 print oauth_access_token
@@ -47,6 +47,7 @@ RTM_READ_DELAY = 1
 PRINT_COMMAND = "print"
 DELETE_COMMAND = "delete"
 MENTION_REGEX = "^<@(|[WU].+?)>(.*)"
+image_types = ["png", "jpg"]
 
 def parse_bot_commands(slack_events):
     for event in slack_events:
@@ -140,12 +141,10 @@ def get_messages(channel):
 
 def print_image(message):
 
-    # message_file_url = message["file"]["thumb_80"]
-    # print message_file_url
-    # print type(message_file_url)
+    url = message["file"]["url_private"]
 
     #must use url_private
-    url = 'https://files.slack.com/files-pri/T380FS421-F9PAQ484W/image.png'
+    # url = 'https://files.slack.com/files-pri/T380FS421-F9PAQ484W/image.png'
     
     try:
         bearer = "Bearer " + oauth_access_token
@@ -200,12 +199,9 @@ def print_previous_message(messages, users_map):
     previous_message_text = messages[1]["text"]
 
     if "file" in previous_message:
-        image_types = ["png", "jpg"]
+        print previous_message
         if previous_message["file"]["filetype"] in image_types:
             print_image(previous_message)
-
-    ####### Use to test image printing even if image isn't in message #######
-    #print_image(previous_message)
 
     if "user" in previous_message:
         user_name = users_map[previous_message["user"]]
@@ -238,8 +234,13 @@ def print_channel_history(messages, users_map):
 
 def print_latest(curr, messages, users_map):
 
+    message = messages[0]
 
-    requestor = messages[0]["user"]
+    if "file" in message:
+        if message["file"]["filetype"] in image_types:
+            print_image(message)
+
+    requestor = message["user"]
 
     response = "@" + users_map[requestor] + " asked me to print \"" + curr + "\""
 
