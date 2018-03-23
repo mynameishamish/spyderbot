@@ -8,7 +8,7 @@ from motions import *
 from Adafruit_Thermal import *
 
 
-printer = Adafruit_Thermal("/dev/ttyUSB0", 19200, timeout=5)
+# printer = Adafruit_Thermal("/dev/ttyUSB0", 19200, timeout=5)
 
 x = easeInOutSine
 
@@ -54,8 +54,8 @@ print("offer")
 easingMultiple(motionoffer, .5)
 time.sleep(2)
 
-printer.println("heckin'")
-printer.feed(5)
+# printer.println("heckin'")
+# printer.feed(5)
 
 time.sleep(2)
 print("moving home")
