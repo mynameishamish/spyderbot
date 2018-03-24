@@ -113,7 +113,7 @@ def resting(z, x, c):
     robot.m3.moving_speed = c
     robot.m1.goal_position = -4
     robot.m2.goal_position = -77
-    robot.m3.goal_position = 85
+    robot.m3.goal_position = 73
     time.sleep(2)
     print("Rest")
     # printer.println("Rest")
