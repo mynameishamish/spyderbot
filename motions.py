@@ -88,7 +88,7 @@ def easing(motor, e_fn, final_position, duration):
         motor.goal_position=pos
         print(motor.present_position)
 
-        time.sleep(0.01)
+        time.sleep(0.005)
 
 def easingMultiple(motion, duration):
     t0=time.time()
@@ -103,8 +103,6 @@ def easingMultiple(motion, duration):
             fn= m[1]
             pos = fn(t, m[2], m[3], d)
             m[0].goal_position=pos
-
-        time.sleep(0.01)
 
 
 # Position definitions, just pass in moving_speed for each motor
