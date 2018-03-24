@@ -50,21 +50,21 @@ print("forward")
 easingMultiple(motionforward, .25)
 time.sleep(1)
 
-print("offer")
-easingMultiple(motionoffer, .5)
-time.sleep(2)
+# print("offer")
+# easingMultiple(motionoffer, .5)
+# time.sleep(2)
 
-# printer.println("heckin'")
-# printer.feed(5)
+# # printer.println("heckin'")
+# # printer.feed(5)
 
-time.sleep(2)
-print("moving home")
-easingMultiple(motionrest, .5)
-time.sleep(2)
+# time.sleep(2)
+# print("moving home")
+# easingMultiple(motionrest, .5)
+# time.sleep(2)
 
-# print("rest")
-# easingMultiple(motionrest, 1.5)
-# time.sleep(1)
+# # print("rest")
+# # easingMultiple(motionrest, 1.5)
+# # time.sleep(1)
 
 
 print("done")
