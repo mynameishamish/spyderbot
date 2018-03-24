@@ -150,3 +150,14 @@ def offer(z, x, c):
     robot.m3.goal_position = 112
     print("Offer")
     time.sleep(2)
+
+def blocking(m1, m2, m3, m1speed=30, m2speed=30, m3speed=30):
+    robot.m1.moving_speed = m1speed
+    robot.m2.moving_speed = m2speed
+    robot.m3.moving_speed = m3speed
+    robot.m1.goal_position = m1
+    robot.m2.goal_position = m2
+    robot.m3.goal_position = m3
+    time.sleep(2)
+
+
