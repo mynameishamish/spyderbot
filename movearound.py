@@ -16,9 +16,9 @@ x = easeInOutSine
 
 
 #
-# print("starting")
-#
-# resting(40, 40, 40)
+print("starting")
+
+resting(40, 40, 40)
 #
 # up(40, 40, 40)
 #
@@ -47,7 +47,7 @@ x = easeInOutSine
 # time.sleep(1)
 
 print("forward")
-easingMultiple(motionforward, .25)
+easingMultiple(motionforward, 1)
 time.sleep(1)
 
 # print("offer")
