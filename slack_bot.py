@@ -33,11 +33,14 @@ printer = Adafruit_Thermal("/dev/ttyUSB0", 19200, timeout=5)
 
 #TODO:
 #Print attachments and images - DONE (maybe)
+#Print malte's messages - DONE
+#Investigate threads - In process 
 
 oauth_access_token = os.environ.get('oauth_access_token')
 print oauth_access_token
 bot_user_token = os.environ.get('bot_user_token')
 print bot_user_token
+
 
 
 slack_client = SlackClient(bot_user_token)
@@ -269,8 +272,6 @@ def print_malte_messages(channel, users_map):
     response = ""
     has_messages = False
     messages = channel_history["messages"]
-    print messages[0]
-    print messages[len(messages) -1]
 
     for m in reversed(messages):
         if "malte" in m["text"]:
@@ -291,6 +292,13 @@ def print_malte_messages(channel, users_map):
 def handle_print_command(command, channel, users_map):
     command_split = command.split()
     command_split = [s.lower() for s in command_split]
+
+
+    #### DELETE ####
+    # print "here"
+    # messages = get_messages(channel)
+    # for m in reversed(messages):
+    #     print m
 
     if len(command_split) > 1:
         if command_split[1] == "previous":
