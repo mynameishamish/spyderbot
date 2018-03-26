@@ -34,14 +34,15 @@ printer = Adafruit_Thermal("/dev/ttyUSB0", 19200, timeout=5)
 #TODO:
 #Print attachments and images - DONE (maybe)
 #Print malte's messages - DONE
-#Investigate threads - In process 
+#Investigate threads - In process
 
 oauth_access_token = os.environ.get('oauth_access_token')
 print oauth_access_token
 bot_user_token = os.environ.get('bot_user_token')
 print bot_user_token
 
-
+printer.println("I'm Alive")
+printer.feed(6)
 
 slack_client = SlackClient(bot_user_token)
 spyderbot_id = None
@@ -377,9 +378,9 @@ if __name__ == "__main__":
     print(slack_client.rtm_connect)
     if slack_client.rtm_connect(with_team_state = False):
 
-        # print("alert")
-        # easingMultiple(motionalert, .75)
-        # time.sleep(2)
+        print("alert")
+        easingMultiple(motionalert, .75)
+        time.sleep(2)
 
         print("Spyder Bot connected and running!")
 
