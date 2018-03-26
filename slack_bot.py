@@ -1,4 +1,5 @@
 from Adafruit_Thermal import *
+import datetime
 from cStringIO import StringIO
 import io
 import os
@@ -16,12 +17,12 @@ import time
 import math
 import numpy
 
-from easing import *
-from motions import *
+# from easing import *
+# from motions import *
 
-x = easeInOutSine
+# x = easeInOutSine
 
-printer = Adafruit_Thermal("/dev/serial0", 19200, timeout=5)
+# printer = Adafruit_Thermal("/dev/serial0", 19200, timeout=5)
 
 
 #READ ME:
@@ -36,6 +37,11 @@ oauth_access_token = os.environ.get('oauth_access_token')
 print oauth_access_token
 bot_user_token = os.environ.get('bot_user_token')
 print bot_user_token
+
+oauth_access_token = 'xoxp-110015888069-309804068407-329406945745-d93e1c9fc5bd9563fbd7fadeb84728eb'
+bot_user_token = 'xoxb-313398944640-sMAPXxu63nJTp83vjjfnkYPI'
+
+
 
 
 slack_client = SlackClient(bot_user_token)
@@ -246,8 +252,49 @@ def print_latest(curr, messages, users_map):
 
     return response
 
+
+def print_malte_messages(channel, users_map):
+
+    yesterday = datetime.date.today() - datetime.timedelta(1)
+
+    timestamp = time.mktime(yesterday.timetuple())
+
+    channel_history = slack_client.api_call(
+      "channels.history",
+      token=oauth_access_token,
+      channel=channel,
+      oldest=timestamp
+    )
+
+    if "error" in channel_history:
+        print "the channels.history error was: " + str(channel_history["error"])
+        return None
+
+    response = ""
+    has_messages = False
+    messages = channel_history["messages"]
+    print messages[0]
+    print messages[len(messages) -1]
+
+    for m in reversed(messages):
+        if "malte" in m["text"]:
+            has_messages = True
+            parsed_message = parse_message(m["text"], users_map)
+
+            if "user" in m:
+                response += "@" + users_map[m["user"]] + ": " + parsed_message + "\n"
+            if "bot_id" in m:
+                response += "@" + m["username"] + ": " + parsed_message + "\n"
+
+    if has_messages:
+        return response
+    else:
+        return "No messages for Malte today."
+
+
 def handle_print_command(command, channel, users_map):
     command_split = command.split()
+    command_split = [s.lower() for s in command_split]
 
     if len(command_split) > 1:
         if command_split[1] == "previous":
@@ -262,6 +309,9 @@ def handle_print_command(command, channel, users_map):
             #currently pulling all messages to get the latest user - can do better
             messages = get_messages(channel)
             response = print_latest(" ".join(command_split[2:]), messages, users_map)
+        #command: "Print messages for malte"
+        if "malte" in command_split:
+            response = print_malte_messages(channel, users_map)
     else:
         response = "You need to specify what to print. Try previous, channel_info, or channel_history"
 
