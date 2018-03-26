@@ -17,12 +17,13 @@ import time
 import math
 import numpy
 
-# from easing import *
-# from motions import *
+from easing import *
+from motions import *
 
-# x = easeInOutSine
+x = easeInOutSine
 
-# printer = Adafruit_Thermal("/dev/serial0", 19200, timeout=5)
+
+printer = Adafruit_Thermal("/dev/ttyUSB0", 19200, timeout=5)
 
 
 #READ ME:
@@ -37,11 +38,6 @@ oauth_access_token = os.environ.get('oauth_access_token')
 print oauth_access_token
 bot_user_token = os.environ.get('bot_user_token')
 print bot_user_token
-
-oauth_access_token = 'xoxp-110015888069-309804068407-329406945745-d93e1c9fc5bd9563fbd7fadeb84728eb'
-bot_user_token = 'xoxb-313398944640-sMAPXxu63nJTp83vjjfnkYPI'
-
-
 
 
 slack_client = SlackClient(bot_user_token)
@@ -151,7 +147,7 @@ def print_image(message):
 
     #must use url_private
     # url = 'https://files.slack.com/files-pri/T380FS421-F9PAQ484W/image.png'
-    
+
     try:
         bearer = "Bearer " + oauth_access_token
         headers = {"Authorization":bearer}
