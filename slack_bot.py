@@ -16,12 +16,12 @@ import time
 import math
 import numpy
 
-from easing import *
-from motions import *
+# from easing import *
+# from motions import *
 
 x = easeInOutSine
 
-printer = Adafruit_Thermal("/dev/serial0", 19200, timeout=5)
+printer = Adafruit_Thermal("/dev/ttyUSB0", 19200, timeout=5)
 
 
 #READ ME:
@@ -145,7 +145,7 @@ def print_image(message):
 
     #must use url_private
     # url = 'https://files.slack.com/files-pri/T380FS421-F9PAQ484W/image.png'
-    
+
     try:
         bearer = "Bearer " + oauth_access_token
         headers = {"Authorization":bearer}
