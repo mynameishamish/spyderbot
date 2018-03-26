@@ -45,7 +45,7 @@ x = easeInOutSine
 # Put the robot in its initial position
 for m in robot.motors: # Note that we always provide an alias for all motors.
     m.compliant = False
-    m.moving_speed = 40
+    m.moving_speed = 200
     # m.goal_position = 0
 
 
@@ -157,5 +157,3 @@ def blocking(m1, m2, m3, m1speed=30, m2speed=30, m3speed=30):
     robot.m2.goal_position = m2
     robot.m3.goal_position = m3
     time.sleep(2)
-
-
