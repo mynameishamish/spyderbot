@@ -378,9 +378,9 @@ if __name__ == "__main__":
     if slack_client.rtm_connect(with_team_state = False):
 
         print("alert")
-        easingMultiple(motionalert, .75)
+        easingMultiple(motionforward, .75)
         printer.println("Spyder Bot connected and running!")
-        printer.feed(6)     
+        printer.feed(6)
         time.sleep(1)
 
         print("Spyder Bot connected and running!")
