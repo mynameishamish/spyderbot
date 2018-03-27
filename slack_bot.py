@@ -22,7 +22,6 @@ from motions import *
 
 x = easeInOutSine
 
-
 printer = Adafruit_Thermal("/dev/ttyUSB0", 19200, timeout=5)
 
 
@@ -380,7 +379,9 @@ if __name__ == "__main__":
 
         print("alert")
         easingMultiple(motionalert, .75)
-        time.sleep(2)
+        time.sleep(1)
+
+        printer.println("Spyder Bot connected and running!")
 
         print("Spyder Bot connected and running!")
 
