@@ -379,9 +379,9 @@ if __name__ == "__main__":
 
         print("alert")
         easingMultiple(motionalert, .75)
-        time.sleep(1)
-
         printer.println("Spyder Bot connected and running!")
+        printer.feed(6)     
+        time.sleep(1)
 
         print("Spyder Bot connected and running!")
 
