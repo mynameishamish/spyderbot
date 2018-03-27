@@ -146,7 +146,7 @@ def get_messages(channel):
 
 def print_image(message):
 
-    url = message["file"]["thumb_80"]
+    url = message["file"]["thumb_360"]
 
     #must use url_private
     # url = 'https://files.slack.com/files-pri/T380FS421-F9PAQ484W/image.png'
