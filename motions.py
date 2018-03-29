@@ -45,7 +45,7 @@ x = easeInOutSine
 # Put the robot in its initial position
 for m in robot.motors: # Note that we always provide an alias for all motors.
     m.compliant = False
-    m.moving_speed = 100
+    m.moving_speed = 80
     # m.goal_position = 0
 
 
