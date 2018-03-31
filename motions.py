@@ -87,8 +87,7 @@ def easing(motor, e_fn, final_position, duration):
         pos =e_fn(t, b, c, d)
         motor.goal_position=pos
         print(motor.present_position)
-
-        time.sleep(0.005)
+        time.sleep(0.1)
 
 def easingMultiple(motion, duration):
     t0=time.time()
