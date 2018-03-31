@@ -57,6 +57,7 @@ printer.println("heckin'")
 printer.feed(5)
 
 time.sleep(2)
+
 print("moving home")
 easingMultiple(motionrest, 1.5)
 time.sleep(2)

@@ -5,6 +5,7 @@ ssh hostname: spyderbot
 Dependencies:
 slackclient
 Pypot
+mpg321
 
 
 # Interaction Engine #
