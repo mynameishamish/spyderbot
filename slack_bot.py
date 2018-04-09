@@ -28,11 +28,8 @@ printer = Adafruit_Thermal("/dev/ttyUSB0", 19200, timeout=5)
 #READ ME:
 #Install SlackClient to run this code (pip install SlackClient)
 #Install PIL (pip install Pillow)
-#Install OauthLib (pip install oauthlib)
 
 #TODO:
-#Print attachments and images - DONE (maybe)
-#Print malte's messages - DONE
 #Investigate threads - In process
 
 oauth_access_token = os.environ.get('oauth_access_token')
@@ -40,8 +37,10 @@ print oauth_access_token
 bot_user_token = os.environ.get('bot_user_token')
 print bot_user_token
 
+
 printer.println("I'm Alive")
 printer.feed(6)
+
 
 slack_client = SlackClient(bot_user_token)
 spyderbot_id = None
@@ -60,6 +59,13 @@ def parse_bot_commands(slack_events):
             user_id, message = parse_direct_mention(event["text"])
             if user_id == spyderbot_id:
                 return message, event["channel"]
+        elif "comment" in event and "type" in event:
+            print "COMMENT"
+            if event["type"] == "message":
+                user_id, message = parse_direct_mention(event["comment"]["comment"])
+                if user_id == spyderbot_id:
+                    return message, event["channel"]
+
     return None, None
 
 def parse_direct_mention(message_text):
@@ -147,9 +153,6 @@ def get_messages(channel):
 def print_image(message):
 
     url = message["file"]["thumb_360"]
-
-    #must use url_private
-    # url = 'https://files.slack.com/files-pri/T380FS421-F9PAQ484W/image.png'
 
     try:
         bearer = "Bearer " + oauth_access_token
@@ -289,16 +292,48 @@ def print_malte_messages(channel, users_map):
         return "No messages for Malte today."
 
 
+def print_thread_helper(message, users_map):
+
+    print message
+
+    ##TODO##
+    #Images not printing because the "print op" comment is not message[0]
+
+    if "file_id" in message:
+        print "HERE"
+        # if message["file"]["filetype"] in image_types:
+        #     print_image(previous_message)
+
+    message_parsed = parse_message(message["text"], users_map)
+
+    return message_parsed
+
+def print_thread_op(channel, messages, users_map):
+
+    last_comment = messages[0]["ts"]
+    last_user = messages[0]["user"]
+
+    for m in messages:
+        if "replies" in m:
+            for r in m["replies"]:
+                if r["ts"] == last_comment and r["user"] == last_user:
+                    # print m
+                    if "user" in m:
+                        return "@" + users_map[last_user] + " asked me to print the op message by @" + users_map[m["user"]] + ": " + print_thread_helper(m, users_map)
+                    if "bot_id" in m:
+                        return "@" + users_map[last_user] + " asked me to print the op message by @" + m["username"] + ": " + print_thread_helper(m, users_map)                    
+
+    return "An error occured, are you sure you're replying to thread?"
+
+
+def print_thread(channel, messages, users_map):
+
+    return "TODO: print thread"
+
+
 def handle_print_command(command, channel, users_map):
     command_split = command.split()
     command_split = [s.lower() for s in command_split]
-
-
-    #### DELETE ####
-    # print "here"
-    # messages = get_messages(channel)
-    # for m in reversed(messages):
-    #     print m
 
     if len(command_split) > 1:
         if command_split[1] == "previous":
@@ -310,12 +345,17 @@ def handle_print_command(command, channel, users_map):
             messages = get_messages(channel)
             response = print_channel_history(messages, users_map)
         if command_split[1] == "this:":
-            #currently pulling all messages to get the latest user - can do better
             messages = get_messages(channel)
             response = print_latest(" ".join(command_split[2:]), messages, users_map)
-        #command: "Print messages for malte"
+        #command example: "Print messages for malte"
         if "malte" in command_split:
             response = print_malte_messages(channel, users_map)
+        if command_split[1] == "op":
+            messages = get_messages(channel)
+            response = print_thread_op(channel, messages, users_map)
+        if command_split[1] == "thread":
+            messages = get_messages(channel)
+            response = print_thread(channel, messages, users_map)
     else:
         response = "You need to specify what to print. Try previous, channel_info, or channel_history"
 
@@ -356,6 +396,12 @@ def execute_print(channel, response):
 
 def handle_command(command, channel, users_map):
 
+    ### DELETE ###
+    # print "here"
+    # messages = get_messages(channel)
+    # for m in reversed(messages):
+    #     print m
+
     default_response = "Something went wrong, check exception traceback."
 
     response = None
@@ -376,6 +422,8 @@ def handle_command(command, channel, users_map):
 if __name__ == "__main__":
     print(slack_client.rtm_connect)
     if slack_client.rtm_connect(with_team_state = False):
+
+        #UNCOMMENT
 
         print("alert")
         easingMultiple(motionforward, .75)
