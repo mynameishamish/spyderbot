@@ -17,12 +17,12 @@ import time
 import math
 import numpy
 
-from easing import *
-from motions import *
+# from easing import *
+# from motions import *
 
-x = easeInOutSine
+# x = easeInOutSine
 
-printer = Adafruit_Thermal("/dev/ttyUSB0", 19200, timeout=5)
+# printer = Adafruit_Thermal("/dev/ttyUSB0", 19200, timeout=5)
 
 
 #READ ME:
@@ -38,8 +38,15 @@ bot_user_token = os.environ.get('bot_user_token')
 print bot_user_token
 
 
-printer.println("I'm Alive")
-printer.feed(6)
+
+oauth_access_token = 'xoxp-110015888069-309804068407-329406945745-d93e1c9fc5bd9563fbd7fadeb84728eb'
+bot_user_token = 'xoxb-313398944640-sMAPXxu63nJTp83vjjfnkYPI'
+
+
+
+
+# printer.println("I'm Alive")
+# printer.feed(6)
 
 
 slack_client = SlackClient(bot_user_token)
@@ -93,6 +100,15 @@ def user_id_map():
             users_map[user["id"]] = user["profile"]["display_name"]
 
     return users_map
+
+
+def make_emoji_map(emoji_map, message):
+
+    if "reactions" in message:
+        for r in message["reactions"]:
+            emoji_map[r['name']] = r["count"]
+
+    return emoji_map
 
 
 def print_channel_info(channel, users_map):
@@ -150,9 +166,7 @@ def get_messages(channel):
     return messages
 
 
-def print_image(message):
-
-    url = message["file"]["thumb_360"]
+def print_image(url):
 
     try:
         bearer = "Bearer " + oauth_access_token
@@ -206,10 +220,15 @@ def print_previous_message(messages, users_map):
     previous_message = messages[1]
     previous_message_text = messages[1]["text"]
 
+    emoji_map = {}
+    emoji_map = make_emoji_map(emoji_map, previous_message)
+
+
     if "file" in previous_message:
         print previous_message
         if previous_message["file"]["filetype"] in image_types:
-            print_image(previous_message)
+            url = previous_message["file"]["thumb_360"]
+            print_image(url)
 
     if "user" in previous_message:
         user_name = users_map[previous_message["user"]]
@@ -219,7 +238,7 @@ def print_previous_message(messages, users_map):
 
     message_parsed = parse_message(previous_message_text, users_map)
 
-    return "@" + users_map[requestor] + " asked me to print @" + user_name + " saying \"" + message_parsed + "\""
+    return ("@" + users_map[requestor] + " asked me to print @" + user_name + " saying \"" + message_parsed + "\"", emoji_map)
 
 def print_channel_history(messages, users_map):
 
@@ -246,7 +265,8 @@ def print_latest(curr, messages, users_map):
 
     if "file" in message:
         if message["file"]["filetype"] in image_types:
-            print_image(message)
+            url = message["file"]["thumb_360"]
+            print_image(url)
 
     requestor = message["user"]
 
@@ -302,7 +322,8 @@ def print_thread_helper(message, users_map):
     if "file_id" in message:
         print "HERE"
         # if message["file"]["filetype"] in image_types:
-        #     print_image(previous_message)
+              # url = previous_message["file"]["thumb_360"]
+        #     print_image(url)
 
     message_parsed = parse_message(message["text"], users_map)
 
@@ -318,10 +339,12 @@ def print_thread_op(channel, messages, users_map):
             for r in m["replies"]:
                 if r["ts"] == last_comment and r["user"] == last_user:
                     # print m
+                    emoji_map = {}
+                    emoji_map = make_emoji_map(emoji_map, m)
                     if "user" in m:
-                        return "@" + users_map[last_user] + " asked me to print the op message by @" + users_map[m["user"]] + ": " + print_thread_helper(m, users_map)
+                        return ("@" + users_map[last_user] + " asked me to print the op message by @" + users_map[m["user"]] + ": " + print_thread_helper(m, users_map), emoji_map)
                     if "bot_id" in m:
-                        return "@" + users_map[last_user] + " asked me to print the op message by @" + m["username"] + ": " + print_thread_helper(m, users_map)                    
+                        return ("@" + users_map[last_user] + " asked me to print the op message by @" + m["username"] + ": " + print_thread_helper(m, users_map), emoji_map)                    
 
     return "An error occured, are you sure you're replying to thread?"
 
@@ -335,10 +358,12 @@ def handle_print_command(command, channel, users_map):
     command_split = command.split()
     command_split = [s.lower() for s in command_split]
 
+    emoji_map = {}
+
     if len(command_split) > 1:
         if command_split[1] == "previous":
             messages = get_messages(channel)
-            response = print_previous_message(messages, users_map)
+            response, emoji_map = print_previous_message(messages, users_map)
         if command_split[1] == "channel_info":
             response = print_channel_info(channel, users_map)
         if command_split[1] == "channel_history":
@@ -352,14 +377,14 @@ def handle_print_command(command, channel, users_map):
             response = print_malte_messages(channel, users_map)
         if command_split[1] == "op":
             messages = get_messages(channel)
-            response = print_thread_op(channel, messages, users_map)
+            response, emoji_map = print_thread_op(channel, messages, users_map)
         if command_split[1] == "thread":
             messages = get_messages(channel)
             response = print_thread(channel, messages, users_map)
     else:
         response = "You need to specify what to print. Try previous, channel_info, or channel_history"
 
-    return response
+    return response, emoji_map
 
 #Currently checking for bot username - change this to use bot_id
 def handle_delete_command(messages):
@@ -394,6 +419,17 @@ def execute_print(channel, response):
             text="An error occured, could not print to spyderbot."
         )
 
+def print_emojis(channel, emoji_map):
+
+    emojis = slack_client.api_call("emoji.list", token=oauth_access_token)
+    emojis = emojis["emoji"]
+
+    for e in emoji_map:
+        for i in range(0, emoji_map[e]):
+            if e in emojis:
+                print_image(emojis[e])
+
+
 def handle_command(command, channel, users_map):
 
     ### DELETE ###
@@ -406,12 +442,15 @@ def handle_command(command, channel, users_map):
 
     response = None
     if command.startswith(PRINT_COMMAND):
-        response = handle_print_command(command, channel, users_map)
+        response, emoji_map = handle_print_command(command, channel, users_map)
     if command.startswith(DELETE_COMMAND):
         messages = get_messages(channel)
         response = handle_delete_command(messages)
 
     execute_print(channel, response)
+
+    if emoji_map is not None and len(emoji_map) > 0:
+        print_emojis(channel, emoji_map)
 
     slack_client.api_call(
         "chat.postMessage",
@@ -425,11 +464,11 @@ if __name__ == "__main__":
 
         #UNCOMMENT
 
-        print("alert")
-        easingMultiple(motionforward, .75)
-        printer.println("Spyder Bot connected and running!")
-        printer.feed(6)
-        time.sleep(1)
+        # print("alert")
+        # easingMultiple(motionforward, .75)
+        # printer.println("Spyder Bot connected and running!")
+        # printer.feed(6)
+        # time.sleep(1)
 
         print("Spyder Bot connected and running!")
 
