@@ -17,12 +17,12 @@ import time
 import math
 import numpy
 
-# from easing import *
-# from motions import *
+from easing import *
+from motions import *
 
-# x = easeInOutSine
+x = easeInOutSine
 
-# printer = Adafruit_Thermal("/dev/ttyUSB0", 19200, timeout=5)
+printer = Adafruit_Thermal("/dev/ttyUSB0", 19200, timeout=5)
 
 
 #READ ME:
@@ -38,15 +38,8 @@ bot_user_token = os.environ.get('bot_user_token')
 print bot_user_token
 
 
-
-oauth_access_token = 'xoxp-110015888069-309804068407-329406945745-d93e1c9fc5bd9563fbd7fadeb84728eb'
-bot_user_token = 'xoxb-313398944640-sMAPXxu63nJTp83vjjfnkYPI'
-
-
-
-
-# printer.println("I'm Alive")
-# printer.feed(6)
+printer.println("I'm Alive")
+printer.feed(6)
 
 
 slack_client = SlackClient(bot_user_token)
@@ -464,11 +457,11 @@ if __name__ == "__main__":
 
         #UNCOMMENT
 
-        # print("alert")
-        # easingMultiple(motionforward, .75)
-        # printer.println("Spyder Bot connected and running!")
-        # printer.feed(6)
-        # time.sleep(1)
+        print("alert")
+        easingMultiple(motionforward, .75)
+        printer.println("Spyder Bot connected and running!")
+        printer.feed(6)
+        time.sleep(1)
 
         print("Spyder Bot connected and running!")
 
