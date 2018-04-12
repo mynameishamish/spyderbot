@@ -171,7 +171,7 @@ def print_image(url):
 
         print "image ok"
         printer.printImage(resized_image)
-        printer.feed(6)
+        printer.feed(1)
     except Exception as e:
         print(e)
         slack_client.api_call(
@@ -337,7 +337,7 @@ def print_thread_op(channel, messages, users_map):
                     if "user" in m:
                         return ("@" + users_map[last_user] + " asked me to print the op message by @" + users_map[m["user"]] + ": " + print_thread_helper(m, users_map), emoji_map)
                     if "bot_id" in m:
-                        return ("@" + users_map[last_user] + " asked me to print the op message by @" + m["username"] + ": " + print_thread_helper(m, users_map), emoji_map)                    
+                        return ("@" + users_map[last_user] + " asked me to print the op message by @" + m["username"] + ": " + print_thread_helper(m, users_map), emoji_map)
 
     return "An error occured, are you sure you're replying to thread?"
 
