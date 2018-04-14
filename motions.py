@@ -34,6 +34,7 @@ import time
 import numpy
 from easing import *
 import math
+import copy
 
 import pypot.robot
 
@@ -42,17 +43,11 @@ robot = pypot.robot.from_config(spyder_config)
 x = easeInOutSine
 
 
-# Put the robot in its initial position
-for m in robot.motors: # Note that we always provide an alias for all motors.
-    m.compliant = False
-    m.moving_speed = 40
-    # m.goal_position = 0
-
 
 motionrest= [
     [robot.m1 , x, robot.m1.present_position, -4] ,
     [robot.m2 , x, robot.m2.present_position, -77] ,
-    [robot.m3 , x, robot.m3.present_position, 85]]
+    [robot.m3 , x, robot.m3.present_position, 73]]
 
 motionalert= [
     [robot.m1 , x, robot.m1.present_position, -4] ,
@@ -70,11 +65,8 @@ motionoffer= [
     [robot.m3 , x, robot.m3.present_position, 112]]
 
 
-
-
-
 def easing(motor, e_fn, final_position, duration):
-
+    motor.moving_speed=200
     t0=time.time()
     d= duration
     b= motor.present_position
@@ -85,24 +77,31 @@ def easing(motor, e_fn, final_position, duration):
         if t>=d:
             break
         pos =e_fn(t, b, c, d)
+        y= pos
         motor.goal_position=pos
-        print(motor.present_position)
+        time.sleep(0.00001)
 
-        time.sleep(0.005)
 
-def easingMultiple(motion, duration):
+def easingMultiple(motions, duration):
+    robot.m1.moving_speed = 200
+    robot.m2.moving_speed = 200
+    robot.m3.moving_speed = 200
     t0=time.time()
     d= duration
-    for m in motion:
-        m[3]= m[3]-m[2]
+    change=[m[3]-m[0].present_position for m in motions]
+    start=[int(m[0].present_position) for m in motions]
+    motion=[m[:2]+[start.pop(0)]+[change.pop(0)] for m in motions]
     while True:
         t=float(time.time()-t0)
         if t>=d:
             break
         for m in motion:
             fn= m[1]
-            pos = fn(t, m[2], m[3], d)
+            pos =fn(t, m[2], m[3], d)
+            y=pos
             m[0].goal_position=pos
+            time.sleep(0.00001)
+
 
 
 # Position definitions, just pass in moving_speed for each motor

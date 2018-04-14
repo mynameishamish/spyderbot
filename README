@@ -29,6 +29,16 @@ Base Positions
                     P1 (Right)    P2 (Forward)  P3 (Left)
 Base (m1)           -48           -4            40
 
+
+# --- #
+Motion Design
+
+motions are a list of lists containing motor, easing function, start position, final position
+ex:
+motionrest= [
+    [robot.m1 , x, robot.m1.present_position, -4] ,
+    [robot.m2 , x, robot.m2.present_position, -77] ,
+    [robot.m3 , x, robot.m3.present_position, 85]]
 # --- #
 
 CURRENT STATUS:
