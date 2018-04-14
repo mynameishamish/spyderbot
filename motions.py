@@ -43,6 +43,15 @@ robot = pypot.robot.from_config(spyder_config)
 x = easeInOutSine
 
 
+<<<<<<< HEAD
+=======
+# Put the robot in its initial position
+for m in robot.motors: # Note that we always provide an alias for all motors.
+    m.compliant = False
+    m.moving_speed = 80
+    # m.goal_position = 0
+
+>>>>>>> 81c34ec6921d54c383bf5cd32c8bed6a1b16a84e
 
 motionrest= [
     [robot.m1 , x, robot.m1.present_position, -4] ,
@@ -79,8 +88,13 @@ def easing(motor, e_fn, final_position, duration):
         pos =e_fn(t, b, c, d)
         y= pos
         motor.goal_position=pos
+<<<<<<< HEAD
         time.sleep(0.00001)
 
+=======
+        print(motor.present_position)
+        time.sleep(0.1)
+>>>>>>> 81c34ec6921d54c383bf5cd32c8bed6a1b16a84e
 
 def easingMultiple(motions, duration):
     robot.m1.moving_speed = 200
@@ -156,5 +170,3 @@ def blocking(m1, m2, m3, m1speed=30, m2speed=30, m3speed=30):
     robot.m2.goal_position = m2
     robot.m3.goal_position = m3
     time.sleep(2)
-
-
