@@ -32,6 +32,7 @@ spyder_config = {
 }
 import time
 import numpy
+import easing
 import pypot.robot
 
 amp = 30
