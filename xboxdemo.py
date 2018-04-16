@@ -46,11 +46,11 @@ def fmtFloat(n):
     return '{:6.3f}'.format(n)
     
 joy = xbox.Joystick()
-print(joy.Back())
 flag= False
 control=False
 
 print "Xbox controller demo: Press Back button to exit"
+print("Press start to take control")
 while not flag:
     while control:
 
