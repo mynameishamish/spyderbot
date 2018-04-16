@@ -14,8 +14,8 @@ for m in robot.motors: # Note that we always provide an alias for all motors.
     m.compliant = False
     m.set_moving_speed = 10
 robot.m1.moving_speed = 200
-robot.m2.moving_speed = 30
-robot.m3.moving_speed = 30
+robot.m2.moving_speed = 40
+robot.m3.moving_speed = 40
 
 print("starting")
 
@@ -65,14 +65,14 @@ while not flag:
 	    
 	    if joy.Start():
 	    	control=False
-	    	time.sleep(.2)
+	    	time.sleep(.4)
 	    	print("control= False")
 
     if joy.Back():
         flag=True
     if joy.Start():
         control=True
-        time.sleep(.2)
+        time.sleep(.4)
     	print("control= True")			
 
 # Close out when done
