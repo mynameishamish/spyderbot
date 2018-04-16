@@ -422,6 +422,13 @@ def print_thread(channel, messages, users_map):
 
     return "An error occured, sorry!"
 
+def print_image_from_comment(channel, messages):
+
+    if "comment" in messages[0]:
+        url = messages[0]["file"]["thumb_360"]
+        print_image(url)
+    else:
+        return "An error occured, are you sure you're commenting on a file?"
 
 def handle_print_command(command, channel, users_map):
     command_split = command.split()
@@ -450,6 +457,9 @@ def handle_print_command(command, channel, users_map):
         elif command_split[1] == "thread":
             messages = get_messages(channel)
             response = print_thread(channel, messages, users_map)
+        elif command_split[1] == "image":
+            messages = get_messages(channel)
+            response = print_image_from_comment(channel, messages)
         else:
             response = "That print command does not exist currently. Try previous, channel_info, or channel_history."
 
