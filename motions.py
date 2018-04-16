@@ -106,7 +106,7 @@ def easingMultiple(motions, duration):
 
 # Position definitions, just pass in moving_speed for each motor
 
-def resting(z, x, c):
+def resting(z=30, x=30, c=30):
     robot.m1.moving_speed = z
     robot.m2.moving_speed = x
     robot.m3.moving_speed = c
@@ -118,7 +118,7 @@ def resting(z, x, c):
     # printer.println("Rest")
     # printer.feed(3)
 
-def alert(z, x, c):
+def alert(z=30, x=30, c=30):
     robot.m1.moving_speed = z
     robot.m2.moving_speed = x
     robot.m3.moving_speed = c
@@ -128,7 +128,7 @@ def alert(z, x, c):
     print("Alert")
     time.sleep(2)
 
-def forward(z, x, c):
+def forward(z=30, x=30, c=30):
     robot.m1.moving_speed = z
     robot.m2.moving_speed = x
     robot.m3.moving_speed = c
@@ -148,7 +148,7 @@ def offer(z, x, c):
     print("Offer")
     time.sleep(2)
 
-def blocking(m1, m2, m3, m1speed=30, m2speed=30, m3speed=30):
+def blocking(m1=robot.m1.present_position, m2=robot.m1.present_position, m3=robot.m1.present_position, m1speed=30, m2speed=30, m3speed=30):
     robot.m1.moving_speed = m1speed
     robot.m2.moving_speed = m2speed
     robot.m3.moving_speed = m3speed
@@ -156,14 +156,60 @@ def blocking(m1, m2, m3, m1speed=30, m2speed=30, m3speed=30):
     robot.m2.goal_position = m2
     robot.m3.goal_position = m3
     time.sleep(2)
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> parent of 899f758... movearound testing
-=======
->>>>>>> parent of 899f758... movearound testing
+
+def concur():
+    nodup=[
+    [robot.m2, easeInQuart, robot.m2.present_position, -55],
+    [robot.m3, easeInQuart, robot.m3.present_position, 140]
+    ]
+
+    noddown1=[
+    [robot.m2, easeInQuart, robot.m2.present_position, -65],
+    [robot.m3, easeInQuart, robot.m3.present_position, 135]
+    ]
+
+    print("down")
+    easingMultiple(noddown1, 1)
+    # time.sleep(.05)
+    print("up")
+    easingMultiple(nodup, 1 )
+
+def nod():
+    nodup=[
+    [robot.m3, easeInQuart, robot.m3.present_position, 25]
+    ]
+
+    noddown1=[
+    [robot.m3, easeInQuart, robot.m3.present_position, 15]
+    ]
+
+    print("down")
+    easingMultiple(noddown1, 1.5)
+    # time.sleep(.05)
+    print("up")
+    easingMultiple(nodup,1.5)
+
+def limp():
+    print("returning home")
+    easingMultiple(motionrest, 1)
+    time.sleep(2)
+    print("compliant")
+
+    for m in robot.motors: 
+        m.compliant = True
+        m.set_moving_speed = 200
+    time.sleep(2)
+
+def livly():
+    print("returning home")
+    easingMultiple(motionrest, 1)
+    time.sleep(2)
+    print("not compliant")
+
+    for m in robot.motors:
+        m.compliant = False
+        m.set_moving_speed = 200
+    time.sleep(2)
 
 
->>>>>>> parent of 899f758... movearound testing
+
