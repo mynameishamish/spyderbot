@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 spyder_config = {
     'controllers': {
         'my_dxl_controller': {
@@ -158,6 +156,3 @@ def blocking(m1, m2, m3, m1speed=30, m2speed=30, m3speed=30):
     robot.m2.goal_position = m2
     robot.m3.goal_position = m3
     time.sleep(2)
-
-
->>>>>>> parent of 899f758... movearound testing
