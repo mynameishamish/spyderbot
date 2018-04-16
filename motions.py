@@ -158,7 +158,10 @@ def blocking(m1, m2, m3, m1speed=30, m2speed=30, m3speed=30):
     time.sleep(2)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of 899f758... movearound testing
 =======
 >>>>>>> parent of 899f758... movearound testing
 
