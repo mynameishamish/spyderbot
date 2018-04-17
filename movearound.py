@@ -16,10 +16,10 @@ for m in robot.motors: # Note that we always provide an alias for all motors.
     m.compliant = False
     m.set_moving_speed = 200
 
-resting()
-limp()
-livly()
-resting()
+# resting()
+# limp()
+# livly()
+# resting()
 # concur()
 
 
