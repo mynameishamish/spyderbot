@@ -30,7 +30,7 @@ printer = Adafruit_Thermal("/dev/ttyUSB0", 19200, timeout=5)
 #Install PIL (pip install Pillow)
 
 #TODO:
-#Investigate threads - In process
+#Find emoji to url map
 
 oauth_access_token = os.environ.get('oauth_access_token')
 print oauth_access_token
@@ -60,7 +60,6 @@ def parse_bot_commands(slack_events):
             if user_id == spyderbot_id:
                 return message, event["channel"]
         elif "comment" in event and "type" in event:
-            print "COMMENT"
             if event["type"] == "message":
                 user_id, message = parse_direct_mention(event["comment"]["comment"])
                 if user_id == spyderbot_id:
@@ -205,13 +204,27 @@ def print_previous_message(messages, users_map):
     if messages == None:
         return "An error occured, sorry!"
 
-    #the requestor is the user who asked to "print previous"
-    #always a user never a bot
-    requestor = messages[0]["user"]
+    #The command was part of a comment on a file (currently only images are implemented)
+    if "comment" in messages[0]:
+        file_id = messages[0]["file"]["id"]
+        file_info = slack_client.api_call(
+          "files.info",
+          token=oauth_access_token,
+          file=file_id,
+        )
+        comments = list(reversed(file_info["comments"]))
+        print comments
+        previous_message = comments[1]
+        previous_message_text = comments[1]["comment"]
+        requestor = comments[0]["user"]
+    else:
+        #the requestor is the user who asked to "print previous"
+        #always a user never a bot
+        requestor = messages[0]["user"]
 
-    #The "previous" message is located at index 1 because the message at index 0 asks to print
-    previous_message = messages[1]
-    previous_message_text = messages[1]["text"]
+        #The "previous" message is located at index 1 because the message at index 0 asks to print
+        previous_message = messages[1]
+        previous_message_text = messages[1]["text"]
 
     emoji_map = {}
     emoji_map = make_emoji_map(emoji_map, previous_message)
@@ -256,12 +269,16 @@ def print_latest(curr, messages, users_map):
 
     message = messages[0]
 
-    if "file" in message:
-        if message["file"]["filetype"] in image_types:
-            url = message["file"]["thumb_360"]
-            print_image(url)
+    #Is a comment on a file (only images implemented currently)
+    if "comment" in message:
+        requestor = message["comment"]["user"]
+    else:
+        # if "file" in message:
+        #     if message["file"]["filetype"] in image_types:
+        #         url = message["file"]["thumb_360"]
+        #         print_image(url)
 
-    requestor = message["user"]
+        requestor = message["user"]
 
     response = "@" + users_map[requestor] + " asked me to print \"" + curr + "\""
 
@@ -305,27 +322,35 @@ def print_malte_messages(channel, users_map):
         return "No messages for Malte today."
 
 
-def print_thread_helper(message, users_map):
+# def print_thread_helper(message, users_map):
 
-    print message
+#     print message
 
-    ##TODO##
-    #Images not printing because the "print op" comment is not message[0]
+#     ##TODO##
+#     #Images not printing because the "print op" comment is not message[0]
 
-    if "file_id" in message:
-        print "HERE"
-        # if message["file"]["filetype"] in image_types:
-              # url = previous_message["file"]["thumb_360"]
-        #     print_image(url)
+#     if "file_id" in message:
+#         print "HERE"
+#         # if message["file"]["filetype"] in image_types:
+#               # url = previous_message["file"]["thumb_360"]
+#         #     print_image(url)
 
-    message_parsed = parse_message(message["text"], users_map)
+#     message_parsed = parse_message(message["text"], users_map)
 
-    return message_parsed
+#     return message_parsed
 
 def print_thread_op(channel, messages, users_map):
 
-    last_comment = messages[0]["ts"]
-    last_user = messages[0]["user"]
+    #Currently only works when commenting on image files
+    if "comment" in messages[0]:
+        # last_comment = messages[0]["ts"]
+        last_user = messages[0]["comment"]["user"]
+        url = messages[0]["file"]["thumb_360"]
+        print_image(url)
+        return ("@" + users_map[last_user] + " asked me to print the file they commented on.", {}) 
+    else:
+        last_comment = messages[0]["ts"]
+        last_user = messages[0]["user"]
 
     for m in messages:
         if "replies" in m:
@@ -334,18 +359,76 @@ def print_thread_op(channel, messages, users_map):
                     # print m
                     emoji_map = {}
                     emoji_map = make_emoji_map(emoji_map, m)
+                    message_parsed = parse_message(m["text"], users_map)
                     if "user" in m:
-                        return ("@" + users_map[last_user] + " asked me to print the op message by @" + users_map[m["user"]] + ": " + print_thread_helper(m, users_map), emoji_map)
+                        return ("@" + users_map[last_user] + " asked me to print the op message by @" + users_map[m["user"]] + ": " + message_parsed, emoji_map)
                     if "bot_id" in m:
-                        return ("@" + users_map[last_user] + " asked me to print the op message by @" + m["username"] + ": " + print_thread_helper(m, users_map), emoji_map)
+                        return ("@" + users_map[last_user] + " asked me to print the op message by @" + m["username"] + ": " + message_parsed, emoji_map)
 
     return "An error occured, are you sure you're replying to thread?"
 
 
 def print_thread(channel, messages, users_map):
 
-    return "TODO: print thread"
+    response = ""
 
+    if "comment" in messages[0]:
+        requestor = messages[0]["comment"]["user"]
+        file_id = messages[0]["file"]["id"]
+        url = messages[0]["file"]["thumb_360"]
+        print_image(url)
+        file_info = slack_client.api_call(
+          "files.info",
+          token=oauth_access_token,
+          file=file_id,
+        )
+        comments = file_info["comments"]
+
+        for c in comments:
+            parsed_message = parse_message(c["comment"], users_map)
+            response += "@" + users_map[c["user"]] + ": " + parsed_message + "\n"
+
+        return response
+
+    elif "thread_ts" in messages[0]:
+
+        thread_ts = messages[0]["thread_ts"]
+
+        for m in messages:
+            if thread_ts == m["ts"]:
+                op = m
+                replies_list = m["replies"]
+
+        parsed_op_message = parse_message(op["text"], users_map)
+
+        if "user" in op:
+            user = users_map[op["user"]]
+        if "username" in op:
+            user = op["username"]
+
+        response += "@" + user + ": " + parsed_op_message + "\n"
+
+        for r in replies_list:
+            r_user = r["user"]
+            r_ts = r["ts"]
+            for m in messages:
+                if "user" in m and m["user"] == r_user and m["ts"] == r_ts:
+                    parsed_message = parse_message(m["text"], users_map)
+                    response += "@" + users_map[m["user"]] + ": " + parsed_message + "\n"
+
+        return response
+    else:
+        return "An error occured, are you sure you're replying to thread?"
+
+    return "An error occured, sorry!"
+
+def print_image_from_comment(channel, messages):
+
+    if "comment" in messages[0]:
+        url = messages[0]["file"]["thumb_360"]
+        print_image(url)
+    else:
+        return "An error occured, are you sure you're commenting on a file?"
 
 def handle_print_command(command, channel, users_map):
     command_split = command.split()
@@ -357,25 +440,31 @@ def handle_print_command(command, channel, users_map):
         if command_split[1] == "previous":
             messages = get_messages(channel)
             response, emoji_map = print_previous_message(messages, users_map)
-        if command_split[1] == "channel_info":
+        elif command_split[1] == "channel_info":
             response = print_channel_info(channel, users_map)
-        if command_split[1] == "channel_history":
+        elif command_split[1] == "channel_history":
             messages = get_messages(channel)
             response = print_channel_history(messages, users_map)
-        if command_split[1] == "this:":
+        elif command_split[1] == "this:":
             messages = get_messages(channel)
             response = print_latest(" ".join(command_split[2:]), messages, users_map)
         #command example: "Print messages for malte"
-        if "malte" in command_split:
+        elif "malte" in command_split:
             response = print_malte_messages(channel, users_map)
-        if command_split[1] == "op":
+        elif command_split[1] == "op":
             messages = get_messages(channel)
             response, emoji_map = print_thread_op(channel, messages, users_map)
-        if command_split[1] == "thread":
+        elif command_split[1] == "thread":
             messages = get_messages(channel)
             response = print_thread(channel, messages, users_map)
+        elif command_split[1] == "image":
+            messages = get_messages(channel)
+            response = print_image_from_comment(channel, messages)
+        else:
+            response = "That print command does not exist currently. Try previous, channel_info, or channel_history."
+
     else:
-        response = "You need to specify what to print. Try previous, channel_info, or channel_history"
+        response = "You need to specify what to print. Try previous, channel_info, or channel_history."
 
     return response, emoji_map
 
