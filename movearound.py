@@ -41,19 +41,19 @@ for m in robot.motors: # Note that we always provide an alias for all motors.
 
 
 print("forward")
-easingMultiple(motionforward, .3)
+easingMultiple(motionforward, .7)
 time.sleep(1)
 
 print("returning home")
-easingMultiple(motionrest, .3)
+easingMultiple(motionrest, .7)
 time.sleep(2)
 
 print("forward")
-easingMultiple(motionforward, .5)
+easingMultiple(motionforward, 1)
 time.sleep(2)
 
 print("returning home")
-easingMultiple(motionrest, .5)
+easingMultiple(motionrest, .8)
 time.sleep(2)
 
 print("done")
