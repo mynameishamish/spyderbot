@@ -35,13 +35,35 @@ import numpy
 from easing import *
 import math
 import copy
-
+import pypot
 import pypot.robot
+from pypot.dynamixel.error import DxlErrorHandler
 
 robot = pypot.robot.from_config(spyder_config)
 
 x = easeInOutSine
 
+class ErrorHandlr(DxlErrorHandler):
+
+    def handle_overheating_error(self, instruction_packet):
+        print("motors are overheating")
+        print("going to limp rest")
+        rest()
+        limp()
+
+        while True:
+            inp=raw_input("for current temps press t and hit enter \nto re-engage motors type m:")
+            if inp=="t":
+                print([(m.name, m.present_temperature) for m in robot.motors])
+            if inp=="m":
+                print("re-engageing motors")
+                livly()
+            else:
+                print("invalid input")
+
+# err=ErrorHandlr()
+
+        # raise NotImplementedError
 
 
 motionrest= [
@@ -138,7 +160,7 @@ def forward(z=30, x=30, c=30):
     print("Forward")
     time.sleep(2)
 
-def offer(z, x, c):
+def offer(z=30, x=30, c=30):
     robot.m1.moving_speed = z
     robot.m2.moving_speed = x
     robot.m3.moving_speed = c
