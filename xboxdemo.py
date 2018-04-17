@@ -7,7 +7,6 @@ from motions import *
 from Adafruit_Thermal import *
 import xbox
 
-err=ErrorHandlr()
 # printer = Adafruit_Thermal("/dev/ttyUSB0", 19200, timeout=5)
 
 speed=300
@@ -16,8 +15,8 @@ for m in robot.motors: # Note that we always provide an alias for all motors.
     m.compliant = False
     m.set_moving_speed = 10
 robot.m1.moving_speed = 200
-robot.m2.moving_speed = 75
-robot.m3.moving_speed = 155
+robot.m2.moving_speed = 40
+robot.m3.moving_speed = 40
 
 print("starting")
 
@@ -38,30 +37,11 @@ def remapHead(inp):
 	if inp<=0:
 		return remap(inp,-1,0,83,100)
 	else:
-		return remap(inp, 0,1,100,139)
+		return remap(inp, 0,1,100,149)
 
 def remapBase(inp):
 	return remap(inp, -1, 1, -48, 40)
 
-# Format floating point number to string format -x.xxx
-def fmtFloat(n):
-    return '{:6.3f}'.format(n)
-
-def overheating():
-    print("motors are overheating")
-    print("going to limp rest")
-    resting()
-    limp()
-
-    while True:
-        inp=raw_input("for current temps press t and hit enter \nto re-engage motors type m:")
-        if inp=="t":
-            print([(m.name, m.present_temperature) for m in robot.motors])
-        if inp=="m":
-            print("re-engageing motors")
-            livly()
-        else:
-            print("invalid input")
 
 joy = xbox.Joystick()
 flag= False
@@ -72,11 +52,9 @@ print("Press start to take control")
 
 while not flag:
     while control:
-
 	    robot.m2.goal_position= remapNeck(joy.rightY())
 	    robot.m3.goal_position = remapHead(joy.leftY())
-	    if max([m.present_temperature for m in robot.motors])>=72:
-	    	overheating()
+	    overheating()
 
 	    if joy.rightTrigger() and robot.m1.present_position>-48:
 	    	robot.m1.moving_speed=speed**2 *joy.rightTrigger()
@@ -91,6 +69,7 @@ while not flag:
 	    	robot.m2.moving_speed = 200
 	    	robot.m3.moving_speed=200
 	    	easingMultiple(motionoffer, 2)
+	    	time.sleep(5)
 	    	robot.m3.moving_speed=40
 	    	robot.m2.moving_speed = 40
 	    if joy.Start():
@@ -101,12 +80,13 @@ while not flag:
 
 	# if max([m.present_temperature for m in robot.motors])>=72:
 	# 	overheating()
+    overheating()
     if joy.Back():
         flag=True
     if joy.Start():
         control=True
         time.sleep(.4)
     	print("control= True")			
-
+resting()
 # Close out when done
 joy.close()
