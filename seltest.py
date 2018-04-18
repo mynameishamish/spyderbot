@@ -31,22 +31,35 @@
 import subprocess
 import time
 import threading
-import sys
+import os
 
 import subprocess
 import time
-p = subprocess.Popen(
-['DISPLAY=:0 chromium-browser tv.giphy.com/whatever'])
-p.communicate()
+# p = subprocess.Popen(
+# ['DISPLAY=:0 chromium-browser tv.giphy.com/whatever'])
+# p.communicate()
 
-time.sleep(1)
-print (p.pid)
-p.kill()
+# time.sleep(1)
+# print (p.pid)
+# p.kill()
 
-def display():
-	os.system("DISPLAY=:0 chromium-browser tv.giphy.com/whatever")
+def display(topic):
+	os.system("pkill chromium")
+	string="DISPLAY=:0 chromium-browser --kiosk tv.giphy.com/"+topic+" &"
+	os.system(string)
+	time.sleep(10)
+
+
+def display2():
+	os.system("DISPLAY=:0 chromium-browser --kiosk https://isitchristmas.com/ &")
 	time.sleep(2)
-	sys.exit()
-# display()
-# print("hello you")
+	
+
+
+display("cat")
+time.sleep(12)
+# os.system("pkill chromium")
+display("dog")
+
+# display("fish")
 

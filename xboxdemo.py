@@ -1,6 +1,7 @@
 import time
 import math
 import numpy
+import os
 
 from easing import *
 from motions import *
@@ -41,7 +42,11 @@ def remapHead(inp):
 
 def remapBase(inp):
 	return remap(inp, -1, 1, -48, 40)
-
+def display(topic):
+	os.system("pkill chromium")
+	string="DISPLAY=:0 chromium-browser --kiosk tv.giphy.com/"+topic+" &"
+	os.system(string)
+	time.sleep(6)
 
 joy = xbox.Joystick()
 flag= False
@@ -65,13 +70,26 @@ while not flag:
 	    	robot.m1.goal_position= robot.m1.present_position+4
 	    time.sleep(.0001)
 	    
-	    if joy.A(): 
+	    if joy.A():
+	    	display("cat")
+	    	robot.m2.moving_speed = 200
+	    	robot.m3.moving_speed=200
+	    	easingMultiple(motionoffer, 2)
+	    	time.sleep(7)
+	    	robot.m3.moving_speed=40
+	    	robot.m2.moving_speed = 40
+	    
+
+	    if joy.B(): 
+	    	display("dog")
 	    	robot.m2.moving_speed = 200
 	    	robot.m3.moving_speed=200
 	    	easingMultiple(motionoffer, 2)
 	    	time.sleep(5)
 	    	robot.m3.moving_speed=40
 	    	robot.m2.moving_speed = 40
+
+
 	    if joy.Start():
 	    	control=False
 	    	time.sleep(.4)
