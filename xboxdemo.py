@@ -47,7 +47,7 @@ def display(topic):
 	os.system("pkill chromium")
 	string="DISPLAY=:0 chromium-browser --kiosk tv.giphy.com/"+topic+" &"
 	os.system(string)
-	time.sleep(6)
+	time.sleep(10)
 
 joy = xbox.Joystick()
 flag= False
