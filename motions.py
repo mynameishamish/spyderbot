@@ -37,6 +37,7 @@ import math
 import copy
 import pypot
 import pypot.robot
+import runmotion
 robot = pypot.robot.from_config(spyder_config)
 
 

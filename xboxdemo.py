@@ -7,8 +7,9 @@ from easing import *
 from motions import *
 from Adafruit_Thermal import *
 import xbox
+from runmotion import *
 
-# printer = Adafruit_Thermal("/dev/ttyUSB0", 19200, timeout=5)
+printer = Adafruit_Thermal("/dev/ttyUSB0", 19200, timeout=5)
 
 speed=300
 
@@ -71,7 +72,9 @@ while not flag:
 	    time.sleep(.0001)
 	    
 	    if joy.A():
-	    	display("cat")
+	    	# display("cat")
+	    	printer.println("HEYOOOOOO")
+	    	printer.feed(2)
 	    	robot.m2.moving_speed = 200
 	    	robot.m3.moving_speed=200
 	    	easingMultiple(motionoffer, 2)
@@ -81,10 +84,29 @@ while not flag:
 	    
 
 	    if joy.B(): 
-	    	display("dog")
+	    	# display("dog")
 	    	robot.m2.moving_speed = 200
 	    	robot.m3.moving_speed=200
-	    	easingMultiple(motionoffer, 2)
+	    	easingMultiple(turnaway, 1.5)
+	    	time.sleep(5)
+	    	robot.m3.moving_speed=40
+	    	robot.m2.moving_speed = 40
+	    	printer.println("HEYOOOOOO")
+	    	printer.feed(2)
+	    
+	    if joy.X(): 
+	    	# display("dog")
+	    	robot.m2.moving_speed = 200
+	    	robot.m3.moving_speed=200
+	    	easingMultiple(musicup, 1.5)
+	    	time.sleep(5)
+	    	robot.m3.moving_speed=40
+	    	robot.m2.moving_speed = 40
+	    if joy.Y(): 
+	    	# display("dog")
+	    	robot.m2.moving_speed = 200
+	    	robot.m3.moving_speed=200
+	    	easingMultiple(turnaway, 1.5)
 	    	time.sleep(5)
 	    	robot.m3.moving_speed=40
 	    	robot.m2.moving_speed = 40
