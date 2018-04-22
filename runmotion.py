@@ -1,4 +1,5 @@
 
+# everything beside dance has been fix. Won't cause moter over heated right now. Dance will be updated soon. 
 import time
 import math
 import numpy
@@ -31,17 +32,17 @@ motionalert= [
 motionforward= [
     [robot.m1 , x, robot.m1.present_position, -4] ,
     [robot.m2 , x, robot.m2.present_position, -45] ,
-    [robot.m3 , x, robot.m3.present_position, 149]]
+    [robot.m3 , x, robot.m3.present_position, 140]]
 
 motionoffer= [
     [robot.m1 , x, robot.m1.present_position, -4] ,
-    [robot.m2 , x, robot.m2.present_position, -20] ,
+    [robot.m2 , x, robot.m2.present_position, -15] ,
     [robot.m3 , x, robot.m3.present_position, 112]]
 
 
 motionofferNew= [
     [robot.m1 , x, robot.m1.present_position, -4] ,
-    [robot.m2 , y, robot.m2.present_position, -15] ,
+    [robot.m2 , y, robot.m2.present_position, -45] ,
     [robot.m3 , y, robot.m3.present_position, 110]]
 
 motionNodup = [
@@ -53,30 +54,30 @@ motionNoddown = [
 motionAfteroffer = [
     # [robot.m1 , x, robot.m1.present_position, robot.m1.present_position] ,
     [robot.m2 , y, robot.m2.present_position, -60] ,
-    [robot.m3 , y, robot.m3.present_position, 135]]
+    [robot.m3 , y, robot.m3.present_position, 130]]
 
 midpos = [
     [robot.m1 , x, robot.m1.present_position, -4] ,
     [robot.m2 , x, robot.m2.present_position, -65] ,
-    [robot.m3 , x, robot.m3.present_position, 135]
+    [robot.m3 , x, robot.m3.present_position, 130]
 ]
 
 turnaway = [
-    [robot.m1 , x, robot.m1.present_position, 57.33] ,
-    [robot.m2 , x, robot.m2.present_position, -32.4] ,
-    [robot.m3 , x, robot.m3.present_position, 103.42]
+    [robot.m1 , x, robot.m1.present_position, 57.5] ,
+    [robot.m2 , x, robot.m2.present_position, -32.5] ,
+    [robot.m3 , x, robot.m3.present_position, 103.5]
 ]
 
 listen = [
     [robot.m1 , x, robot.m1.present_position, -4] ,
-    [robot.m2 , x, robot.m2.present_position, -84.9] ,
-    [robot.m3 , x, robot.m3.present_position, 107.18]
+    [robot.m2 , x, robot.m2.present_position, -75] ,
+    [robot.m3 , x, robot.m3.present_position, 107]
 ]
 
 strench  = [
     [robot.m1 , x, robot.m1.present_position, -4] ,
     [robot.m2 , s, robot.m2.present_position, -57] ,
-    [robot.m3 , x, robot.m3.present_position, 146]
+    [robot.m3 , x, robot.m3.present_position, 140]
 ]
 
 look = [
@@ -87,7 +88,7 @@ look = [
 
 read = [
     [robot.m1 , x, robot.m1.present_position, -4] ,
-    [robot.m2 , x, robot.m2.present_position, -27] ,
+    [robot.m2 , x, robot.m2.present_position, -35] ,
     [robot.m3 , x, robot.m3.present_position, 114]
 ]
 
@@ -108,7 +109,7 @@ time.sleep(2)
 
 #run motions!
 while True: 
-    print('Choose a motion: ')
+    print('Choose a motion:')
     command = input()
     if command == "offer":
         print("offer")
