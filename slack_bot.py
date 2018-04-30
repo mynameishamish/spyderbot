@@ -25,12 +25,10 @@ x = easeInOutSine
 printer = Adafruit_Thermal("/dev/ttyUSB0", 19200, timeout=5)
 
 
-#READ ME:
-#Install SlackClient to run this code (pip install SlackClient)
-#Install PIL (pip install Pillow)
+# Installations:
+# Install SlackClient to run this code (pip install SlackClient)
+# Install PIL (pip install Pillow)
 
-#TODO:
-#Find emoji to url map
 
 oauth_access_token = os.environ.get('oauth_access_token')
 print oauth_access_token
@@ -273,11 +271,6 @@ def print_latest(curr, messages, users_map):
     if "comment" in message:
         requestor = message["comment"]["user"]
     else:
-        # if "file" in message:
-        #     if message["file"]["filetype"] in image_types:
-        #         url = message["file"]["thumb_360"]
-        #         print_image(url)
-
         requestor = message["user"]
 
     response = "@" + users_map[requestor] + " asked me to print \"" + curr + "\""
@@ -321,23 +314,6 @@ def print_malte_messages(channel, users_map):
     else:
         return "No messages for Malte today."
 
-
-# def print_thread_helper(message, users_map):
-
-#     print message
-
-#     ##TODO##
-#     #Images not printing because the "print op" comment is not message[0]
-
-#     if "file_id" in message:
-#         print "HERE"
-#         # if message["file"]["filetype"] in image_types:
-#               # url = previous_message["file"]["thumb_360"]
-#         #     print_image(url)
-
-#     message_parsed = parse_message(message["text"], users_map)
-
-#     return message_parsed
 
 def print_thread_op(channel, messages, users_map):
 
@@ -489,8 +465,6 @@ def handle_delete_command(messages):
 
 def execute_print(channel, response):
 
-    #First argument depends on type of system: Linux, Windows, etc.
-
     try:
         printer.println(response)
         printer.feed(6)
@@ -514,18 +488,13 @@ def print_emojis(channel, emoji_map):
 
 def handle_command(command, channel, users_map):
 
-    ### DELETE ###
-    # print "here"
-    # messages = get_messages(channel)
-    # for m in reversed(messages):
-    #     print m
-
     default_response = "Something went wrong, check exception traceback."
 
     response = None
     if command.startswith(PRINT_COMMAND):
         response, emoji_map = handle_print_command(command, channel, users_map)
     if command.startswith(DELETE_COMMAND):
+        emoji_map = None
         messages = get_messages(channel)
         response = handle_delete_command(messages)
 
@@ -543,8 +512,6 @@ def handle_command(command, channel, users_map):
 if __name__ == "__main__":
     print(slack_client.rtm_connect)
     if slack_client.rtm_connect(with_team_state = False):
-
-        #UNCOMMENT
 
         print("alert")
         easingMultiple(motionforward, .75)
