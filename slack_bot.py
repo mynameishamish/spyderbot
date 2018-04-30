@@ -20,6 +20,9 @@ import numpy
 from easing import *
 from motions import *
 
+# Spyderbot SlackBot Overview Document: 
+# https://docs.google.com/document/d/1N1E67esbNr0NOWolGILMVZsoaNzZkR5SdYvEn0Aec2U/edit?usp=sharing
+
 # Installations required to run this code:
 # Install SlackClient (pip install SlackClient)
 # Install PIL (pip install Pillow)
@@ -42,7 +45,6 @@ from motions import *
 #   Example command: @spyderbotpython print this: hello
 #           Returns @spyderbotpython: @{user} asked me to print "hello"
 #           Which will be printed on the printer attached to spyderbot
-
 
 x = easeInOutSine
 
