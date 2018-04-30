@@ -16,10 +16,10 @@ for m in robot.motors: # Note that we always provide an alias for all motors.
     m.compliant = False
     m.set_moving_speed = 200
 
-resting()
-limp()
-livly()
-resting()
+# resting()
+# limp()
+# livly()
+# resting()
 # concur()
 
 
@@ -40,20 +40,20 @@ resting()
 # # easingMultiple(motionalert, 1)
 
 
-# print("forward")
-# easingMultiple(motionforward, .3)
-# time.sleep(1)
+print("forward")
+easingMultiple(motionforward, .7)
+time.sleep(1)
 
-# print("returning home")
-# easingMultiple(motionrest, .3)
-# time.sleep(2)
+print("returning home")
+easingMultiple(motionrest, .7)
+time.sleep(2)
 
-# print("forward")
-# easingMultiple(motionforward, .5)
-# time.sleep(2)
+print("forward")
+easingMultiple(motionforward, 1)
+time.sleep(2)
 
-# print("returning home")
-# easingMultiple(motionrest, .5)
-# time.sleep(2)
+print("returning home")
+easingMultiple(motionrest, .8)
+time.sleep(2)
 
 print("done")

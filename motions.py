@@ -35,13 +35,18 @@ import numpy
 from easing import *
 import math
 import copy
-
+import pypot
 import pypot.robot
-
+import runmotion
 robot = pypot.robot.from_config(spyder_config)
+
+
+
+
 
 x = easeInOutSine
 
+        # raise NotImplementedError
 
 
 motionrest= [
@@ -60,10 +65,34 @@ motionforward= [
     [robot.m3 , x, robot.m3.present_position, 149]]
 
 motionoffer= [
-    [robot.m1 , x, robot.m1.present_position, -4] ,
+    # [robot.m1 , x, robot.m1.present_position, -4] ,
     [robot.m2 , x, robot.m2.present_position, -26] ,
     [robot.m3 , x, robot.m3.present_position, 112]]
 
+
+
+def overheating():
+    speeds=[]
+    motors=robot.motors
+    if max([m.present_temperature for m in motors])>=71:
+        speeds=[m.present_speed for m in motors]
+
+
+        print("motors are overheating")
+        print("going to limp rest")
+        resting()
+        limp()
+
+        while True:
+            inp=raw_input("for current temps press t and hit enter \nto re-engage motors type m:")
+            if inp=="t":
+                print([(m.name, m.present_temperature) for m in motors])
+            if inp=="m":
+                print("re-engageing motors")
+                livly(speeds)
+                break
+            else:
+                print("invalid input")
 
 def easing(motor, e_fn, final_position, duration):
     motor.moving_speed=200
@@ -138,7 +167,7 @@ def forward(z=30, x=30, c=30):
     print("Forward")
     time.sleep(2)
 
-def offer(z, x, c):
+def offer(z=30, x=30, c=30):
     robot.m1.moving_speed = z
     robot.m2.moving_speed = x
     robot.m3.moving_speed = c
@@ -197,18 +226,17 @@ def limp():
 
     for m in robot.motors: 
         m.compliant = True
-        m.set_moving_speed = 200
-    time.sleep(2)
+    time.sleep(1)
 
-def livly():
+def livly(speeds):
     print("returning home")
     easingMultiple(motionrest, 1)
     time.sleep(2)
     print("not compliant")
 
-    for m in robot.motors:
+    for m, s in zip(robot.motors, speeds):
         m.compliant = False
-        m.set_moving_speed = 200
+        m.set_moving_speed = s
     time.sleep(2)
 
 
