@@ -7,7 +7,6 @@ from easing import *
 from motions import *
 from Adafruit_Thermal import *
 import xbox
-from runmotion import *
 
 printer = Adafruit_Thermal("/dev/ttyUSB0", 19200, timeout=5)
 
@@ -45,9 +44,12 @@ def remapBase(inp):
 	return remap(inp, -1, 1, -48, 40)
 def display(topic):
 	os.system("pkill chromium")
-	string="DISPLAY=:0 chromium-browser --kiosk tv.giphy.com/"+topic+" &"
+	string="DISPLAY=:0 chromium-browser --kiosk --disable-infobars tv.giphy.com/"+topic+" &"
 	os.system(string)
-	time.sleep(10)
+display("cat")
+time.sleep(4)
+display("dog")
+
 
 joy = xbox.Joystick()
 flag= False
@@ -72,44 +74,73 @@ while not flag:
 	    time.sleep(.0001)
 	    
 	    if joy.A():
-	    	# display("cat")
-	    	printer.println("HEYOOOOOO")
-	    	printer.feed(2)
+	    	display("cat")
+	    	print("HEYOOOOOO")
+
+	    	# printer.println("HEYOOOOOO")
+	    	# printer.feed(3)
 	    	robot.m2.moving_speed = 200
 	    	robot.m3.moving_speed=200
 	    	easingMultiple(motionoffer, 2)
-	    	time.sleep(7)
+	    	time.sleep(2)
 	    	robot.m3.moving_speed=40
 	    	robot.m2.moving_speed = 40
 	    
 
 	    if joy.B(): 
-	    	# display("dog")
+	    	display("dog")
+	    	print("HEYOOOOOO")
+	    	printer.println("doggo what!")
+	    	printer.feed(3)
 	    	robot.m2.moving_speed = 200
 	    	robot.m3.moving_speed=200
 	    	easingMultiple(turnaway, 1.5)
-	    	time.sleep(5)
+	    	time.sleep(1.5)
 	    	robot.m3.moving_speed=40
 	    	robot.m2.moving_speed = 40
 	    	printer.println("HEYOOOOOO")
-	    	printer.feed(2)
+	    	printer.feed(3)
 	    
 	    if joy.X(): 
-	    	# display("dog")
+	    	display("nah")
+	    	print("nope!")
+	    	printer.println("Nope")
+	    	printer.feed(3)
 	    	robot.m2.moving_speed = 200
 	    	robot.m3.moving_speed=200
-	    	easingMultiple(musicup, 1.5)
-	    	time.sleep(5)
+	    	# easingMultiple(musicup, 1.5)
+	    	easing(robot.m1, easeInOutSine, -20, .2)
+	    	easing(robot.m1, easeInOutSine, 20, .4)
+	    	easing(robot.m1, easeInOutSine, -20, .4)
+	    	easing(robot.m1, easeInOutSine, 20, .4)
+	    	easing(robot.m1, easeInOutSine, -4, .4)
+	    	time.sleep(1.85)
 	    	robot.m3.moving_speed=40
 	    	robot.m2.moving_speed = 40
 	    if joy.Y(): 
-	    	# display("dog")
+	    	display("penguin")
+	    	print("HEYOOOOOO")
+	    	printer.println("Pingu or Penguin?")
 	    	robot.m2.moving_speed = 200
 	    	robot.m3.moving_speed=200
-	    	easingMultiple(turnaway, 1.5)
+	    	easing(robot.m3, easeInOutSine, 110, .2)
+	    	easing(robot.m3, easeInOutSine, 90, .4)
+	    	easing(robot.m3, easeInOutSine, 110, .4)
+	    	easing(robot.m3, easeInOutSine, 90, .4)
+	    	easing(robot.m3, easeInOutSine, 110, .4)
+	    	
 	    	time.sleep(5)
 	    	robot.m3.moving_speed=40
 	    	robot.m2.moving_speed = 40
+	    
+	    if joy.rightBumper():
+        	inp=raw_input("giphy giph:")
+        	display(inp)
+        	printer.println("oh look! a "+ inp)
+        	printer.feed(3)
+
+
+
 
 
 	    if joy.Start():

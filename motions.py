@@ -37,17 +37,27 @@ import math
 import copy
 import pypot
 import pypot.robot
-import runmotion
 robot = pypot.robot.from_config(spyder_config)
 
 
-
+        # raise NotImplementedError
+x = easeInOutSine
+y = easeOutBack
+linear = linearTween
+s = easeInExpo
+eib = easeInBack
+eoc = easeOutCirc
 
 
 x = easeInOutSine
-
-        # raise NotImplementedError
-
+y = easeOutBack
+linear = linearTween
+s = easeInExpo
+eib = easeInBack
+eoc = easeOutCirc
+eoq = easeOutQuint
+eoe = easeOutExpo
+eie = easeInExpo
 
 motionrest= [
     [robot.m1 , x, robot.m1.present_position, -4] ,
@@ -65,9 +75,76 @@ motionforward= [
     [robot.m3 , x, robot.m3.present_position, 149]]
 
 motionoffer= [
-    # [robot.m1 , x, robot.m1.present_position, -4] ,
+    [robot.m1 , x, robot.m1.present_position, -4] ,
     [robot.m2 , x, robot.m2.present_position, -26] ,
     [robot.m3 , x, robot.m3.present_position, 112]]
+
+
+
+
+# motions
+
+print("starting Easepos")
+
+motionofferNew= [
+    [robot.m1 , x, robot.m1.present_position, -4] ,
+    [robot.m2 , y, robot.m2.present_position, -15] ,
+    [robot.m3 , y, robot.m3.present_position, 110]]
+
+motionNodup = [
+    [robot.m3 , linear, robot.m3.present_position, 120]]
+
+motionNoddown = [
+    [robot.m3 , linear, robot.m3.present_position, 100]]
+
+motionAfteroffer = [
+    # [robot.m1 , x, robot.m1.present_position, robot.m1.present_position] ,
+    [robot.m2 , y, robot.m2.present_position, -60] ,
+    [robot.m3 , y, robot.m3.present_position, 135]]
+
+
+
+turnaway = [
+    [robot.m1 , x, robot.m1.present_position, 57.33] ,
+    [robot.m2 , x, robot.m2.present_position, -32.4] ,
+    [robot.m3 , x, robot.m3.present_position, 103.42]
+]
+
+listen = [
+    [robot.m1 , x, robot.m1.present_position, -4] ,
+    [robot.m2 , x, robot.m2.present_position, -84.9] ,
+    [robot.m3 , x, robot.m3.present_position, 107.18]
+]
+
+strench  = [
+    [robot.m1 , x, robot.m1.present_position, -4] ,
+    [robot.m2 , s, robot.m2.present_position, -57] ,
+    [robot.m3 , x, robot.m3.present_position, 146]
+]
+
+look = [
+    [robot.m1 , x, robot.m1.present_position, -4] ,
+    [robot.m2 , eib, robot.m2.present_position, -53] ,
+    [robot.m3 , x, robot.m3.present_position, 143]
+]
+
+read = [
+    [robot.m1 , x, robot.m1.present_position, -4] ,
+    [robot.m2 , x, robot.m2.present_position, -27] ,
+    [robot.m3 , x, robot.m3.present_position, 114]
+]
+
+musicdown = [
+    [robot.m1 , x, robot.m1.present_position, -4] ,
+    [robot.m2 , eoc, robot.m2.present_position, -65] ,
+    [robot.m3 , x, robot.m3.present_position, 75]
+]
+
+musicup = [
+    [robot.m1 , x, robot.m1.present_position, -4] ,
+    [robot.m2 , eoc, robot.m2.present_position, -55] ,
+    [robot.m3 , x, robot.m3.present_position, 99]
+]
 
 
 
@@ -89,7 +166,7 @@ def overheating():
                 print([(m.name, m.present_temperature) for m in motors])
             if inp=="m":
                 print("re-engageing motors")
-                livly(speeds)
+                livly([200,40,40])
                 break
             else:
                 print("invalid input")
@@ -203,20 +280,54 @@ def concur():
     print("up")
     easingMultiple(nodup, 1 )
 
-def nod():
-    nodup=[
-    [robot.m3, easeInQuart, robot.m3.present_position, 25]
-    ]
+# def nod():
+motionNodup = [
+    [robot.m3 , linear, robot.m3.present_position, 120]]
 
-    noddown1=[
-    [robot.m3, easeInQuart, robot.m3.present_position, 15]
-    ]
+motionNoddown = [
+    [robot.m3 , linear, robot.m3.present_position, 100]]
 
-    print("down")
-    easingMultiple(noddown1, 1.5)
+ParticipantRight= [
+    [robot.m1 , x, robot.m1.present_position, -45] ,
+    [robot.m2 , eie, robot.m2.present_position, -52] ,
+    [robot.m3 , eoq, robot.m3.present_position, 105]]
+ParticipantLeft= [
+    [robot.m1 , x, robot.m1.present_position, 37] ,
+    [robot.m2 , eie, robot.m2.present_position, -52] ,
+    [robot.m3 , eoq, robot.m3.present_position, 105]]
+
+ParticipantCenter= [
+    [robot.m1 , x, robot.m1.present_position, -4] ,
+    [robot.m2 , eie, robot.m2.present_position, -52] ,
+    [robot.m3 , eoq, robot.m3.present_position, 105]]
+
+leftpos = [
+    [robot.m1 , x, robot.m1.present_position, 25] ,
+]
+rightpos = [
+    [robot.m1 , x, robot.m1.present_position, -35] ,
+]
+midpos = [
+    [robot.m1 , x, robot.m1.present_position, -4] ,
+]
+def shake():
+    easingMultiple(rightpos, .5)
+    easingMultiple(leftpos, .5)
+    time.sleep(.05)
+    easingMultiple(midpos, .35)
+    # easingMultiple(leftpos, .45)
     # time.sleep(.05)
     print("up")
-    easingMultiple(nodup,1.5)
+
+    # easingMultiple(midpos, 1)
+
+
+def nod():
+    print("down")
+    easingMultiple(motionNoddown, .5)
+    time.sleep(.05)
+    print("up")
+    easingMultiple(motionNodup,.5)
 
 def limp():
     print("returning home")
@@ -238,6 +349,9 @@ def livly(speeds):
         m.compliant = False
         m.set_moving_speed = s
     time.sleep(2)
+def offer():
+    easingMultiple(motionoffer, 1.5)
 
-
+def alertmotion():
+    easingMultiple(motionalert, 1.5)
 
