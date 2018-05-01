@@ -1,6 +1,7 @@
 import time
 import math
 import numpy
+import random
 
 from easing import *
 from motions import *
@@ -122,6 +123,37 @@ ParticipantLeft= [
     [robot.m1 , x, robot.m1.present_position, 37] ,
     [robot.m2 , eie, robot.m2.present_position, -52] ,
     [robot.m3 , eoq, robot.m3.present_position, 105]]
+
+netural= [
+    [robot.m1 , x, robot.m1.present_position, robot.m1.present_position+10 ],
+    # [robot.m2 , x, robot.m2.present_position, robot.m1.present_position-2],
+    # [robot.m3 , x, robot.m3.present_position, robot.m1.present_position+2]
+    ]
+netural2= [
+    [robot.m2 , x, robot.m2.present_position, robot.m2.present_position+5 ],
+    # [robot.m2 , x, robot.m2.present_position, robot.m1.present_position-2],
+    [robot.m3 , x, robot.m3.present_position, robot.m1.present_position+5]
+    ]
+netural3= [
+    # [robot.m2 , x, robot.m2.present_position, robot.m2.present_position+2 ],
+    [robot.m2 , x, robot.m2.present_position, robot.m1.present_position+5],
+    [robot.m3 , x, robot.m3.present_position, robot.m1.present_position-5]]
+netural4= [
+    [robot.m2 , x, robot.m2.present_position, robot.m2.present_position-2 ],
+    # [robot.m2 , x, robot.m2.present_position, robot.m1.present_position-2],
+    [robot.m3 , x, robot.m3.present_position, robot.m1.present_position-2]
+    ]
+
+netural5= [
+    # [robot.m2 , x, robot.m2.present_position, robot.m2.present_position+2 ],
+    [robot.m2 , x, robot.m2.present_position, robot.m1.present_position-2],
+    [robot.m3 , x, robot.m3.present_position, robot.m1.present_position+2]]
+
+netural6= [
+    [robot.m1 , x, robot.m1.present_position, robot.m1.present_position-10 ],
+    [robot.m2 , x, robot.m2.present_position, robot.m1.present_position+2]
+    # [robot.m3 , x, robot.m3.present_position, robot.m1.present_position+2]
+    ]
 # resting(30,30,30)
 
 # time.sleep(2)
@@ -133,6 +165,8 @@ window = Tk()
 window.title("Spyderbot Motion")
  
 window.geometry('400x350')
+
+a =numpy.array([netural,netural2,netural3,netural4,netural5,netural6])
  
 # lbl = Label(window, text="Hello")
  
@@ -150,6 +184,12 @@ def checkLeftParticipant():
 def checkRightParticipant():
      print("Check Right Participant")
      easingMultiple(ParticipantRight, 1.2)
+
+def neturalMotion():
+    print("Rondom Netural Motion")
+    targetmotion = random.randint(0,5) 
+    easingMultiple(a[targetmotion],1.5)
+
 def rest():
 	print("rest")
 	easingMultiple(motionrest,1)
@@ -168,7 +208,10 @@ RightParticipant = Button(window, text="Check Right Participant", command=checkR
 RightParticipant.grid(column=2, row=2)
 
 rest = Button(window, text = "rest", command = rest)
-rest.grid(column=5,row = 4)
+rest.grid(column=5,row = 5)
+
+netural = Button(window, text = "netural", command = neturalMotion)
+netural.grid(column=2,row = 5)
 
 
 window.mainloop()
