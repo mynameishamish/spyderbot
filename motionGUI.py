@@ -1,5 +1,3 @@
-
-# everything beside dance has been fix. Won't cause moter over heated right now. Dance will be updated soon. 
 import time
 import math
 import numpy
@@ -7,21 +5,25 @@ import numpy
 from easing import *
 from motions import *
 
-#easing 
+from tkinter import *
+ 
 x = easeInOutSine
 y = easeOutBack
 linear = linearTween
 s = easeInExpo
 eib = easeInBack
 eoc = easeOutCirc
+eoq = easeOutQuint
+eoe = easeOutExpo
+eie = easeInExpo
 
 # motions
 
-print("starting Easepos")
+# print("starting Easepos")
 
 motionrest= [
     [robot.m1 , x, robot.m1.present_position, -4] ,
-    [robot.m2 , x, robot.m2.present_position, -77] ,
+    [robot.m2 , x, robot.m2.present_position, -77],
     [robot.m3 , x, robot.m3.present_position, 73]]
 
 motionalert= [
@@ -103,48 +105,74 @@ musicup = [
     [robot.m2 , eoc, robot.m2.present_position, -55] ,
     [robot.m3 , x, robot.m3.present_position, 99]
 ]
-resting(30,30,30)
 
-time.sleep(2)
+ScreenLeft= [
+    [robot.m1 , x, robot.m1.present_position, 22] ,
+    [robot.m2 , eie, robot.m2.present_position, -45] ,
+    [robot.m3 , eie, robot.m3.present_position, 132]]
+ScreenRight= [
+    [robot.m1 , x, robot.m1.present_position, -30] ,
+    [robot.m2 , eie, robot.m2.present_position, -45] ,
+    [robot.m3 , eie, robot.m3.present_position, 132]]
+ParticipantRight= [
+    [robot.m1 , x, robot.m1.present_position, -45] ,
+    [robot.m2 , eie, robot.m2.present_position, -52] ,
+    [robot.m3 , eoq, robot.m3.present_position, 105]]
+ParticipantLeft= [
+    [robot.m1 , x, robot.m1.present_position, 37] ,
+    [robot.m2 , eie, robot.m2.present_position, -52] ,
+    [robot.m3 , eoq, robot.m3.present_position, 105]]
+# resting(30,30,30)
 
-#run motions!
-while True: 
-    print('Choose a motion:')
-    command = input()
-    if command == "offer":
-        print("offer")
-        easingMultiple(motionofferNew, 1.5)
-    elif command == "nod":
-        print("nod")
-        easingMultiple(motionNodup, 1)
-        easingMultiple(motionNoddown, 1)
-    elif command == "midpos":
-        print("midpos")
-        easingMultiple(midpos,1)
-    elif command == "listen":     
-        easingMultiple(listen,1)
-    elif command == "turnaway":
-        easingMultiple(turnaway,1)
-    elif command == "awake":
-        easingMultiple(strench,2)
-        time.sleep(1)
-        easingMultiple(listen,1)
-    elif command == "look":
-        easingMultiple(look,1)
-    elif command == "read":
-        easingMultiple(read, 1)
-    elif command == "dance":
-        while True:
-            easingMultiple(musicdown,1)
-            easingMultiple(musicup,1)
-            time.sleep(0.2)
-            n = input()
-            if n == "break":
-                break
-    elif command == "rest":
-        easingMultiple(motionrest, 1.5)
-    elif command == "break":
-        print("rest")
-        easingMultiple(motionrest, 1.5)
-        break
+# time.sleep(2)
+
+
+
+window = Tk()
+ 
+window.title("Spyderbot Motion")
+ 
+window.geometry('400x350')
+ 
+# lbl = Label(window, text="Hello")
+ 
+# lbl.grid(column=0, row=0)
+ 
+def checkleftscreen():
+     print("Check Left Screen")
+     easingMultiple(ScreenLeft, 1.2)
+def checkrightscreen():
+     print("Check Right Screen")
+     easingMultiple(ScreenRight, 1.2)
+def checkLeftParticipant():
+     print("Check Left Participant")
+     easingMultiple(ParticipantLeft, 1.2)
+def checkRightParticipant():
+     print("Check Right Participant")
+     easingMultiple(ParticipantRight, 1.2)
+def rest():
+	print("rest")
+	easingMultiple(motionrest,1)
+
+
+LeftScreen = Button(window, text="Check Left Screen", command=checkleftscreen)
+LeftScreen.grid(column=0, row=0)
+
+RightScreen = Button(window, text="Check Right Screen", command=checkrightscreen)
+RightScreen.grid(column=2, row=0)
+
+LeftParticipant = Button(window, text="Check Left Participant", command=checkLeftParticipant)
+LeftParticipant.grid(column=0, row=2)
+
+RightParticipant = Button(window, text="Check Right Participant", command=checkRightParticipant)
+RightParticipant.grid(column=2, row=2)
+
+rest = Button(window, text = "rest", command = rest)
+rest.grid(column=5,row = 4)
+
+
+window.mainloop()
+
+
+
 

@@ -20,39 +20,59 @@ import numpy
 from easing import *
 from motions import *
 
+# Spyderbot SlackBot Overview Document: 
+# https://docs.google.com/document/d/1N1E67esbNr0NOWolGILMVZsoaNzZkR5SdYvEn0Aec2U/edit?usp=sharing
+
+# Installations required to run this code:
+# Install SlackClient (pip install SlackClient)
+# Install PIL (pip install Pillow)
+
+# Commands for Spyderbot Slackbot:
+#
+# To command spyderbot to do something, send a message on slack of the form:
+# @spyderbotpython followed by:
+# 
+#   delete
+#   print channel_info
+#   print channel_history
+#   print this: {your text here}
+#   print previous
+#   print {any mention of malte. Ex: "messages for malte"}
+#   print thread 
+#   print thread op
+#   print image
+# 
+#   Example command: @spyderbotpython print this: hello
+#           Returns @spyderbotpython: @{user} asked me to print "hello"
+#           Which will be printed on the printer attached to spyderbot
+
 x = easeInOutSine
 
 printer = Adafruit_Thermal("/dev/ttyUSB0", 19200, timeout=5)
 
-
-#READ ME:
-#Install SlackClient to run this code (pip install SlackClient)
-#Install PIL (pip install Pillow)
-
-#TODO:
-#Find emoji to url map
-
+# Store the tokens to your machine as environment variables 
 oauth_access_token = os.environ.get('oauth_access_token')
 print oauth_access_token
 bot_user_token = os.environ.get('bot_user_token')
 print bot_user_token
 
-
 printer.println("I'm Alive")
 printer.feed(6)
-
 
 slack_client = SlackClient(bot_user_token)
 spyderbot_id = None
 
 websocket.enableTrace(True)
 
+# Global constants 
 RTM_READ_DELAY = 1
 PRINT_COMMAND = "print"
 DELETE_COMMAND = "delete"
 MENTION_REGEX = "^<@(|[WU].+?)>(.*)"
 image_types = ["png", "jpg"]
 
+# Parses a command to spyderbot slackbot and returns the message text 
+# and channel in which the command was sent
 def parse_bot_commands(slack_events):
     for event in slack_events:
         if event["type"] == "message" and not "subtype" in event:
@@ -67,6 +87,7 @@ def parse_bot_commands(slack_events):
 
     return None, None
 
+# Parses a message for a mention of the username of the slackbot
 def parse_direct_mention(message_text):
     matches = re.search(MENTION_REGEX, message_text)
     if matches:
@@ -74,6 +95,10 @@ def parse_direct_mention(message_text):
     else:
         return (None, None)
 
+# Creates a dictionary that maps user ids to usernames
+# Ex: {U1234567 : JaneDoe} represents the username @JaneDoe belonging to user U1234567
+# This dictionary is used to efficiently convert user ids to usernames 
+# in message texts
 def user_id_map():
     users_list = slack_client.api_call(
       "users.list",
@@ -93,7 +118,9 @@ def user_id_map():
 
     return users_map
 
-
+# Creates a map of emoji names to the number of reactions that emoji 
+# recieved for a particular message
+# Ex. {smile : 3} represents the reaction smile being chosen by 3 users
 def make_emoji_map(emoji_map, message):
 
     if "reactions" in message:
@@ -102,7 +129,11 @@ def make_emoji_map(emoji_map, message):
 
     return emoji_map
 
-
+# Prints the channel of the channel that the message command was sent in
+# The channel info for the channel is accessed by an api call to the slack api.
+# and then parsed and formatted into a a string containing the channel name, creator,
+# topic, purpose, and members.
+# For more info: https://api.slack.com/methods/channels.info
 def print_channel_info(channel, users_map):
     #channels.info will only work in a channel, not a direct chat
     channel_info = slack_client.api_call(
@@ -142,6 +173,8 @@ def print_channel_info(channel, users_map):
 
     return info
 
+# Returns all the messages in the channel as a list of message objects
+# For more info: https://api.slack.com/methods/channels.history
 def get_messages(channel):
     channel_history = slack_client.api_call(
       "channels.history",
@@ -157,29 +190,8 @@ def get_messages(channel):
 
     return messages
 
-
-def print_image(url):
-
-    try:
-        bearer = "Bearer " + oauth_access_token
-        headers = {"Authorization":bearer}
-
-        response = requests.get(url, headers=headers, stream=True)
-        img = StringIO(response.content)
-        resized_image = Image.open(img)
-
-        print "image ok"
-        printer.printImage(resized_image)
-        printer.feed(1)
-    except Exception as e:
-        print(e)
-        slack_client.api_call(
-            "chat.postMessage",
-            channel=channel,
-            text="An error occured, could not print image to spyderbot."
-        )
-
-
+# Returns a message that is the same as the passed in [message] but 
+# has replaced every instance of an user id with the corresponding username
 def parse_message(message, users_map):
 
     start_idx = 0
@@ -198,7 +210,14 @@ def parse_message(message, users_map):
 
     return new_message + message[start_idx:]
 
-
+# Prints the messages immediately preceding the message that was sent to
+# command Spyderbot to print previous. 
+# Ex. 
+# user1 : message 1
+# user1 : @spyderbotpython print previous
+# Returns the response: @user1 asked me to print @user1 saying "message 1"
+#
+# If the previous message is an image, the image will be printed
 def print_previous_message(messages, users_map):
 
     if messages == None:
@@ -246,6 +265,9 @@ def print_previous_message(messages, users_map):
 
     return ("@" + users_map[requestor] + " asked me to print @" + user_name + " saying \"" + message_parsed + "\"", emoji_map)
 
+# Prints all the messages in the channel that were retrived by the api call 
+# to the slack api for messages.
+# For more info: https://api.slack.com/methods/channels.history
 def print_channel_history(messages, users_map):
 
     if messages == None:
@@ -264,7 +286,9 @@ def print_channel_history(messages, users_map):
 
     return response
 
-
+# Prints the message text following the command "print this:"
+# Ex. user : @spyderbotpython print this: hello
+# Returns the response: @user asked me to print "hello"
 def print_latest(curr, messages, users_map):
 
     message = messages[0]
@@ -273,18 +297,16 @@ def print_latest(curr, messages, users_map):
     if "comment" in message:
         requestor = message["comment"]["user"]
     else:
-        # if "file" in message:
-        #     if message["file"]["filetype"] in image_types:
-        #         url = message["file"]["thumb_360"]
-        #         print_image(url)
-
         requestor = message["user"]
 
     response = "@" + users_map[requestor] + " asked me to print \"" + curr + "\""
 
     return response
 
-
+# Prints all the messages in a channel that mention Malte from the past day.
+# In the command, any mention of malte will trigger this command.
+# Ex: @user : @spyderbotpython print messages for malte
+# All messages in the last 24 hours containing the word malte will be printed.
 def print_malte_messages(channel, users_map):
 
     yesterday = datetime.date.today() - datetime.timedelta(1)
@@ -321,24 +343,8 @@ def print_malte_messages(channel, users_map):
     else:
         return "No messages for Malte today."
 
-
-# def print_thread_helper(message, users_map):
-
-#     print message
-
-#     ##TODO##
-#     #Images not printing because the "print op" comment is not message[0]
-
-#     if "file_id" in message:
-#         print "HERE"
-#         # if message["file"]["filetype"] in image_types:
-#               # url = previous_message["file"]["thumb_360"]
-#         #     print_image(url)
-
-#     message_parsed = parse_message(message["text"], users_map)
-
-#     return message_parsed
-
+# Prints the top, or original post (op) of a thread
+# If the original post is an image, the image will be printed
 def print_thread_op(channel, messages, users_map):
 
     #Currently only works when commenting on image files
@@ -367,7 +373,8 @@ def print_thread_op(channel, messages, users_map):
 
     return "An error occured, are you sure you're replying to thread?"
 
-
+# Prints an entire thread including the original post and all comments that follow
+# Will work for threads whose op is an image
 def print_thread(channel, messages, users_map):
 
     response = ""
@@ -422,6 +429,8 @@ def print_thread(channel, messages, users_map):
 
     return "An error occured, sorry!"
 
+# Prints the image that is being commented on. This command will only work
+# if it is a used as a comment on an image file 
 def print_image_from_comment(channel, messages):
 
     if "comment" in messages[0]:
@@ -430,6 +439,87 @@ def print_image_from_comment(channel, messages):
     else:
         return "An error occured, are you sure you're commenting on a file?"
 
+# Deletes massages that were sent to a channel by Spyderbot
+# Use this function to clean up the channel if needed by deleting 
+# old messages from Spyderbot
+def handle_delete_command(messages):
+
+    ts_list = []
+
+    for m in messages:
+        if "username" in m and m["username"] == "Spyderbot":
+            if "ts" in m:
+                ts_list.append(m["ts"])
+
+    for ts in ts_list:
+        slack_client.api_call(
+          "chat.delete",
+          channel=channel,
+          ts=ts
+        )
+
+    return "Deleted my messages."
+
+# Function that executes the printing action of the response from
+# Spyderbot to the physical printer 
+def execute_print(channel, response):
+
+    try:
+        printer.println(response)
+        printer.feed(6)
+    except:
+        slack_client.api_call(
+            "chat.postMessage",
+            channel=channel,
+            text="An error occured, could not print to spyderbot."
+        )
+
+# Prints an image given a valid image url 
+# Function that executes the printing action of an image given 
+# a valid image url  from Spyderbot to the physical printer.
+# 
+# If the image cannot be printed, the exception will be printed to the 
+# command line and an error message will be printed instead.
+def print_image(url):
+
+    try:
+        bearer = "Bearer " + oauth_access_token
+        headers = {"Authorization":bearer}
+
+        response = requests.get(url, headers=headers, stream=True)
+        img = StringIO(response.content)
+        resized_image = Image.open(img)
+
+        print "image ok"
+        printer.printImage(resized_image)
+        printer.feed(1)
+    except Exception as e:
+        print(e)
+        slack_client.api_call(
+            "chat.postMessage",
+            channel=channel,
+            text="An error occured, could not print image to spyderbot."
+        )
+
+# Function that executes the printing action of emoji reactions of a message
+# from Spyderbot to the physical printer 
+def print_emojis(channel, emoji_map):
+
+    emojis = slack_client.api_call("emoji.list", token=oauth_access_token)
+    emojis = emojis["emoji"]
+
+    for e in emoji_map:
+        for i in range(0, emoji_map[e]):
+            if e in emojis:
+                print_image(emojis[e])
+
+# Function that handles the flow of command from the message command to the
+# corresponding function that can execute that command
+#
+# Each of the prior functions called in this function returns a response 
+# and sometimes an emoji map which are returned by this function. If no
+# either the response or emoji map are missing the defaults for those 
+# will be returned
 def handle_print_command(command, channel, users_map):
     command_split = command.split()
     command_split = [s.lower() for s in command_split]
@@ -468,57 +558,11 @@ def handle_print_command(command, channel, users_map):
 
     return response, emoji_map
 
-#Currently checking for bot username - change this to use bot_id
-def handle_delete_command(messages):
-
-    ts_list = []
-
-    for m in messages:
-        if "username" in m and m["username"] == "Spyderbot":
-            if "ts" in m:
-                ts_list.append(m["ts"])
-
-    for ts in ts_list:
-        slack_client.api_call(
-          "chat.delete",
-          channel=channel,
-          ts=ts
-        )
-
-    return "Deleted my messages."
-
-def execute_print(channel, response):
-
-    #First argument depends on type of system: Linux, Windows, etc.
-
-    try:
-        printer.println(response)
-        printer.feed(6)
-    except:
-        slack_client.api_call(
-            "chat.postMessage",
-            channel=channel,
-            text="An error occured, could not print to spyderbot."
-        )
-
-def print_emojis(channel, emoji_map):
-
-    emojis = slack_client.api_call("emoji.list", token=oauth_access_token)
-    emojis = emojis["emoji"]
-
-    for e in emoji_map:
-        for i in range(0, emoji_map[e]):
-            if e in emojis:
-                print_image(emojis[e])
-
-
+# Function that handles the flow of command from a message command to 
+# the corresponding type of command mentioned in the message
+# This function also prints the response to the physical printer and sends
+# the response as a message to the channel from SPyderbot
 def handle_command(command, channel, users_map):
-
-    ### DELETE ###
-    # print "here"
-    # messages = get_messages(channel)
-    # for m in reversed(messages):
-    #     print m
 
     default_response = "Something went wrong, check exception traceback."
 
@@ -526,6 +570,7 @@ def handle_command(command, channel, users_map):
     if command.startswith(PRINT_COMMAND):
         response, emoji_map = handle_print_command(command, channel, users_map)
     if command.startswith(DELETE_COMMAND):
+        emoji_map = None
         messages = get_messages(channel)
         response = handle_delete_command(messages)
 
@@ -540,11 +585,10 @@ def handle_command(command, channel, users_map):
         text=response or default_response
     )
 
+# Function to start flow of command to Spyderbot SlackBot
 if __name__ == "__main__":
     print(slack_client.rtm_connect)
     if slack_client.rtm_connect(with_team_state = False):
-
-        #UNCOMMENT
 
         print("alert")
         easingMultiple(motionforward, .75)
