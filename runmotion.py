@@ -103,7 +103,43 @@ musicup = [
     [robot.m2 , eoc, robot.m2.present_position, -55] ,
     [robot.m3 , x, robot.m3.present_position, 99]
 ]
-resting(30,30,30)
+
+turn1 = [
+    [robot.m1 , x, robot.m1.present_position, -55] ,
+    [robot.m2 , x, robot.m2.present_position, -45] ,
+    [robot.m3 , x, robot.m3.present_position, 100]
+
+]
+
+turnup = [
+    [robot.m1 , x, -55, -55] ,
+    [robot.m2 , x, -45, -53] ,
+    [robot.m3 , x, 100, 117]
+
+]
+
+turndown = [
+    [robot.m1 , x, -55, -55] ,
+    [robot.m2 , x, -53, -50] ,
+    [robot.m3 , x, 117, 98]
+
+]
+
+check1 = [
+    [robot.m1 , s, robot.m1.present_position, -46] ,
+    [robot.m2 , s, robot.m2.present_position, -67] ,
+    [robot.m3 , y, robot.m3.present_position, 83]
+
+]
+
+check2 = [
+    [robot.m1 , s, robot.m1.present_position, 35] ,
+    [robot.m2 , s, robot.m2.present_position, -67] ,
+    [robot.m3 , s, robot.m3.present_position, 83]
+
+]
+
+resting(45,45,45)
 
 time.sleep(2)
 
@@ -133,6 +169,23 @@ while True:
         easingMultiple(look,1)
     elif command == "read":
         easingMultiple(read, 1)
+    elif command =="curious":
+        easingMultiple(look,1)
+        time.sleep(0.5)
+        # easingMultiple(motionrest,1)
+        # time.sleep(1)
+        easingMultiple(check1,1)
+        time.sleep(1)
+        easingMultiple(check2,1.5)
+        time.sleep(2)
+    elif command =="sigh":
+        easingMultiple(turn1,1.5)
+        time.sleep(1)
+        print("up")
+        easingMultiple(turnup,1.5)
+        print("down")
+        easingMultiple(turndown,1.5)
+        time.sleep(1)
     elif command == "dance":
         while True:
             easingMultiple(musicdown,1)
