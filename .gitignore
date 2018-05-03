@@ -6,3 +6,9 @@ jspm_packages
 .serverless
 .DS_Store
 .pyc
+
+# Optional npm cache directory
+.npm
+
+# dotenv environment variables file
+.env

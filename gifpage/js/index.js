@@ -13,7 +13,7 @@ function sendMessage() {
     xhr.done(function(data) {
       console.log("success got data", data);
       var img = data.data[0].images.original.url;
-      window.open(img);
+      document.getElementById("body").style.background-image:url('img');
     });
 
 }
