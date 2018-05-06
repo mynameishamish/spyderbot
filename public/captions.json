@@ -1,0 +1,338 @@
+{
+	"CDC1": {
+		"content": "CDC-NS.mp4",
+		"lines": [
+			{
+				"text": "...las dos sabemos que Chavano no está listo para ser presidente.",
+				"start": 20.3608749,
+				"end": 23.113624900000104,
+				"text-chunks": "...las dos sabemos/que Chava/no está listo/para ser presidente.",
+        "en-text-chunks": "...we both know/that Chava/is not ready/to be president.",
+				"title": "clip-1"
+			},
+			{
+				"text": "Tarde o temprano la va a cagar.",
+				"start": 23.196707900000092,
+				"end": 24.865374900000006,
+				"text-chunks": "Tarde o temprano/la va a cagar.",
+        "en-text-chunks": "Sooner or later/he's going to screw up.",
+				"title": "clip-2"
+			},
+			{
+				"text": "Tú espérate y te vas ganando el puesto<br/>poco a poco.",
+				"start": 24.948457899999994,
+				"end": 27.535041899999896,
+				"text-chunks": "Tú espérate/y te vas ganando el puesto/poco a poco.",
+        "en-text-chunks": "You just wait/and you'll earn the position step by step.",
+				"title": "clip-3"
+			}
+		],
+		"offset": 0
+	},
+	"CDC2": {
+		"content": "CDC-2-NS.mp4",
+		"lines": [
+			{
+				"text": "Tú papá era muy buena persona,todo mundo lo quería.",
+				"start": 0.9954169000000093,
+				"end": 2.9133328999998866,
+				"text-chunks": "Tú papá era muy buena persona/todo mundo lo quería",
+        "en-text-chunks": "Your dad was a good man/Everyone loved him.",
+				"title": "clip-1"
+			},
+			{
+				"text": "Sí, pero eso está muy trillado, güey.Tengo que decir algo diferente,",
+				"start": 2.997416899999962,
+				"end": 5.540957899999967,
+				"text-chunks": "Sí, pero eso está muy trillado, güey/Tengo que decir algo diferente",
+        "en-text-chunks": "Yeah, but that's too corny./I need to say something different.",
+				"title": "clip-2"
+			},
+			{
+				"text": "voy a hablar frente a un chingode personas, güey.",
+				"start": 5.625041900000042,
+				"end": 6.917332900000019,
+				"text-chunks": "voy a hablar frente/a un chingode personas, güey",
+        "en-text-chunks": "I'll be speaking in front of/tons of people.",
+				"title": "clip-3"
+			},
+			{
+				"text": "Tu jefe no era nada más el dueño de los Cuervos",
+				"start": 7.001416900000095,
+				"end": 9.503916899999922,
+				"text-chunks": "Tu jefe no era nada más el dueño de los Cuervos",
+        "en-text-chunks": "Your dad was not just<br/>the owner of the Cuervos team.",
+				"title": "clip-4"
+			},
+			{
+				"text": "tu papá era un cuervo.",
+				"start": 9.58699989999991,
+				"end": 11.088499899999988,
+				"text-chunks": "tu papá era un cuervo",
+        "en-text-chunks": "Your dad was a real Cuervo, a crow.",
+				"title": "clip-5"
+			}
+		],
+		"offset": 0
+	},
+  "Aqui Entre Nos": {
+		"content": "aquientrenosvideo.mov",
+		"lines": [
+			{
+				"text": "A tu papá le choca que yo vaya a comer con mis amigas.",
+				"start": 1,
+				"end": 3.5437495,
+				"text-chunks": "A tu papá le choca que yo vaya/a comer con mis amigas.",
+        "en-text-chunks": "our dad doesn't like me/eating out with my friends",
+				"title": "clip-1"
+			},
+			{
+				"text": "Así que mejor que ni se entere.",
+				"start": 4.2942493,
+				"end": 5.8379999,
+				"text-chunks": "Así que mejor que ni se entere.",
+        "en-text-chunks": "so it's best he doesn't find out.",
+				"title": "clip-2"
+			}
+		],
+		"offset": 0
+	},
+  "Bomb Scared": {
+		"content": "bombscaredvideo.mov",
+		"lines": [
+			{
+				"text": "¿De Albacete?",
+				"start": 0,
+				"end": 1.0833333,
+				"text-chunks": "De Albacete?",
+        "en-text-chunks": "From Albacete?",
+				"title": "clip-1"
+			},
+			{
+				"text": "De Chinchilla.",
+				"start": 1.0833333,
+				"end": 2.3333333,
+				"text-chunks": "De Chinchilla.",
+        "en-text-chunks": "From Chinchilla.",
+				"title": "clip-2"
+			},
+      {
+				"text": "Un etarra de Albacete...",
+				"start": 2.3333333,
+				"end": 3.8333333,
+				"text-chunks": "Un etarra de Albacete...",
+        "en-text-chunks": "An etarra from Albacete?",
+				"title": "clip-3"
+			},
+      {
+				"text": "Vosotros sabéis manejar explosivos?<br/>¿Vosotros qué sabéis hacer?",
+				"start": 3.8333333,
+				"end": 11.2083333,
+				"text-chunks": "Vosotros sabéis manejar explosivos?/Vosotros qué sabéis hacer?",
+        "en-text-chunks": "Do you know how to handle explosives?/What can you do?",
+				"title": "clip-4"
+			},
+      {
+				"text": "Hemos estado de apoyo en varios comandos<br/>haciendo seguimientos. ¿Por qué?",
+				"start": 11.2083333,
+				"end": 15.4583333,
+				"text-chunks": "Hemos estado de apoyo en varios comandos/haciendo seguimientos. ¿Por qué?",
+        "en-text-chunks": "We've helped out several units/by tailing people, and things like that.",
+				"title": "clip-5"
+			}
+		],
+		"offset": 0
+	},
+  "Corazon Valiente": {
+		"content": "corazonvalientevideo.mov",
+		"lines": [
+			{
+				"text": "Yo confío mucho en ti, mucho.",
+				"start": 4,
+				"end": 6.4337666,
+				"text-chunks": "Yo confío mucho en ti, mucho.",
+        "en-text-chunks": "I trust you.",
+				"title": "clip-1"
+			},
+			{
+				"text": "Gracias, papá",
+				"start": 6.4337666,
+				"end": 7.8338666,
+				"text-chunks": "Gracias, papá",
+        "en-text-chunks": "Thanks, Dad.",
+				"title": "clip-2"
+			},
+      {
+				"text": "Tu hermana no contesta.Siempre es lo mismo.",
+				"start": 7.8338666,
+				"end": 11.8667333,
+				"text-chunks": "Tu hermana no contesta./Siempre es lo mismo.",
+        "en-text-chunks": "Your sister doesn't pick up./It's always the same.",
+				"title": "clip-3"
+			},
+      {
+				"text": "Tranquila, mami",
+				"start": 11.8667333,
+				"end": 13.8999000,
+				"text-chunks": "Tranquila, mami",
+        "en-text-chunks": "Relax, Mom",
+				"title": "clip-4"
+			}
+		],
+		"offset": 0
+	},
+  "El Barco": {
+		"content": "elbarcovideo.mov",
+		"lines": [
+			{
+				"text": "que el camarote es mío.",
+				"start": 0,
+				"end": 2.64,
+				"text-chunks": "que el camarote es mío.",
+        "en-text-chunks": "This is my cabin.",
+				"title": "clip-1"
+			},
+			{
+				"text": "Pues no he visto ningún cartel<br/>que ponga",
+				"start": 2.64,
+				"end": 4.8,
+				"text-chunks": "Pues no he visto ningún cartel/que ponga",
+        "en-text-chunks": "I didn't see any sign saying:",
+				"title": "clip-2"
+			},
+      {
+				"text": "Camarote reservado para idiotas/que llevan un chicle pegado...",
+				"start": 4.8,
+				"end": 9.04,
+				"text-chunks": "Camarote reservado para idiotas/que llevan un chicle pegado...",
+        "en-text-chunks": "cabin exclusive for assholes/with a gum stuck on the forehead.",
+				"title": "clip-3"
+			},
+      {
+				"text": "...en la frente. ¿Lo has visto tú?/-No, no, no.",
+				"start": 9.04,
+				"end": 12.84,
+				"text-chunks": "-...en la frente. ¿Lo has visto tú?/-No, no, no.",
+        "en-text-chunks": "-Have you seen it?<br/>-No.",
+				"title": "clip-4"
+			}
+		],
+		"offset": 0
+	}, "El Clon": {
+		"content": "elclonvideo.mov",
+		"lines": [
+			{
+				"text": "AQUÍ MISMO, EN EL HOTEL.",
+				"start": 0.5,
+				"end": 1.5,
+				"text-chunks": "AQUÍ MISMO, EN EL HOTEL",
+        "en-text-chunks": "right here at the hotel.",
+				"title": "clip-1"
+			},
+			{
+				"text": "Y EL CÓNSUL ME PIDIÓ<br/>QUE ASISTIERAa",
+				"start": 1.5,
+				"end": 3.5,
+				"text-chunks": "Y EL CÓNSUL ME PIDIÓ/QUE ASISTIERA",
+        "en-text-chunks": "so the consul asked me/ to assist",
+				"title": "clip-2"
+			},
+      {
+				"text": "PORQUE UN GRUPO DE PERIODISTAS<br/>QUIERE HABLAR CONMIGO",
+				"start": 3.5,
+				"end": 5.7,
+				"text-chunks": "PORQUE UN GRUPO DE PERIODISTAS/QUIERE HABLAR CONMIGO",
+        "en-text-chunks": "because some reporters/want to talk to me.",
+				"title": "clip-3"
+			},
+      {
+				"text": "SON GAJES<br/>DEL OFICIO.",
+				"start": 5.7,
+				"end": 7.5,
+				"text-chunks": "SON GAJES/DEL OFICIO.",
+        "en-text-chunks": "It comes with the territory.",
+				"title": "clip-4"
+			}
+		],
+		"offset": 0
+	}, "La Familia": {
+		"content": "lafamiliavideo.mov",
+		"lines": [
+			{
+				"text": "Así me sucedió a mí a los 19 años.",
+				"start": 2,
+				"end": 5,
+				"text-chunks": "Así me sucedió a mí a los 19 años.",
+        "en-text-chunks": "That happened to me when I was 19.",
+				"title": "clip-1"
+			},
+			{
+				"text": "Pero, pues claro, uno no se puede casar<br/>con la portada de una revista",
+				"start": 5,
+				"end": 9,
+				"text-chunks": "Pero, pues claro, uno no se puede casar/con la portada de una revista",
+        "en-text-chunks": "But you can't marry/the cover of a magazine.",
+				"title": "clip-2"
+			}
+		],
+		"offset": 0
+	}, "Malcriados": {
+		"content": "malcriadosvideo.mov",
+		"lines": [
+			{
+				"text": "Ay, no, qué cansancio.<br/>Que la gente escoja lo que quiera.",
+				"start": 0,
+				"end": 2.125,
+				"text-chunks": "Ay, no, qué cansancio./Que la gente escoja lo que quiera.",
+        "en-text-chunks": "Oh, no, how tired./Let people choose what they want",
+				"title": "clip-1"
+			},
+			{
+				"text": "Ya suficiente hago<br/>con invitarlos al matrimonio",
+				"start": 2.125,
+				"end": 4.04,
+				"text-chunks": "Ya suficiente hago/con invitarlos al matrimonio",
+        "en-text-chunks": "They should be thankful/I'm inviting them to the wedding.",
+				"title": "clip-2"
+			},
+      {
+				"text": "Sí, parce, es verdad",
+				"start": 4.04,
+				"end": 5.583,
+				"text-chunks": "Sí, parce, es verdad",
+        "en-text-chunks": "Yeah, that's true.",
+				"title": "clip-3"
+			},
+      {
+				"text": "Es algo para pensar después.",
+				"start": 5.583,
+				"end": 7.5,
+				"text-chunks": "Es algo para pensar después.",
+        "en-text-chunks": "You get so tired after thinking...",
+				"title": "clip-4"
+			}
+		],
+		"offset": 0
+	} , "Peru": {
+		"content": "peruvideo.mov",
+		"lines": [
+			{
+				"text": "Es como nuestro tesoro, ¿no?,porque siempre es verano",
+				"start": 3.375,
+				"end": 6.838,
+				"text-chunks": "Es como nuestro tesoro, ¿no?,/porque siempre es verano",
+        "en-text-chunks": "It's like our treasure/because it is always summer.",
+				"title": "clip-1"
+			},
+			{
+				"text": "siempre hay sol y buen clima",
+				"start": 6.838,
+				"end": 9,
+				"text-chunks": "siempre hay sol y buen clima",
+        "en-text-chunks": "there is always sun and good weather",
+				"title": "clip-2"
+			}
+		],
+		"offset": 0
+	}
+}

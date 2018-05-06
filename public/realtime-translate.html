@@ -1,0 +1,106 @@
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(() => {
+			const captions = [];
+			const clipStart = 24*60 + 27;
+			console.log(clipStart);
+			const timeDivisor = 10000000;
+			$("p").each((index, element) => {
+				const $element = $(element);
+
+				let start = $element.attr('begin');
+				start = parseInt(start.substring(0, start.length - 1)) / timeDivisor;
+				start -= clipStart;
+
+				let end = $element.attr('end');
+				end = parseInt(end.substring(0, end.length - 1)) / timeDivisor;
+				end -= clipStart;
+
+				captions.push({ text: $element.text(), start: start, end: end });
+			});
+			console.log(captions);
+
+
+			const displayed = {};
+			window.translations = [];
+			setInterval(() => {
+				let time = $("#audio-player")[0].currentTime;
+				for(let i = 0; i < captions.length; i++){
+					if(time >= captions[i].start && time <= captions[i].end){
+						$("#caption").html(captions[i].text);
+					}
+
+					// if(time > captions[i].end && !displayed[i]){
+					// 	// $("#caption").html(captions[i].text);
+					// 	displayed[i] = true;
+					// 	$("#audio-player")[0].pause();
+					// 	$("#translate-area").show();
+					// 	break;
+					// }
+				}
+			}, 50);
+
+			$("#continue").click(() => {
+				console.log($("#trans").val());
+				window.translations.push($("#trans").val());
+				$("#trans").val("");
+				$("#translate-area").hide();
+				$("#audio-player")[0].play();
+			});
+		});
+	</script>
+</head>
+<body>
+	<!-- <audio id="audio-player" controls>
+		<source src="velvet.ogg" type="audio/ogg">
+	</audio> -->
+	<video id="audio-player" width="320" height="240" controls>
+  	<source src="CDC-NS.mp4" type="video/mp4">
+			Your browser does not support the video tag.
+	</video>
+	<br>
+	<div id="translate-area" style="display:none">
+		<textarea id="trans" style="font-size: 24px; width:800px"></textarea>
+		<br>
+		<button id="continue" style="font-size:40px">continue</button>
+	</div>
+	<div id="caption"></div>
+	<div style="display:none">
+		<p begin="14694679999t" end="14708864169t" region="bottomCenter" style="s1" xml:id="subtitle373">[Isabel] Â¡No mames!</p>
+		<p begin="14709694999t" end="14722207499t" region="bottomCenter" style="s1" xml:id="subtitle374">Â¿QuÃ©?</p>
+		<p begin="14723038329t" end="14733889169t" region="bottomCenter" style="s1" xml:id="subtitle375">Â¿QuÃ© pedo, mami?</p>
+		<p begin="14734719999t" end="14771837079t" region="bottomCenter" style="s1" xml:id="subtitle376">-No mames. Ya.<br/>-Â¿Te dio miedo? Son mis mÃºsculos, ya sÃ©.</p>
+		<p begin="14772677919t" end="14797702919t" region="bottomCenter" style="s1" xml:id="subtitle377">No sabes el pinche dÃ­a<br/>en la oficina, gÃ¼ey.</p>
+		<p begin="14798533749t" end="14818133329t" region="bottomCenter" style="s1" xml:id="subtitle378">Pero vas a hablar, o sea,<br/>no entiendo por quÃ© te estresas.</p>
+		<p begin="14818974169t" end="14830235419t" region="bottomCenter" style="s1" xml:id="subtitle379">No, ni madres.</p>
+		<p begin="14831066249t" end="14858173329t" region="bottomCenter" style="s1" xml:id="subtitle380">PerdÃ³n, pero a mÃ­ no me van a poner<br/>de plato de segunda mesa.</p>
+		<p begin="14859014169t" end="14872777919t" region="bottomCenter" style="s1" xml:id="subtitle381">A ver...</p>
+		<p begin="14873608749t" end="14901136249t" region="bottomCenter" style="s1" xml:id="subtitle382">...las dos sabemos que Chava<br/>no estÃ¡ listo para ser presidente.</p>
+		<p begin="14901967079t" end="14918653749t" region="bottomCenter" style="s1" xml:id="subtitle383">Tarde o temprano la va a cagar.</p>
+		<p begin="14919484579t" end="14945350419t" region="bottomCenter" style="s1" xml:id="subtitle384">Tú espérate y te vas ganando el puesto<br/>poco a poco.</p>
+		<p begin="14946181249t" end="14977042079t" region="bottomCenter" style="s1" xml:id="subtitle385">Llevo 15 aÃ±os ganÃ¡ndome el puesto<br/>poco a poco, gÃ¼ey.</p>
+		<p begin="14977882919t" end="15006241249t" region="bottomCenter" style="s1" xml:id="subtitle386">Y se lo van a dar a Chava<br/>porque yo no tengo un par de huevos.</p>
+		<p begin="15007072079t" end="15017502499t" region="bottomCenter" style="s1" xml:id="subtitle387">Es que, Â¡quÃ© necia!</p>
+		<p begin="15018333329t" end="15043358329t" region="bottomCenter" style="s1" xml:id="subtitle388">A ver, Â¿estÃ¡s poniendo atenciÃ³n?<br/>No estÃ¡s poniendo atenciÃ³n.</p>
+		<p begin="15044199169t" end="15056291249t" region="bottomCenter" style="s1" xml:id="subtitle389">SÃ­, a ver, Â¿quÃ©?</p>
+		<p begin="15057122079t" end="15087992919t" region="bottomCenter" style="s1" xml:id="subtitle390">Vas a escribir el discurso mÃ¡s padrote<br/>que puedas.</p>
+		<p begin="15088823749t" end="15114679579t" region="bottomCenter" style="s1" xml:id="subtitle391">Vas a la junta de consejo,<br/>se lo presentas,</p>
+		<p begin="15115520419t" end="15149304169t" region="bottomCenter" style="s1" xml:id="subtitle392">les enseÃ±as lo lÃ­der que eres<br/>y las bonitas chichis que tienes.</p>
+		<p begin="15159724579t" end="15196010829t" region="bottomCenter" style="s1" xml:id="subtitle393">Entonces todos van a ver, o sea,<br/>lo lÃ­der que eres, gÃ¼ey.</p>
+		<p begin="15196851669t" end="15218953749t" region="bottomCenter" style="s1" xml:id="subtitle394">Entonces va a llegar este gÃ¼ey,<br/>la va a cagar,</p>
+		<p begin="15219784579t" end="15244399169t" region="bottomCenter" style="s1" xml:id="subtitle395">y todo mundo te va a voltear<br/>a ver a ti, para que lo salves.</p>
+		<p begin="15245229999t" end="15268172919t" region="bottomCenter" style="s1" xml:id="subtitle396">No tengo paciencia para largo plazo.</p>
+		<p begin="15269003749t" end="15290274999t" region="bottomCenter" style="s1" xml:id="subtitle397">Me caga esperar<br/>a que las cosas sucedan y ya.</p>
+		<p begin="15291105829t" end="15311546249t" region="bottomCenter" style="s1" xml:id="subtitle398">Con este gÃ¼ey al volante<br/>no tienes que esperar nada.</p>
+		<p begin="15312377079t" end="15336571249t" region="bottomCenter" style="s1" xml:id="subtitle399">No te vayas, gÃ¼ey.<br/>Tres madrazos mÃ¡s.</p>
+		<p begin="15337402079t" end="15361596249t" region="bottomCenter" style="s1" xml:id="subtitle400">-Ni madre. Ya.<br/>-Â¿Es porque te gano siempre?</p>
+		<p begin="15362427079t" end="15390795419t" region="bottomCenter" style="s1" xml:id="subtitle401">-[sonido zÃ­per]<br/>-Yo sÃ© que odias perder, ya lo sÃ©.</p>
+		<p begin="15401215829t" end="15411225829t" region="bottomCenter" style="s1" xml:id="subtitle402">[Emilia] Ya, gÃ¼ey.</p>
+		<p begin="15412066669t" end="15435419999t" region="bottomCenter" style="s1" xml:id="subtitle403">Emilia, ya me quiero largar.<br/>Â¿Me dejas, por favor, ya?</p>
+		<p begin="15436250829t" end="15451265829t" region="bottomCenter" style="s1" xml:id="subtitle404">Okey.</p>
+		<p begin="15452106669t" end="15474629169t" region="bottomCenter" style="s1" xml:id="subtitle405">-Es buena idea lo del discurso.<br/>-Te dije.</p>
+		<p begin="15486721249t" end="15521756249t" region="bottomCenter" style="s1" xml:id="subtitle406">-Ya me voy.<br/>-Un toque antes del discurso, acuÃ©rdate.</p>
+	</div>
+</body>

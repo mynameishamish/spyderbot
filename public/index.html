@@ -1,38 +1,230 @@
-<!DOCTYPE html>
-<html lang="en" >
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <head>
-  <meta charset="UTF-8">
-  <title>Simple JavaScript Chatbot</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/jquery.typeit/4.4.0/typeit.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/text.css">
+  <script>
+  const socket = io();
 
-  <script src="/socket.io/socket.io.js"></script>
+  var voices = window.speechSynthesis.getVoices();
 
-      <link rel="stylesheet" href="css/style.css">
+  function say(text){
+    var voices = window.speechSynthesis.getVoices();
+    var vIndex = 0;
+    for(var v in voices){
+      if(voices[v].lang == 'es-ES'){
+        vIndex = v;
+        break;
+      }
+    }
+    var msg = new SpeechSynthesisUtterance();
+    msg.voice = voices[vIndex];
+    msg.text = text;
+    speechSynthesis.speak(msg);
+  }
+
+  socket.on('type-intro', function(){
+    if (!$("#text-area").length) {
+      var textArea = '<div id="text-area"></div>';
+      $("#start").after(textArea);
+      $(".video").remove();
+    }
+    $('#text-area').typeIt({
+      speed: 50,
+      autoStart: false,
+      lifeLike: false,
+    })
+    .tiType('Tom')
+  });
+
+  socket.on('type-delete', function(){
+    $("#start").html('');
+    $('#text-area').typeIt({
+      speed: 10,
+      autoStart: false,
+      deleteSpeed: 2000
+    })
+    .tiDelete()
+  });
+
+  socket.on('mic', function(){
+    var op = $(".ti-cursor").css("opacity")
+    var dot = '<i class="fas fa-microphone"></i>';
+    $(".ti-container").after(dot)
+    $(".ti-cursor").hide()
+    setInterval (function(){
+      var op = $(".ti-cursor").css("opacity")
+      $(".ti-dot").html('<i class="fas fa-microphone"></i>')
+      $(".ti-cursor").hide()
+    }, 1)
+  })
+
+  socket.on('type-word-with-def', function(text){
+    $("#start").html('');
+    $('#text-area').typeIt({
+      speed: 50,
+      autoStart: false,
+      lifeLike: false
+    })
+    .tiType(text.word)
+    .tiBreak()
+    .tiPause(300)
+    .tiType('=')
+    .tiBreak()
+    .tiPause(300)
+    .tiType(text.def)
+  });
+
+  socket.on('changeColor', function(color){
+
+    function changeBack() {
+      socket.emit('type-delete');
+      // $('document.body').animate({backgroundColor: 'none'}, 'slow');
+      document.body.style.background = 'none'
+    }
+    // $('document.body').animate({backgroundColor: color}, 'slow');
+    document.body.style.background = color
+    setTimeout(changeBack, 5000);
+  });
+
+  socket.on('play-video', function(video, start, duration){
+    $("#text-area").remove();
+    $("#start").html('');
+    var play = `<div id=""><video autoplay class="video" id="audio-player" width="auto" height="auto" controls>
+    <source src="videos/` + video + `" type="video/mp4"></source>
+    Your browser does not support the video tag.</video><br>
+    <div id="translate-area" style="display:none"><textarea id="trans" style="font-size: 24px; width:800px"></textarea>
+    <br>
+    </div><div id="caption"></div>`;
+    $("#start").html(play);
+    $(document).ready(() => {
+      /*const captions = [];
+      const clipStart = 24*60 + 27; // 1,467 seconds
+      console.log(clipStart);
+      const timeDivisor = 10000000;
+      $("p").each((index, element) => {
+      const $element = $(element);
+
+      let start = $element.attr('begin');
+      start = parseInt(start.substring(0, start.length - 1)) / timeDivisor;
+      start -= clipStart;
+
+      let end = $element.attr('end');
+      end = parseInt(end.substring(0, end.length - 1)) / timeDivisor;
+      end -= clipStart;
+
+      captions.push({ text: $element.text(), start: start, end: end });
+    });
+    console.log(captions);
 
 
+    const displayed = {};
+    window.translations = [];
+    let lastText = "";
+    setInterval(() => {
+    let time = $("#audio-player")[0].currentTime;
+    for(let i = 0; i < captions.length; i++){
+    if(time >= captions[i].start && time <= captions[i].end){
+    const newText = captions[i].text;
+    if(lastText != newText){
+    $("#caption").html(newText);
+    lastText = newText;
+  }
+}
+}
+}, 50);*/
+
+$("#continue").click(() => {
+  // console.log($("#trans").val());
+  window.translations.push($("#trans").val());
+  $("#trans").val("");
+  $("#translate-area").hide();
+  $("#audio-player")[0].play();
+});
+});
+var vid = document.getElementById("audio-player");
+var videoStartTime = start;
+var durationTime = duration;
+vid.currentTime = videoStartTime;
+vid.addEventListener('timeupdate', function() {
+  if(this.currentTime > Number(videoStartTime) + Number(durationTime)){
+    this.pause();
+  }
+});
+});
+
+socket.on('type-word', function(word, subtitles){
+  $("#start").html('');
+  if (!$("#text-area").length) {
+    var textArea = '<div id="text-area"></div>';
+  }
+
+  $(".ti-dot").remove()
+  $("#start").html(textArea);
+  console.log('subtitles is: ' + subtitles);
+  if (subtitles == "true") {
+    if (!$("#text-area").length) {
+      var textArea = '<div id="text-area"></div>';
+      $("#start").after(textArea);
+      $(".video").remove();
+    }
+    $('#text-area').typeIt({
+      speed:50,
+      autoStart: false,
+      lifeLike: false
+    })
+    .tiType(word);
+  } else {
+    if (!$("#text-area").length) {
+      var textArea = '<div id="text-area"></div>';
+      $("#start").after(textArea);
+      $(".video").remove();
+    }
+    $('#text-area').typeIt({
+      speed: 50,
+      autoStart: false,
+      lifeLike: false
+    })
+    .tiType(word)
+  }
+  //say(word);
+})
+
+socket.on('voice-recog', function(word){
+  $("#start").html('');
+  if (!$("#text-area").length) {
+    var textArea = '<div id="text-area"></div>';
+  }
+  $("#start").html(textArea);
+  console.log('recognized voice is: ' + word);
+
+  $("#start").after(textArea);
+  $(".video").remove();
+
+  $('#text-area').typeIt({
+    speed:50,
+    autoStart: false,
+    lifeLike: false
+  })
+  .tiType(word);
+  //say(word);
+})
+</script>
 </head>
 
-<body id="body">
-
-  <div id="gif">
-    
+<body>
+  <div id="start">
   </div>
-
-  <div id="output"></div>
-
-<div id="container">
-    <input type="text" id="input" value="">
-</div>
-
-<!-- jquery for enter key press -->
-<script src="https://code.jquery.com/jquery-3.0.0.js" integrity="sha256-jrPLZ+8vDxt2FnE1zvZXCkCcebI/C8Dt5xyaQBjxQIo=" crossorigin="anonymous"></script>
-
-
-<script  src="js/index.js"></script>
-
-
-
-
+  <div id="text-area"></div>
 </body>
 
-</html>
+<script>
+$('#text-area').typeIt({
+  strings: '',
+  speed: 70,
+  autoStart: true
+});
+</script>

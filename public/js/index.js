@@ -8,6 +8,7 @@ var api_key = "&api_key=DlqAwfTsWWdeZwmOemKS2jUUHJ2FuOQp"
 
 
 
+
 													// keep count of question, used for IF condition.
 var output = document.getElementById('output');				// store id="output" in output variable
 output.innerHTML = "<h1 id=response> </h1>";													// ouput first question

@@ -1,0 +1,240 @@
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script>
+  let captions = null;
+  let videos = null;
+  const socket = io();
+  const instruction = "Listen to the following video clip and repeat what your hear aloud"
+  function intro(){
+    socket.emit('type-intro');
+  }
+  function deleteText(){
+    socket.emit('type-delete');
+  }
+  function runPython() {
+    socket.emit('runPython');
+  }
+  function metanod() {
+    socket.emit('metanod');
+  }
+  function instn() {
+    socket.emit('type-word', instruction);
+  }
+  function dot() {
+    socket.emit('type-word', '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
+    setTimeout(function(){
+        socket.emit('mic');
+    }, '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.length+100);
+  }
+  function preinstn() {
+    socket.emit('type-word', 'Listen to the videos I show you and repeat what you hear aloud when you see the red dot');
+    setTimeout(function(){
+        socket.emit('type-word', 'Try saying "Hello Pigu"');
+        setTimeout(function(){
+          socket.emit('mic');
+        }, 'Try saying "Hello Pigu"'.length*100);
+    }, 'Listen to the videos I show you and repeat what you hear aloud when you see the red dot'.length*80);
+
+
+    // socket.emit('type-word', '1. Every time you get a phrase right, the robot offers you a English translation. After completing a full video, feel free to tear it off.');
+    // setTimeout(function(){
+    //   socket.emit('printer', "Hi, how are you!");
+    //   socket.emit('offerandreturn');
+    // }, 500);
+
+    // setTimeout(function(){
+    //     socket.emit('type-delete');
+    //     socket.emit('type-word', '2. Start repeating the video after you see the red dot')
+    //     setTimeout(function(){
+    //         socket.emit('mic');
+    //     }, '1. Start repeating the video after you see the red dot'.length*80);
+    // }, 12000);
+  }
+  function preinstn2() {
+    socket.emit('type-word', 'When you say a phrase correctly, I\'ll give you a printout.');
+    socket.emit('printer', 'hello participant');
+    setTimeout(function(){
+      socket.emit('type-word', 'Feel free to tear off the paper after it prints');
+      setTimeout(function() {
+        socket.emit('offerandreturn');
+      }, 'Feel free to tear off the paper after it prints'.length*100);
+
+    }, 4000);
+  }
+
+  function returnto() {
+    socket.emit('return');
+  }
+  function offerandreturn() {
+    socket.emit('offerandreturn');
+  }
+  function offer() {
+    socket.emit('offer');
+  }
+  socket.on('video-selector', (titles) => {
+    for (var title of titles) {
+      $('#video-selector').append(`<button class="title-selector" val="${title}">${title}</button>`)
+    }
+
+    $(".title-selector").click(function(){
+      const title = $(this).attr('val');
+      socket.emit('captions', title);
+    });
+  });
+  function changeColor(color) {
+    if (color === 'pink') {
+      // socket.emit('type-word', 'Try Again :(');
+      socket.emit('shake');
+    } else {
+      // socket.emit('type-word', 'GOOD JOB!');
+      socket.emit('nod');
+    }
+    socket.emit('changeColor', color)
+  }
+  socket.on('captions', (_captions) => {
+    $('#videos').html('');
+    $('#radio-buttons-start').html('');
+    $('#radio-buttons-end').html('');
+
+    captions = _captions;
+    content = captions.content;
+
+    $('#videos').append('<button class="play-video" content="' + content + '" start="' + captions.lines[0]['start'] + '" duration="' + ((captions.lines[captions.lines.length - 1]['end']) - captions.lines[0]['start']) + '">Entire Video</button>');
+
+    for (var line of captions.lines) {
+      $('#videos').append('<button class="play-video" content="' + content + '" start="' + line.start + '" duration="' + (line.end-line.start) + '">' + line.title + '</button>');
+    }
+
+    $('#videos').append('<input type="checkbox" name="subtitles" value="true">Subtitles</input>');
+
+    var globalChunks = [];
+    var n = 0;
+    var m = 1;
+    for (var caption of captions.lines) {
+      caption.chunks = caption['text-chunks'].split('/');
+      caption.eng_chunks = caption['en-text-chunks'].split('/');
+      $('#radio-buttons-end').append(`<div id="caption${m}">clip ${m} Espanol: </div>
+      <div id="second${m}">clip ${m} second task: </div>
+      <div id="eng_caption${m}">clip ${m} English: </div><br>`)
+      for (var chunk of caption.chunks){
+        // $('#radio-buttons-start').append(`<input type="radio"
+        // name="chunk" value="${n}">
+        // <label for="contactChoice1">${chunk}</label>`)
+        $('#caption'+m).append(`<button class="end-chunk" chunk="${n}">${chunk}</button>`)
+        globalChunks.push(chunk);
+        n++;
+      }
+      $('#caption'+m).append(`<br>`)
+      for (var chunk of caption.chunks){
+        // $('#radio-buttons-start').append(`<input type="radio"
+        // name="chunk" value="${n}">
+        // <label for="contactChoice1">${chunk}</label>`)
+        $('#second'+m).append(`<button class="second-task-chunk" chunk="${n}">${chunk}</button>`)
+        globalChunks.push(chunk);
+        n++;
+      }
+      $('#caption'+m).append(`<br>`)
+      for (var chunk of caption.eng_chunks){
+        // $('#radio-buttons-start').append(`<input type="radio"
+        // name="chunk" value="${n}">
+        // <label for="contactChoice1">${chunk}</label>`)
+        $('#eng_caption'+m).append(`<button class="eng-end-chunk" chunk="${n}">${chunk}</button>`)
+        globalChunks.push(chunk);
+        n++;
+      }
+      m++;
+    }
+
+    $(".end-chunk").click(function(){
+      var subtitles = "false";
+      // if ($('input[name="subtitles"]:checked').val()) {
+        // subtitles = "true"
+      // }
+      const chunkIndex = $(this).attr('chunk');
+      // var value = $('input[name="chunk"]:checked').val();
+      // var value = $(this).val()
+      // var output = '';
+      // for (var i = Number(value); i < Number(chunkIndex) + 1; i++) {
+        // console.log(globalChunks[i]);
+        // output += String(globalChunks[i]) + ' ';
+      // }
+      output = globalChunks[chunkIndex]
+      // console.log('value: ' + value);
+      console.log('chunkIndex: ' + chunkIndex);
+      console.log('output: ' + output);
+      socket.emit('type-word', output, subtitles);
+      setTimeout(function(){
+          socket.emit('mic');
+      }, output.length*100);
+    });
+    $(".eng-end-chunk").click(function(){
+      var chunk = $(this).text();
+      socket.emit('printer', chunk);
+    });
+    $(".second-task-chunk").click(function(){
+      socket.emit('type-word', 'Repeat the chunk without looking at it.');
+      setTimeout(function(){
+          socket.emit('type-word', $(this).text());
+          setTimeout(dot(), 3000)
+      }, 3000);
+    });
+
+    $(".play-video").click(function(){
+      const video = $(this).attr('content');
+      const start = $(this).attr('start');
+      const duration = $(this).attr('duration');
+      socket.emit('play-video', video, start, duration);
+    });
+  });
+
+  $(document).ready(function(){
+
+    $(".word-button").click(function(){
+      const word = $(this).attr('word');
+      const def = $(this).attr('def');
+      console.log('def = ' + def);
+      if (def) {
+        socket.emit('type-word-with-def', { word: word, def: def });
+      } else {
+        socket.emit('type-word', word);
+      }
+    });
+
+    $("#submit-button").click(function(){
+      socket.emit('type-word', $("#text-area").val());
+    });
+
+  });
+
+
+
+  </script>
+</head>
+<body>
+  <button onclick="intro()">Introduction</button>
+  <button onclick="deleteText()">delete</button>
+  <br>
+  <textarea id="text-area"></textarea>
+  <button id="submit-button">Submit</button>
+  <div id="video-selector"></div>
+  <br>
+  <button onclick="changeColor('LightGreen')">GOOD JOB!</button>
+  <button onclick="changeColor('pink')">Try again</button>
+  <button onclick="metanod">Meta nod</button>
+  <button onclick="runPython()">Run Python</button>
+  <br>
+  <button onclick="preinstn()">Pre-instn reddot</button>
+  <button onclick="preinstn2()">Pre-instn printout</button>
+  <button onclick="instn()">Instruction</button>
+  <br><br>
+  <button onclick="dot()">Prompt Dot</button>
+  <button onclick="returnto()">return</button>
+  <button onclick="offer()">Offer</button>
+  <button onclick="offerandreturn()">Offer and return</button>
+  <br><br>
+  <div id="videos"></div>
+  <form id="radio-buttons-start"></form>
+  <div id="radio-buttons-end"></div>
+  <br/>
+</body>
