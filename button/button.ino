@@ -1,3 +1,16 @@
+/* --- Spyderbot button ---
+
+You will need the RedBear's Device ID and the Access Token. These are accessible as environment variables on the Pi
+
+REDBEAR_DEVICE_ID
+REDBEAR_ACCESS_TOKEN
+
+Query the status of this button by running the following command:
+
+curl "https://api.particle.io/v1/devices/REDBEAR_DEVICE_ID/spyderbutton?access_token=REDBEAR_ACCESS_TOKEN"
+
+*/
+
 const int onboardLED = D7;
 const int buttonLED = D0;
 const int buttonPin = D1;
