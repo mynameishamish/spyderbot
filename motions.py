@@ -85,10 +85,9 @@ motionoffer= [
 # motions
 
 print("starting Easepos")
-
 motionofferNew= [
     [robot.m1 , x, robot.m1.present_position, -4] ,
-    [robot.m2 , y, robot.m2.present_position, -15] ,
+    [robot.m2 , y, robot.m2.present_position, -45] ,
     [robot.m3 , y, robot.m3.present_position, 110]]
 
 motionNodup = [
@@ -100,26 +99,30 @@ motionNoddown = [
 motionAfteroffer = [
     # [robot.m1 , x, robot.m1.present_position, robot.m1.present_position] ,
     [robot.m2 , y, robot.m2.present_position, -60] ,
-    [robot.m3 , y, robot.m3.present_position, 135]]
+    [robot.m3 , y, robot.m3.present_position, 130]]
 
-
+midpos = [
+    [robot.m1 , x, robot.m1.present_position, -4] ,
+    [robot.m2 , x, robot.m2.present_position, -65] ,
+    [robot.m3 , x, robot.m3.present_position, 130]
+]
 
 turnaway = [
-    [robot.m1 , x, robot.m1.present_position, 57.33] ,
-    [robot.m2 , x, robot.m2.present_position, -32.4] ,
-    [robot.m3 , x, robot.m3.present_position, 103.42]
+    [robot.m1 , x, robot.m1.present_position, 57.5] ,
+    [robot.m2 , x, robot.m2.present_position, -32.5] ,
+    [robot.m3 , x, robot.m3.present_position, 103.5]
 ]
 
 listen = [
     [robot.m1 , x, robot.m1.present_position, -4] ,
-    [robot.m2 , x, robot.m2.present_position, -84.9] ,
-    [robot.m3 , x, robot.m3.present_position, 107.18]
+    [robot.m2 , x, robot.m2.present_position, -75] ,
+    [robot.m3 , x, robot.m3.present_position, 107]
 ]
 
 strench  = [
     [robot.m1 , x, robot.m1.present_position, -4] ,
     [robot.m2 , s, robot.m2.present_position, -57] ,
-    [robot.m3 , x, robot.m3.present_position, 146]
+    [robot.m3 , x, robot.m3.present_position, 140]
 ]
 
 look = [
@@ -130,7 +133,7 @@ look = [
 
 read = [
     [robot.m1 , x, robot.m1.present_position, -4] ,
-    [robot.m2 , x, robot.m2.present_position, -27] ,
+    [robot.m2 , x, robot.m2.present_position, -35] ,
     [robot.m3 , x, robot.m3.present_position, 114]
 ]
 
@@ -144,6 +147,43 @@ musicup = [
     [robot.m1 , x, robot.m1.present_position, -4] ,
     [robot.m2 , eoc, robot.m2.present_position, -55] ,
     [robot.m3 , x, robot.m3.present_position, 99]
+]
+
+# sigh, perform best when the speed is 45, 45, 45
+turn1 = [
+    [robot.m1 , x, robot.m1.present_position, -55] ,
+    [robot.m2 , x, robot.m2.present_position, -45] ,
+    [robot.m3 , x, robot.m3.present_position, 100]
+
+]
+
+turnup = [
+    [robot.m1 , x, -55, -55] ,
+    [robot.m2 , x, -45, -53] ,
+    [robot.m3 , x, 100, 117]
+
+]
+
+turndown = [
+    [robot.m1 , x, -55, -55] ,
+    [robot.m2 , x, -53, -50] ,
+    [robot.m3 , x, 117, 98]
+
+]
+
+#check from different angle, perform best when the speed is 45, 45, 45
+check1 = [
+    [robot.m1 , s, robot.m1.present_position, -46] ,
+    [robot.m2 , s, robot.m2.present_position, -67] ,
+    [robot.m3 , y, robot.m3.present_position, 83]
+
+]
+
+check2 = [
+    [robot.m1 , s, robot.m1.present_position, 35] ,
+    [robot.m2 , s, robot.m2.present_position, -67] ,
+    [robot.m3 , s, robot.m3.present_position, 83]
+
 ]
 
 
