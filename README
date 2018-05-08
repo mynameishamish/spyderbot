@@ -68,10 +68,13 @@ Motor ID's 2 (Base), 3 (Neck), 4 (Head)
 ** -- **
 
 
-Current Motion:
+About Motion:
 
-All the pre coded motions are stored in runmotion.py.
-The motions for the boss bot with GUI are in MotionGUI.py
+1. All the pre coded motions are stored in motions.py 
+2. If user want to run motions with terminal command, please run runmotion.py and type in the motion you want
+3. The motions for the boss bot with GUI are in MotionGUI.py (The GUI is setted with Tkinter)
+
+
 
 To Do:
 
