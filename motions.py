@@ -368,7 +368,26 @@ def nod():
     time.sleep(.05)
     print("up")
     easingMultiple(motionNodup,.5)
-
+    
+def sigh():
+    easingMultiple(turn1,1.5)
+    time.sleep(1)
+    print("up")
+    easingMultiple(turnup,1.5)
+    print("down")
+    easingMultiple(turndown,1.5)
+    time.sleep(1)
+    
+def checkaround():
+     easingMultiple(look,1)
+     time.sleep(0.5)
+     # easingMultiple(motionrest,1)
+     # time.sleep(1)
+     easingMultiple(check1,1)
+     time.sleep(1)
+     easingMultiple(check2,1.5)
+     time.sleep(2)
+    
 def limp():
     print("returning home")
     easingMultiple(motionrest, 1)
