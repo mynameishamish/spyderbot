@@ -1,0 +1,20 @@
+#text-area {
+  font-family: "HelveticaNeue-Bold";
+  font-size: 100px;
+  padding-left: 40px;
+  padding-top: 145px;
+}
+
+body {
+  margin: 0px;
+}
+
+#caption {
+  font-family: "HelveticaNeue-Bold";
+  font-size: 50px;
+  position: fixed;
+  bottom: 15%;
+  color: white;
+  width: 100%;
+  text-align: center;
+}

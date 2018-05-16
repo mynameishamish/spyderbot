@@ -1,5 +1,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <head>
+  <style>
+   img {
+    margin-left:auto;
+    margin-right:auto;
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+}
+</style>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
@@ -27,6 +36,7 @@
   }
 
   socket.on('type-intro', function(){
+    document.getElementById("mic-animate").style.display = "none";
     if (!$("#text-area").length) {
       var textArea = '<div id="text-area"></div>';
       $("#start").after(textArea);
@@ -41,6 +51,7 @@
   });
 
   socket.on('type-delete', function(){
+    document.getElementById("mic-animate").style.display = "none";
     $("#start").html('');
     $('#text-area').typeIt({
       speed: 10,
@@ -51,18 +62,11 @@
   });
 
   socket.on('mic', function(){
-    var op = $(".ti-cursor").css("opacity")
-    var dot = '<i class="fas fa-microphone"></i>';
-    $(".ti-container").after(dot)
-    $(".ti-cursor").hide()
-    setInterval (function(){
-      var op = $(".ti-cursor").css("opacity")
-      $(".ti-dot").html('<i class="fas fa-microphone"></i>')
-      $(".ti-cursor").hide()
-    }, 1)
+    document.getElementById("mic-animate").style.display = "inline-block";
   })
 
   socket.on('type-word-with-def', function(text){
+    document.getElementById("mic-animate").style.display = "none";
     $("#start").html('');
     $('#text-area').typeIt({
       speed: 50,
@@ -79,7 +83,7 @@
   });
 
   socket.on('changeColor', function(color){
-
+    document.getElementById("mic-animate").style.display = "none";
     function changeBack() {
       socket.emit('type-delete');
       // $('document.body').animate({backgroundColor: 'none'}, 'slow');
@@ -91,6 +95,7 @@
   });
 
   socket.on('play-video', function(video, start, duration){
+    document.getElementById("mic-animate").style.display = "none";
     $("#text-area").remove();
     $("#start").html('');
     var play = `<div id=""><video autoplay class="video" id="audio-player" width="auto" height="auto" controls>
@@ -157,6 +162,7 @@ vid.addEventListener('timeupdate', function() {
 });
 
 socket.on('type-word', function(word, subtitles){
+  document.getElementById("mic-animate").style.display = "none";
   $("#start").html('');
   if (!$("#text-area").length) {
     var textArea = '<div id="text-area"></div>';
@@ -194,6 +200,7 @@ socket.on('type-word', function(word, subtitles){
 })
 
 socket.on('voice-recog', function(word){
+  document.getElementById("mic-animate").style.display = "none";
   $("#start").html('');
   if (!$("#text-area").length) {
     var textArea = '<div id="text-area"></div>';
@@ -212,6 +219,7 @@ socket.on('voice-recog', function(word){
   .tiType(word);
   //say(word);
 })
+
 </script>
 </head>
 
@@ -219,6 +227,7 @@ socket.on('voice-recog', function(word){
   <div id="start">
   </div>
   <div id="text-area"></div>
+  <img id="mic-animate" src="mic-animate.gif" alt="Start" align="middle" style="display: none;width:128px;height:128px;">
 </body>
 
 <script>
