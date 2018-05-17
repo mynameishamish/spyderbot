@@ -14,7 +14,7 @@
   <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
   <script src="https://cdn.jsdelivr.net/jquery.typeit/4.4.0/typeit.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/text.css">
+  <link rel="stylesheet" href="/css/style.css">
   <script>
   const socket = io();
 
@@ -229,6 +229,8 @@ socket.on('voice-recog', function(word){
   <div id="text-area"></div>
   <img id="mic-animate" src="mic-animate.gif" alt="Start" align="middle" style="display: none;width:128px;height:128px;">
 </body>
+
+<script  src="js/index.js"></script>
 
 <script>
 $('#text-area').typeIt({

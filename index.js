@@ -20,14 +20,14 @@ app.use(express.static('public'));
 //   //res.render('test', { stuffFromServer: messageFile, pid: participantId });
 // });
 
-app.get('/writeTxt', (req, res) => {
-  req.setTimeout(0)
-  const participantId = req.query.id;
-  fs.appendFile('test.txt', req.query.msg, function (err) {
-  if (err) throw err;
-  console.log('Saved!');
-  });
-});
+// app.get('/writeTxt', (req, res) => {
+//   req.setTimeout(0)
+//   const participantId = req.query.id;
+//   fs.appendFile('test.txt', req.query.msg, function (err) {
+//   if (err) throw err;
+//   console.log('Saved!');
+//   });
+// });
 
 
 io.on('connection', function(socket){
@@ -63,15 +63,15 @@ io.on('connection', function(socket){
   socket.on('play-video', function(video, start, duration){
     io.sockets.emit('play-video', video, start, duration);
   });
-  socket.on('type-word-with-def', function(text){
-    io.sockets.emit('type-word-with-def', text);
-  });
+  // socket.on('type-word-with-def', function(text){
+  //   io.sockets.emit('type-word-with-def', text);
+  // });
   socket.on('type-word', function(text, subtitles){
     io.sockets.emit('type-word', text, subtitles);
   });
-  socket.on('voice-recog', function(word){
-    io.sockets.emit('voice-recog',word);
-  });
+  // socket.on('voice-recog', function(word){
+  //   io.sockets.emit('voice-recog',word);
+  // });
   socket.on('runPython', function(){
     PythonShell.run('helloworld.py', function (err) {
     if (err) throw err;
@@ -107,6 +107,7 @@ io.on('connection', function(socket){
     PythonShell.run('../spyderbot/offerAndReturn.py', function (err) {
     })
   });
+
   socket.on('printer', function(chunk){
     console.log(chunk);
     var options = {
@@ -119,6 +120,7 @@ io.on('connection', function(socket){
       console.log('results: %j', results);
     });
   });
+
   socket.on('changeColor', function(color){
     io.sockets.emit('changeColor',color);
   });
@@ -127,3 +129,108 @@ io.on('connection', function(socket){
 server.listen(3000, function () {
   console.log('Launching language robot!')
 });
+
+
+//---------------------- WEBSOCKET COMMUNICATION -----------------------------//
+// this is the websocket event handler and say if someone connects
+// as long as someone is connected, listen for messages
+io.on('connect', function(socket) {
+  console.log('a new user connected');
+  var questionNum = 0; // keep count of question, used for IF condition.
+  socket.on('loaded', function(){// we wait until the client has loaded and contacted us that it is ready to go.
+
+  socket.emit('answer',"Hey, Hello I am Pingu."); //We start with the introduction;
+  setTimeout(timedQuestion, 2500, socket,"What is your Name?"); // Wait a moment and respond with a question.
+
+});
+  socket.on('message', (data)=>{ // If we get a new message from the client we process it;
+        console.log(data);
+        questionNum= bot(data,socket,questionNum);	// run the bot function with the new message
+      });
+  socket.on('disconnect', function() { // This function  gets called when the browser window gets closed
+    console.log('user disconnected');
+  });
+});
+
+//--------------------------CHAT BOT FUNCTION-------------------------------//
+function bot(data,socket,questionNum) {
+  var input = data; // This is generally really terrible from a security point of view ToDo avoid code injection
+  var answer;
+  var question;
+  var waitTime;
+
+
+/// These are the main statments that make up the conversation.
+  if (questionNum == 0) {
+  answer= 'Hello ' + input + ' :-)';// output response
+  waitTime =2000;
+  question = 'How old are you?';			    	// load next question
+  }
+  else if (questionNum == 1) {
+  answer= 'Really ' + input + ' Years old? So that means you where born in: ' + (2018-parseInt(input));// output response
+  waitTime =2000;
+  question = 'Where do you live?';			    	// load next question
+  }
+  else if (questionNum == 2) {
+  answer= ' Cool! I have never been to ' + input+'.';
+  waitTime =2000;
+  question = 'Whats your favorite Color?';			    	// load next question
+  }
+  else if (questionNum == 3) {
+  answer= 'Ok, ' + input+' it is.';
+  socket.emit('changeBG',input.toLowerCase());
+  waitTime = 2000;
+  question = 'Can you still read the font?';			    	// load next question
+  }
+  else if (questionNum == 4) {
+    if(input.toLowerCase()==='yes'|| input===1){
+      answer = 'Perfect!';
+      waitTime =2000;
+      question = 'Whats your favorite place?';
+    }
+    else if(input.toLowerCase()==='no'|| input===0){
+        socket.emit('changeFont','white'); /// we really should look up the inverse of what we said befor.
+        answer=''
+        question='How about now?';
+        waitTime =0;
+        questionNum--; // Here we go back in the question number this can end up in a loop
+    }else{
+      answer=' I did not understand you. Can you please answer with simply with yes or no.'
+      question='';
+      questionNum--;
+      waitTime =0;
+    }
+  // load next question
+  }
+  else if (questionNum == 5) {
+  answer= ' Cool! I have never been to ' + input+'.';
+  waitTime =2000;
+  question = 'Whats your favourite animal?';			    	// load next question
+  }
+  else if (questionNum == 6) {
+  answer= ' Me Too! Check out this gif of a ' + input+'.';
+  waitTime =2000;
+  gifCall()			    	// load next question
+  }
+  else{
+    answer= 'I have nothing more to say!';// output response
+    waitTime =0;
+    question = '';
+  }
+
+
+/// We take the changed data and distribute it across the required objects.
+  socket.emit('answer',answer);
+  setTimeout(timedQuestion, waitTime,socket,question);
+  return (questionNum+1);
+}
+
+function timedQuestion(socket,question) {
+  if(question!=''){
+  socket.emit('question',question);
+}
+  else{
+    //console.log('No Question send!');
+  }
+
+}

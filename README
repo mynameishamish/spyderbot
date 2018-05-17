@@ -12,7 +12,8 @@ Pypot
 To run this example:
 
 1. clone the repo
-3. run `node server.js`
+2. run 'npm install' to install dependencies
+3. run `node index.js`
 
 # --- #
 
@@ -31,6 +32,7 @@ Base (m1)           -48           -4            40
 
 
 # --- #
+
 Motion Design
 
 motions are a list of lists containing motor, easing function, start position, final position
@@ -39,6 +41,7 @@ motionrest= [
     [robot.m1 , x, robot.m1.present_position, -4] ,
     [robot.m2 , x, robot.m2.present_position, -77] ,
     [robot.m3 , x, robot.m3.present_position, 85]]
+
 # --- #
 
 CURRENT STATUS:
@@ -51,13 +54,12 @@ A good range to start with speeds is from 10-40, then work up or down from there
 
 
 
-
 Dependencies
 Pypot: https://poppy-project.github.io/pypot/
 
 
 Hardware:
-http://www.trossenrobotics.com/dynamixel-ax-12-robot-actuator.aspx
+http://www.trossenrobotics.com/dynamixel-ax-12-robot-actuator.aspx + also the ax-18 model (same shell)
 http://www.trossenrobotics.com/usb2ax
 
 
@@ -70,19 +72,19 @@ Motor ID's 2 (Base), 3 (Neck), 4 (Head)
 
 About Motion:
 
-1. All the pre coded motions are stored in motions.py 
+1. All the pre coded motions are stored in motions.py
 2. If user want to run motions with terminal command, please run runmotion.py and type in the motion you want
 3. The motions for the boss bot with GUI are in MotionGUI.py (The GUI is setted with Tkinter)
 
 
-
 To Do:
 
-Easing function working with multiple motors
-Integrate Easing into it's own file
 Make global speed variable easily changeable
 Integrate printer code
 Setup node server (Pi)
 
 
 Completed:
+
+Easing function working with multiple motors
+Integrate Easing into it's own file
