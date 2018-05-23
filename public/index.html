@@ -14,29 +14,32 @@
   <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
   <script src="https://cdn.jsdelivr.net/jquery.typeit/4.4.0/typeit.min.js"></script>
-  <link rel="stylesheet" href="/css/style.css">
+  <!-- <link rel="stylesheet" href="/css/style.css"> -->
   <script>
   const socket = io();
 
   var voices = window.speechSynthesis.getVoices();
 
-  function say(text){
-    var voices = window.speechSynthesis.getVoices();
-    var vIndex = 0;
-    for(var v in voices){
-      if(voices[v].lang == 'es-ES'){
-        vIndex = v;
-        break;
-      }
-    }
-    var msg = new SpeechSynthesisUtterance();
-    msg.voice = voices[vIndex];
-    msg.text = text;
-    speechSynthesis.speak(msg);
-  }
+  // function say(text){
+  //   var voices = window.speechSynthesis.getVoices();
+  //   var vIndex = 0;
+  //   for(var v in voices){
+  //     if(voices[v].lang == 'es-ES'){
+  //       vIndex = v;
+  //       break;
+  //     }
+  //   }
+  //   var msg = new SpeechSynthesisUtterance();
+  //   msg.voice = voices[vIndex];
+  //   msg.text = text;
+  //   speechSynthesis.speak(msg);
+  // }
 
   socket.on('type-intro', function(){
     document.getElementById("mic-animate").style.display = "none";
+    // const imgurl = "url('https://media3.giphy.com/media/5GoVLqeAOo6PK/giphy.gif')";
+    // console.log('Changing backgroundurl to:', imgurl);
+    // document.body.style.backgroundImage = imgurl
     if (!$("#text-area").length) {
       var textArea = '<div id="text-area"></div>';
       $("#start").after(textArea);
@@ -49,6 +52,17 @@
     })
     .tiType('Tom')
   });
+
+
+
+  socket.on('changeGif', function(gifurl){
+    // const imgurl = "url('https://media3.giphy.com/media/5GoVLqeAOo6PK/giphy.gif')";
+    // var gifurl = imgurl;
+    console.log('Changing backgroundImage to:', gifurl);
+    document.body.style.backgroundImage = gifurl;
+  });
+
+
 
   socket.on('type-delete', function(){
     document.getElementById("mic-animate").style.display = "none";
@@ -197,28 +211,33 @@ socket.on('type-word', function(word, subtitles){
     .tiType(word)
   }
   //say(word);
-})
+});
 
-socket.on('voice-recog', function(word){
-  document.getElementById("mic-animate").style.display = "none";
-  $("#start").html('');
-  if (!$("#text-area").length) {
-    var textArea = '<div id="text-area"></div>';
-  }
-  $("#start").html(textArea);
-  console.log('recognized voice is: ' + word);
+// socket.on('voice-recog', function(word){
+//   document.getElementById("mic-animate").style.display = "none";
+//   $("#start").html('');
+//   if (!$("#text-area").length) {
+//     var textArea = '<div id="text-area"></div>';
+//   }
+//   $("#start").html(textArea);
+//   console.log('recognized voice is: ' + word);
+//
+//   $("#start").after(textArea);
+//   $(".video").remove();
+//
+//   $('#text-area').typeIt({
+//     speed:50,
+//     autoStart: false,
+//     lifeLike: false
+//   })
+//   .tiType(word);
+//   //say(word);
+// })
 
-  $("#start").after(textArea);
-  $(".video").remove();
-
-  $('#text-area').typeIt({
-    speed:50,
-    autoStart: false,
-    lifeLike: false
-  })
-  .tiType(word);
-  //say(word);
-})
+  // socket.on('changeGif', function(input){
+  //   document.getElementById("body").style.backgroundImage=imgurl;
+  //   console.log('function triggered');
+  // })
 
 </script>
 </head>

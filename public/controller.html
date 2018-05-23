@@ -3,9 +3,19 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script>
+  // WebSocket connection setup
+  var socket = io();
+  var questionRecieved=false;
+  var host = "http://api.giphy.com";
+  var search = "/v1/gifs/search?q=";
+  var random = ""
+  var api_key = "&api_key=DlqAwfTsWWdeZwmOemKS2jUUHJ2FuOQp"
+
+
+
   let captions = null;
   let videos = null;
-  const socket = io();
+  // const socket = io();
   const instruction = "Listen to the following video clip and repeat what your hear aloud"
   function intro(){
     socket.emit('type-intro');
@@ -93,6 +103,30 @@
     }
     socket.emit('changeColor', color)
   }
+
+
+  function changeGif(keyword) {
+    // var input = document.getElementById("input").value;
+    var input = keyword;
+    // socket.emit('message',input);
+    // document.getElementById("input").value="";
+    // document.getElementById("input").style.display="none";
+    var xhr = $.get(host + search + input + api_key);
+    xhr.done(function(data) {
+      console.log("success got data", data);
+      var gifnum = Math.floor(Math.random() * 26)
+      var img = data.data[gifnum].images.original.url;
+      var imgurl = "url('" + img + "')";
+      const gifurl = imgurl;
+      console.log(gifurl);
+      // window.open(img);
+      // location.replace(img);
+      // socket.emit('changeGif', imgurl);
+      socket.emit('changeGif', gifurl)
+      console.log('emitted');
+    });
+  }
+
   socket.on('captions', (_captions) => {
     // $('#videos').html('');
     // $('#radio-buttons-start').html('');
@@ -235,6 +269,7 @@
   <button onclick="offer()">Offer</button>
   <button onclick="offerandreturn()">Offer and return</button>
   <br><br>
+  <button onclick="changeGif()">Change Gif</button>
   <div id="videos"></div>
   <form id="radio-buttons-start"></form>
   <div id="radio-buttons-end"></div>

@@ -1,5 +1,5 @@
 // WebSocket connection setup
-var socket = io();
+// var socket = io();
 var questionRecieved=false;
 var host = "http://api.giphy.com";
 var search = "/v1/gifs/search?q=";
