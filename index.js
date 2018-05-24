@@ -54,6 +54,10 @@ io.on('connection', function(socket){
     io.sockets.emit('type-intro');
   });
 
+  socket.on('changeGif', function(gifurl){
+    io.sockets.emit('changeGif', gifurl);
+  });
+
   socket.on('mic', function(){
     io.sockets.emit('mic');
   });
