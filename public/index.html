@@ -66,6 +66,7 @@
 
   socket.on('type-delete', function(){
     document.getElementById("mic-animate").style.display = "none";
+    document.body.style.backgroundImage = "none";
     $("#start").html('');
     $('#text-area').typeIt({
       speed: 10,
@@ -102,6 +103,7 @@
       socket.emit('type-delete');
       // $('document.body').animate({backgroundColor: 'none'}, 'slow');
       document.body.style.background = 'none'
+
     }
     // $('document.body').animate({backgroundColor: color}, 'slow');
     document.body.style.background = color
