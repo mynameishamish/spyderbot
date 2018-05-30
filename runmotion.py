@@ -1,5 +1,5 @@
 
-# everything beside dance has been fix. Won't cause moter over heated right now. Dance will be updated soon. 
+# everything beside dance has been fix. Won't cause moter over heated right now. Dance will be updated soon.
 import time
 import math
 import numpy
@@ -7,7 +7,11 @@ import numpy
 from easing import *
 from motions import *
 
-#easing 
+for m in robot.motors: # Note that we always provide an alias for all motors.
+    m.compliant = False
+    m.set_moving_speed = 200
+
+#easing
 x = easeInOutSine
 y = easeOutBack
 linear = linearTween
@@ -144,7 +148,7 @@ resting(45,45,45)
 time.sleep(2)
 
 #run motions!
-while True: 
+while True:
     print('Choose a motion:')
     command = input()
     if command == "offer":
@@ -157,7 +161,7 @@ while True:
     elif command == "midpos":
         print("midpos")
         easingMultiple(midpos,1)
-    elif command == "listen":     
+    elif command == "listen":
         easingMultiple(listen,1)
     elif command == "turnaway":
         easingMultiple(turnaway,1)
@@ -200,4 +204,3 @@ while True:
         print("rest")
         easingMultiple(motionrest, 1.5)
         break
-
