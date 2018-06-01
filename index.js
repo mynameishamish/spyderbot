@@ -58,6 +58,11 @@ io.on('connection', function(socket){
     io.sockets.emit('changeGif', gifurl);
   });
 
+  socket.on('slackOn', function(){
+    PythonShell.run('../spyderbot/slack_bot.py', function (err) {
+    })
+  });
+
   socket.on('mic', function(){
     io.sockets.emit('mic');
   });

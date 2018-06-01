@@ -7,10 +7,6 @@ import numpy
 from easing import *
 from motions import *
 
-for m in robot.motors: # Note that we always provide an alias for all motors.
-    m.compliant = False
-    m.set_moving_speed = 200
-
 #easing
 x = easeInOutSine
 y = easeOutBack
