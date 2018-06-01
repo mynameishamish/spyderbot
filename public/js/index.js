@@ -14,21 +14,21 @@ var output = document.getElementById('output');				// store id="output" in outpu
 output.innerHTML = "<h1 id=response> </h1>";													// ouput first question
 
 function sendMessage() {
-    var input = document.getElementById("input").value;
-    socket.emit('message',input);
-    document.getElementById("input").value="";
-    document.getElementById("input").style.display="none";
-    var xhr = $.get(host + search + input + api_key);
-    xhr.done(function(data) {
-      console.log("success got data", data);
-      var gifnum = Math.floor(Math.random() * 26)
-      var img = data.data[gifnum].images.original.url;
-      var imgurl = "url('" + img + "')";
-      console.log(imgurl);
-      // window.open(img);
-      // location.replace(img);
-      document.getElementById("body").style.backgroundImage=imgurl;
-    });
+    // var input = document.getElementById("input").value;
+    // socket.emit('message',input);
+    // document.getElementById("input").value="";
+    // document.getElementById("input").style.display="none";
+    // var xhr = $.get(host + search + input + api_key);
+    // xhr.done(function(data) {
+    //   console.log("success got data", data);
+    //   var gifnum = Math.floor(Math.random() * 26)
+    //   var img = data.data[gifnum].images.original.mp4;
+    //   var imgurl = "url('" + img + "')";
+    //   console.log(imgurl);
+    //   // window.open(img);
+    //   // location.replace(img);
+    //   document.getElementById("body").style.backgroundImage=imgurl;
+    // });
 }
 
 
@@ -64,8 +64,6 @@ socket.on('changeFont', function(msg) {
   console.log('Changeing Font to:', msg);
   var h1 = document.getElementById('response');
   h1.style.color = 'white';
-
-  //document.body.style.backgroundColor = msg;
 });
 socket.on('connect',function(){// We let the server know that we are up and running also from the client side;
   socket.emit('loaded');

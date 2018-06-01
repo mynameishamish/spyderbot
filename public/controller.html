@@ -119,9 +119,9 @@
     xhr.done(function(data) {
       console.log("success got data", data);
       var gifnum = Math.floor(Math.random() * 26)
-      var img = data.data[gifnum].images.original.url;
-      var imgurl = "url('" + img + "')";
-      const gifurl = imgurl;
+      var img = data.data[gifnum].images.original.mp4;
+      // var imgurl = "url('" + img + "')";
+      const gifurl = img;
       console.log(gifurl);
       // window.open(img);
       // location.replace(img);

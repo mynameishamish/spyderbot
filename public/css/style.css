@@ -5,14 +5,14 @@
   padding-top: 145px;
 }
 
-body {
+/* body {
   margin: 0px;
   background-color: #ffffff;
 	background-image: url('https://media3.giphy.com/media/Cmr1OMJ2FN0B2/giphy.gif');
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: auto;
-}
+} */
 
 img {
 	height: auto;
@@ -40,4 +40,16 @@ img {
 	height: 100px;
 	display: block;
 
+}
+
+#video-background {
+/*  making the video fullscreen  */
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -100;
 }

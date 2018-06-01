@@ -14,7 +14,7 @@
   <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
   <script src="https://cdn.jsdelivr.net/jquery.typeit/4.4.0/typeit.min.js"></script>
-  <!-- <link rel="stylesheet" href="/css/style.css"> -->
+  <link rel="stylesheet" href="/css/style.css">
   <script>
   const socket = io();
 
@@ -58,8 +58,13 @@
   socket.on('changeGif', function(gifurl){
     // const imgurl = "url('https://media3.giphy.com/media/5GoVLqeAOo6PK/giphy.gif')";
     // var gifurl = imgurl;
+    var video = document.getElementById("video-background");
+    var mp4 = document.getElementById("mp4");
+    mp4.setAttribute("src", gifurl);
+    video.load();
+    video.play();
+    // document.body.video.source.src = "https://player.vimeo.com/external/158148793.hd.mp4?s=8e8741dbee251d5c35a759718d4b0976fbf38b6f&profile_id=119&oauth2_token_id=57447761";
     console.log('Changing backgroundImage to:', gifurl);
-    document.body.style.backgroundImage = gifurl;
   });
 
 
@@ -241,10 +246,15 @@ socket.on('type-word', function(word, subtitles){
   //   console.log('function triggered');
   // })
 
+
 </script>
 </head>
 
 <body>
+  <video autoplay id="video-background" muted plays-inline>
+  <source id="mp4" src="" type="video/mp4">
+  </video>
+
   <div id="start">
   </div>
   <div id="text-area"></div>
