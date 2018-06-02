@@ -29,10 +29,10 @@ while run:
         print("offer")
         offer()
 
-    elif command == "break":
+    elif command == "rest":
         print("rest")
         run=False
-    
+
     overheating()
 
 resting()
