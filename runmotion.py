@@ -146,7 +146,7 @@ time.sleep(2)
 #run motions!
 while True:
     print('Choose a motion:')
-    command = input()
+    command = raw_input()
     if command == "offer":
         print("offer")
         easingMultiple(motionofferNew, 1.5)

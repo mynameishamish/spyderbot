@@ -26,11 +26,10 @@ while run:
     print('Choose a motion:')
     command = raw_input()
     if command == "offer":
-        print("offer")
         offer()
 
-    elif command == "rest":
-        print("rest")
+    elif command == "exit":
+        print("exiting")
         run=False
 
     overheating()
