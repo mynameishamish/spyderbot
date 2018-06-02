@@ -61,18 +61,22 @@ io.on('connection', function(socket){
   socket.on('slackOn', function(){
     PythonShell.run('../spyderbot/slack_bot.py', function (err) {
     })
+    console.log("slack turning on")
   });
 
   socket.on('moveOn', function(){
     PythonShell.run('../spyderbot/move.py', function (err) {
     })
+    console.log("motors turning on")
+  });
+
+  socket.on('moveOff', function(){
+    io.sockets.emit('moveOff');
   });
 
   socket.on('moveFunction', function(){
     io.sockets.emit('moveFunction', movement);
   });
-
-
 
   socket.on('mic', function(){
     io.sockets.emit('mic');

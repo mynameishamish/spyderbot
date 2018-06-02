@@ -23,7 +23,16 @@ alert()
 run = True
 
 while run:
+    print('Choose a motion:')
+    command = input()
+    if command == "offer":
+        print("offer")
+        offer()
 
+    elif command == "break":
+        print("rest")
+        run=False
+    
     overheating()
 
 resting()
