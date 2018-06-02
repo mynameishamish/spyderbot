@@ -74,10 +74,10 @@ io.on('connection', function(socket){
     io.sockets.emit('moveOff');
   });
 
-  socket.on('moveFunction', function(movement){
-    console.log(movement);
+  socket.on('moveFunction', function(position){
+    console.log(position);
     console.log("Sending movement code:");
-    new PythonShell('move.py').send(movement);
+    new PythonShell('move.py').send(position);
   });
 
   socket.on('mic', function(){
@@ -121,10 +121,10 @@ io.on('connection', function(socket){
     PythonShell.run('../spyderbot/shake.py', function (err) {
     })
   });
-  socket.on('offer', function(){
-    PythonShell.run('../spyderbot/offer.py', function (err) {
-    })
-  });
+  // socket.on('offer', function(){
+  //   PythonShell.run('../spyderbot/offer.py', function (err) {
+  //   })
+  // });
   socket.on('return', function(){
     PythonShell.run('../spyderbot/alert.py', function (err) {
     })
