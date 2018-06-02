@@ -194,6 +194,7 @@ def overheating():
 
 
         print("motors are overheating")
+        console.log("motors are overheating")
         print("going to limp rest")
         resting()
         limp()

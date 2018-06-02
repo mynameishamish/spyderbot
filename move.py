@@ -28,8 +28,17 @@ while run:
     if command == "offer":
         offer()
 
+    elif command == "rest":
+        resting()
+
+    elif command == "alert":
+        alert()
+
+    elif command == "forward":
+        forward()
+
     elif command == "exit":
-        print("exiting")
+        console.log("exiting")
         run=False
 
     overheating()
