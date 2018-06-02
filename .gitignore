@@ -6,7 +6,7 @@ git
 # Serverless directories
 .serverless
 .DS_Store
-.pyc
+*.pyc
 
 # Optional npm cache directory
 .npm
