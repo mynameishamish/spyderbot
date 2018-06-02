@@ -38,7 +38,6 @@ while run:
         forward()
 
     elif command == "exit":
-        console.log("exiting")
         run=False
 
     overheating()
