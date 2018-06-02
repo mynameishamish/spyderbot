@@ -26,6 +26,4 @@ while run:
 
     overheating()
 
-    time.sleep(2)
-
 resting()

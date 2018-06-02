@@ -23,8 +23,8 @@
   function deleteText(){
     socket.emit('type-delete');
   }
-  function runPython() {
-    socket.emit('runPython');
+  function moveOn() {
+    socket.emit('moveOn');
   }
   function metanod() {
     socket.emit('metanod');
@@ -184,7 +184,8 @@
   <div id="radio-buttons-end"></div>
   <br><br>
   <button onclick="slackOn()">Turn Slack On</button>
-  <br/>
+  <br><br>
+  <button onclick="moveOn()">Turn Motors On</button>
 
   <!-- jquery for enter key press -->
   <!-- <script src="https://code.jquery.com/jquery-3.0.0.js" integrity="sha256-jrPLZ+8vDxt2FnE1zvZXCkCcebI/C8Dt5xyaQBjxQIo=" crossorigin="anonymous"></script> -->

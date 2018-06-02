@@ -63,6 +63,17 @@ io.on('connection', function(socket){
     })
   });
 
+  socket.on('moveOn', function(){
+    PythonShell.run('../spyderbot/move.py', function (err) {
+    })
+  });
+
+  socket.on('moveFunction', function(){
+    io.sockets.emit('moveFunction', movement);
+  });
+
+
+
   socket.on('mic', function(){
     io.sockets.emit('mic');
   });
