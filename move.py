@@ -24,7 +24,7 @@ run = True
 
 while run:
     print('Choose a motion:')
-    command = input()
+    command = raw_input()
     if command == "offer":
         print("offer")
         offer()
