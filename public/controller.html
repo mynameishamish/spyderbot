@@ -81,7 +81,7 @@
     socket.emit('offerandreturn');
   }
   function offer() {
-    socket.emit('offer');
+    socket.emit('moveFunction', offer);
   }
   function slackOn() {
     socket.emit('slackOn');

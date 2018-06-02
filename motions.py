@@ -154,7 +154,6 @@ turn1 = [
     [robot.m1 , x, robot.m1.present_position, -55] ,
     [robot.m2 , x, robot.m2.present_position, -45] ,
     [robot.m3 , x, robot.m3.present_position, 100]
-
 ]
 
 turnup = [
@@ -168,7 +167,6 @@ turndown = [
     [robot.m1 , x, -55, -55] ,
     [robot.m2 , x, -53, -50] ,
     [robot.m3 , x, 117, 98]
-
 ]
 
 #check from different angle, perform best when the speed is 45, 45, 45
@@ -368,7 +366,7 @@ def nod():
     time.sleep(.05)
     print("up")
     easingMultiple(motionNodup,.5)
-    
+
 def sigh():
     easingMultiple(turn1,1.5)
     time.sleep(1)
@@ -377,7 +375,7 @@ def sigh():
     print("down")
     easingMultiple(turndown,1.5)
     time.sleep(1)
-    
+
 def checkaround():
      easingMultiple(look,1)
      time.sleep(0.5)
@@ -387,14 +385,14 @@ def checkaround():
      time.sleep(1)
      easingMultiple(check2,1.5)
      time.sleep(2)
-    
+
 def limp():
     print("returning home")
     easingMultiple(motionrest, 1)
     time.sleep(2)
     print("compliant")
 
-    for m in robot.motors: 
+    for m in robot.motors:
         m.compliant = True
     time.sleep(1)
 
@@ -413,4 +411,3 @@ def offer():
 
 def alertmotion():
     easingMultiple(motionalert, 1.5)
-

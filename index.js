@@ -74,8 +74,9 @@ io.on('connection', function(socket){
     io.sockets.emit('moveOff');
   });
 
-  socket.on('moveFunction', function(){
-    io.sockets.emit('moveFunction', movement);
+  socket.on('moveFunction', function(movement){
+    console.log("Sending movement code:" + movement);
+    new PythonShell('move.py').send(movement);
   });
 
   socket.on('mic', function(){
