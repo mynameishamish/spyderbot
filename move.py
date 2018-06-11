@@ -21,23 +21,10 @@ alert()
 run = True
 
 while run:
-    print('Choose a motion:')
-    command = raw_input()
-    if command == "offer":
-        offer()
-
-    elif command == "rest":
-        resting()
-
-    elif command == "alert":
-        alert()
-
-    elif command == "forward":
-        forward()
-
-    elif command == "exit":
-        run=False
-
     overheating()
+
+    command = raw_input()
+    if command == "exit":
+        run=False
 
 resting()

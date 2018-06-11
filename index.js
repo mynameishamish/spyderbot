@@ -71,6 +71,10 @@ io.on('connection', function(socket){
   });
 
   socket.on('moveOff', function(){
+    new PythonShell('move.py').send("exit");
+  });
+
+  socket.on('moveOff', function(){
     io.sockets.emit('moveOff');
   });
 

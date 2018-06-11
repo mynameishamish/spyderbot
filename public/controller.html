@@ -26,6 +26,9 @@
   function moveOn() {
     socket.emit('moveOn');
   }
+  function moveOff() {
+    socket.emit('moveOff');
+  }
   function metanod() {
     socket.emit('metanod');
   }
@@ -188,6 +191,7 @@
   <button onclick="slackOn()">Turn Slack On</button>
   <br><br>
   <button onclick="moveOn()">Turn Motors On</button>
+  <button onclick="moveOff()">Turn Motors Off</button>
   <button onclick="move('rest')">Rest</button>
   <button onclick="move('alert')">Alert</button>
   <button onclick="move('forward')">Forward</button>
