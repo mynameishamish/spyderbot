@@ -2,8 +2,8 @@ import time
 import math
 import numpy
 
-from .. from easing import *
-from .. from motions import *
-from .. from Adafruit_Thermal
+from .. import easing import *
+from .. import motions import *
+from .. import Adafruit_Thermal
 alertmotion()
 time.sleep(2)
