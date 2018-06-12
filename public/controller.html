@@ -83,10 +83,17 @@
   function offerandreturn() {
     socket.emit('offerandreturn');
   }
-  function move(position) {
-    console.log("triggered");
-    console.log(position);
-    socket.emit('moveFunction', position);
+  function rest() {
+    socket.emit('rest');
+  }
+  function alert() {
+    socket.emit('alert');
+  }
+  function forward() {
+    socket.emit('forward');
+  }
+  function offer() {
+    socket.emit('offer');
   }
   function slackOn() {
     socket.emit('slackOn');
@@ -180,7 +187,7 @@
   <button onclick="dot()">Prompt Dot</button>
   <button onclick="returnto()">return</button>
 
-  <button onclick="offerandreturn()">Offer and return</button>
+
   <br><br>
   <textarea id="find-gif"></textarea>
   <button onclick="changeGif()">Change Gif</button>
@@ -192,10 +199,11 @@
   <br><br>
   <button onclick="moveOn()">Turn Motors On</button>
   <button onclick="moveOff()">Turn Motors Off</button>
-  <button onclick="move('rest')">Rest</button>
-  <button onclick="move('alert')">Alert</button>
-  <button onclick="move('forward')">Forward</button>
-  <button onclick="move('offer')">Offer</button>
+  <button onclick="rest()">Rest</button>
+  <button onclick="alert()">Alert</button>
+  <button onclick="forward()">Forward</button>
+  <button onclick="offer()">Offer</button>
+  <button onclick="offerandreturn()">Offer and return</button>
 
   <!-- jquery for enter key press -->
   <!-- <script src="https://code.jquery.com/jquery-3.0.0.js" integrity="sha256-jrPLZ+8vDxt2FnE1zvZXCkCcebI/C8Dt5xyaQBjxQIo=" crossorigin="anonymous"></script> -->
