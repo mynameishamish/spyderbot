@@ -84,7 +84,6 @@ motionoffer= [
 
 # motions
 
-print("starting Easepos")
 motionofferNew= [
     [robot.m1 , x, robot.m1.present_position, -4] ,
     [robot.m2 , y, robot.m2.present_position, -45] ,
