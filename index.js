@@ -298,3 +298,9 @@ function timedQuestion(socket,question) {
   }
 
 }
+
+
+
+window.setInterval(function(){
+  socket.emit('m1temp', m1temp)
+}, 1000);
