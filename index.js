@@ -143,6 +143,10 @@ io.on('connection', function(socket){
     PythonShell.run('../spyderbot/sigh.py', function (err) {
     })
   });
+  socket.on('checkaround', function(){
+    PythonShell.run('../spyderbot/cheackaround.py', function (err) {
+    })
+  });
   socket.on('shake', function(){
     PythonShell.run('../spyderbot/shake.py', function (err) {
     })
