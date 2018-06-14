@@ -74,9 +74,17 @@ io.on('connection', function(socket){
     new PythonShell('move.py').send("exit");
   });
 
-  socket.on('moveOff', function(){
-    io.sockets.emit('moveOff');
+  socket.on('m1temp', function(m1temp){
+    PythonShell.run('../spyderbot/m1temp.py', function (err) {
+    })
+    console.log("m1 temp is" + m1temp)
+    io.sockets.emit('m1temp', m1temp);
   });
+
+
+  // socket.on('moveOff', function(){
+  //   io.sockets.emit('moveOff');
+  // });
 
   socket.on('rest', function(){
     io.sockets.emit('rest');
@@ -144,7 +152,7 @@ io.on('connection', function(socket){
     })
   });
   socket.on('checkaround', function(){
-    PythonShell.run('../spyderbot/cheackaround.py', function (err) {
+    PythonShell.run('../spyderbot/checkaround.py', function (err) {
     })
   });
   socket.on('shake', function(){
