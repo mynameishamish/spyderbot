@@ -95,6 +95,18 @@
   function offer() {
     socket.emit('offer');
   }
+  function shake() {
+    socket.emit('shake');
+  }
+  function nod() {
+    socket.emit('nod');
+  }
+  function sigh() {
+    socket.emit('sigh');
+  }
+  function checkAround() {
+    socket.emit('cheakAround');
+  }
   function slackOn() {
     socket.emit('slackOn');
   }
@@ -203,7 +215,12 @@
   <button onclick="alert()">Alert</button>
   <button onclick="forward()">Forward</button>
   <button onclick="offer()">Offer</button>
+  <button onclick="shake()">Shake</button>
+  <button onclick="nod()">Nod</button>
+  <button onclick="sigh()">Sigh</button>
+  <button onclick="checkAround()">Check Around</button>
   <button onclick="offerandreturn()">Offer and return</button>
+  <div><textarea id="m1temp">
 
   <!-- jquery for enter key press -->
   <!-- <script src="https://code.jquery.com/jquery-3.0.0.js" integrity="sha256-jrPLZ+8vDxt2FnE1zvZXCkCcebI/C8Dt5xyaQBjxQIo=" crossorigin="anonymous"></script> -->

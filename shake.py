@@ -7,3 +7,4 @@ from motions import *
 from Adafruit_Thermal import *
 
 shake()
+time.sleep(.5)
