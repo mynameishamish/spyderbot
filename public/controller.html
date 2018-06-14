@@ -180,6 +180,9 @@
   });
 
 
+  window.setInterval(function(){
+    socket.emit('m1temp', m1temp)
+  }, 1000);
 
   </script>
 </head>
