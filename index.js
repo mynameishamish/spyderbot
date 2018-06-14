@@ -75,11 +75,14 @@ io.on('connection', function(socket){
   });
 
   socket.on('m1temp', function(m1temp){
-    PythonShell.run('../spyderbot/m1temp.py', function (err) {
-    })
+    new PythonShell('m1temp.py').on('m1temp', function (m1temp) {
+    // received a message sent from the Python script (a simple "print" statement)
+    console.log(m1temp);
+    });
     console.log("m1 temp is" + m1temp)
     io.sockets.emit('m1temp', m1temp);
   });
+
 
 
   // socket.on('moveOff', function(){
