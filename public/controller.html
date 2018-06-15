@@ -121,9 +121,21 @@
   //   });
   // });
 
-  socket.on('m1temp', function(m1temp){
-    document.getElementById("m1temp").innerHTML = m1temp;
-  });
+  function m1temp() {
+    socket.emit('m1temp', m1temp)
+    socket.on('m1temp', function(m1temp){
+      document.getElementById("m1temp").innerHTML = m1temp;
+    });
+  }
+  // socket.on('m1temp', function(m1temp){
+  //   document.getElementById("m1temp").innerHTML = m1temp;
+  // });
+  //
+  // window.setInterval(function(){
+  //   socket.emit('m1temp', m1temp)
+  // }, 1000);
+
+
 
   function changeColor(color) {
     if (color === 'pink') {
@@ -180,9 +192,7 @@
   });
 
 
-  window.setInterval(function(){
-    socket.emit('m1temp', m1temp)
-  }, 1000);
+
 
   </script>
 </head>
@@ -227,7 +237,7 @@
   <button onclick="nod()">Nod</button>
   <button onclick="sigh()">Sigh</button>
   <button onclick="checkaround()">Check Around</button>
-  <div><div>M1 Temperature Is = </div><div id="m1temp"></div></div>
+  <button onclick="m1temp()">Get M1 Temp></button><div><div>M1 Temperature Is = </div><div id="m1temp"></div></div>
 
   <!-- jquery for enter key press -->
   <!-- <script src="https://code.jquery.com/jquery-3.0.0.js" integrity="sha256-jrPLZ+8vDxt2FnE1zvZXCkCcebI/C8Dt5xyaQBjxQIo=" crossorigin="anonymous"></script> -->
