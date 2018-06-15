@@ -81,12 +81,12 @@ io.on('connection', function(socket){
     // });
     // console.log("m1 temp is" + m1temp)
     // io.sockets.emit('m1temp', m1temp);
+    console.log('getting temperatures')
     new PythonShell('../spyderbot/m1temp.py').on('m1temp', function (m1temp) {
-        // received a message sent from the Python script (a simple "print" statement)
+
         console.log(m1temp);
     });
 
-    // end the input stream and allow the process to exit
     new PythonShell('../spyderbot/m1temp.py').end(function (err) {
         if (err){
             throw err;
@@ -94,6 +94,7 @@ io.on('connection', function(socket){
 
         console.log('finished');
     });
+    io.sockets.emit('m1temp', m1temp)
   });
 
 
