@@ -29,7 +29,7 @@ app.use(express.static('public'));
 //   });
 // });
 
-var pyshell = new PythonShell('move.py');
+var pyshell = new PythonShell('test.py');
 
 pyshell.on('message', function (message) {
   console.log(message);
