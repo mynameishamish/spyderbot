@@ -2,6 +2,7 @@ import time
 import math
 import numpy
 import os
+import sys
 
 from easing import *
 from motions import *
@@ -24,7 +25,15 @@ while run:
     overheating()
 
     command = raw_input()
-    if command == "exit":
-        run=False
+    command = sys.stdin.readline()
+    command = command.split('\n')[0]
+    if command == "hello":
+        sys.stdout.write("You said hello!\n")
+    elif command == "goodbye":
+        sys.stdout.write("You said goodbye!\n")
+        run = False
+    else:
+        sys.stdout.write("Sorry, I didn't understand that.\n")
+    sys.stdout.flush()
 
 resting()
