@@ -365,7 +365,7 @@ def shake():
 def nod():
     print("down")
     easingMultiple(motionNoddown, .5)
-    time.sleep(1)
+    time.sleep(.5)
     print("up")
     easingMultiple(motionNodup,.5)
 
