@@ -227,8 +227,8 @@ def easing(motor, e_fn, final_position, duration):
 
 
 def easingMultiple(motions, duration):
-    println(motions)
-    println(duration)
+    print(motions)
+    print(duration)
     robot.m1.moving_speed = 200
     robot.m2.moving_speed = 200
     robot.m3.moving_speed = 200
