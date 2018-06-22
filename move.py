@@ -21,19 +21,24 @@ alert()
 
 run = True
 
-while run:
-    overheating()
 
-    command = raw_input()
-    command = sys.stdin.readline()
-    command = command.split('\n')[0]
-    if command == "hello":
-        sys.stdout.write("You said hello!\n")
-    elif command == "goodbye":
-        sys.stdout.write("You said goodbye!\n")
-        run = False
-    else:
-        sys.stdout.write("Sorry, I didn't understand that.\n")
-    sys.stdout.flush()
+def main():
+    while run:
+        overheating()
+
+        command = raw_input()
+        command = sys.stdin.readline()
+        command = command.split('\n')[0]
+        if command == "hello":
+            sys.stdout.write("You said hello!\n")
+        elif command == "goodbye":
+            sys.stdout.write("You said goodbye!\n")
+            run = False
+        else:
+            sys.stdout.write("Sorry, I didn't understand that.\n")
+        sys.stdout.flush()
+
+if __name__ == '__main__':
+    main()
 
 resting()

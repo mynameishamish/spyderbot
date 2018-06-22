@@ -29,7 +29,7 @@ app.use(express.static('public'));
 //   });
 // });
 
-var pyshell = new PythonShell('move.py');
+var pyshell = new PythonShell('y');
 
 pyshell.on('message', function (message) {
   console.log(message);
@@ -71,14 +71,14 @@ io.on('connection', function(socket){
     console.log("slack turning on")
   });
 
-  socket.on('moveOn', function(){
-    PythonShell.run('../spyderbot/move.py', function (err) {
-    })
-    console.log("motors turning on")
-  });
+  // socket.on('moveOn', function(){
+  //   PythonShell.run('../spyderbot/move.py', function (err) {
+  //   })
+  //   console.log("motors turning on")
+  // });
 
   socket.on('moveOff', function(){
-    new PythonShell('move.py').send("exit");
+    new PythonShell('y').send("exit");
   });
 
   socket.on('m1temp', function(m1temp){
