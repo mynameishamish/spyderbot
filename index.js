@@ -29,6 +29,15 @@ app.use(express.static('public'));
 //   });
 // });
 
+var PythonShell = require('python-shell');
+var pyshell = new PythonShell('move.py');
+
+pyshell.on('message', function (message) {
+  console.log(message);
+});
+
+pyshell.send('hello');
+
 
 io.on('connection', function(socket){
 // 		const captions = JSON.parse(fs.readFileSync('public/captions.json'));
