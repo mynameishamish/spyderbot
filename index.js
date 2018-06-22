@@ -35,7 +35,6 @@ pyshell.on('message', function (message) {
   console.log(message);
 });
 
-pyshell.send('hello');
 
 
 io.on('connection', function(socket){
@@ -323,3 +322,12 @@ function timedQuestion(socket,question) {
   }
 
 }
+
+
+
+
+
+
+
+
+pyshell.send('hello');
