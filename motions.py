@@ -40,7 +40,7 @@ import pypot.robot
 robot = pypot.robot.from_config(spyder_config)
 
 
-        # raise NotImplementedError
+# raise NotImplementedError
 x = easeInOutSine
 y = easeOutBack
 linear = linearTween
@@ -348,6 +348,7 @@ rightpos = [
 midpos = [
     [robot.m1 , x, robot.m1.present_position, -4] ,
 ]
+
 def shake():
     easingMultiple(rightpos, .5)
     easingMultiple(leftpos, .5)
@@ -359,6 +360,20 @@ def shake():
 
     # easingMultiple(midpos, 1)
 
+rightPosShort = [
+    [robot.m1 , x, robot.m1.present_position, -20] ,
+]
+
+leftPosShort = [
+    [robot.m1 , x, robot.m1.present_position, 10] ,
+]
+
+def subtleShake():
+    easingMultiple(rightPosShort, .45)
+    easingMultiple(leftPosShort, .35)
+    time.sleep(.05)
+    easingMultiple(midpos, .35)
+    print("done")
 
 def nod():
     print("down")
