@@ -79,8 +79,9 @@ motionoffer= [
     [robot.m2 , x, robot.m2.present_position, -26] ,
     [robot.m3 , x, robot.m3.present_position, 112]]
 
-
-
+motionLookUp= [
+    [robot.m1 , x, robot.m1.present_position, -4] ,
+    [robot.m3 , x, robot.m3.present_position, 135]]
 
 # motions
 
@@ -381,6 +382,11 @@ def nod():
     time.sleep(.05)
     print("up")
     easingMultiple(motionNodup,.5)
+
+def lookUp():
+    print("looking up")
+    easingMultiple(motionLookUp, .45)
+    time.sleep(.05)
 
 def sigh():
     easingMultiple(turn1,1.5)
