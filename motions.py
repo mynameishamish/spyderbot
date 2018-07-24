@@ -401,6 +401,10 @@ def checkaround():
      easingMultiple(check2,1.5)
      time.sleep(2)
 
+def home():
+    print("returning home")
+    easingMultiple(motionrest, 1)
+
 def limp():
     print("returning home")
     easingMultiple(motionrest, 1)
