@@ -81,7 +81,7 @@ motionoffer= [
 
 motionLookUp= [
     [robot.m1 , x, robot.m1.present_position, -4] ,
-    [robot.m3 , x, robot.m3.present_position, 135]]
+    [robot.m3 , x, robot.m3.present_position, 120]]
 
 # motions
 
