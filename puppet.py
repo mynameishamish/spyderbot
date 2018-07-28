@@ -1,0 +1,135 @@
+# import pypot.dynamixel
+# import time
+#
+# puppet_robot = {
+#     'controllers': {
+#         'my_dxl_controller': {
+#             'sync_read': False,
+#             'attached_motors': ['robot1', 'robot2'],
+#             'port': 'auto'
+#         }
+#     },
+#     'motorgroups': {
+#         'robot1': ['m2','m1'],
+#         'robot2': ['m4']
+#     },
+#     'motors': {
+#         'm1': {
+#             'orientation': 'direct',
+#             'type': 'AX-12A',
+#             'id': 1,
+#             'angle_limit': [-90.0, 90.0],
+#             'offset': 0.0
+#         },
+#         'm2': {
+#             'orientation': 'direct',
+#             'type': 'AX-12A',
+#             'id': 4,
+#             'angle_limit': [-90.0, 90.0],
+#             'offset': 0.0
+#         },
+#         'm4': {
+#             'orientation': 'direct',
+#             'type': 'AX-12A',
+#             'id': 2,
+#             'angle_limit': [-90.0, 90.0],
+#             'offset': 0.0
+#         }
+#     }
+# }
+#
+# import pypot.robot
+# robot = pypot.robot.from_config(puppet_robot)
+#
+#
+# while True:
+#     robot.m1.goal_position = 0
+#     robot.m2.goal_position = 0
+#     robot.m4.goal_position = 0
+#
+#     time.sleep(1)
+#     print(robot.m1.present_position)
+#     print(robot.m2.present_position)
+#     print(robot.m4.present_position)
+#
+#     robot.m1.goal_position = 50
+#     robot.m2.goal_position = 50
+#     robot.m4.goal_position = 50
+#
+#     time.sleep(1)
+
+
+puppet_config = {
+    'controllers': {
+        'my_dxl_controller': {
+            'sync_read': False,
+            'attached_motors': ['robot1', 'robot2'],
+            'port': 'auto'
+        }
+    },
+    'motorgroups': {
+        'robot1': ['m1', 'm2'],
+        'robot2': ['m4']
+    },
+    'motors': {
+        'm1': {
+            'orientation': 'direct',
+            'type': 'AX-12A', 'id': 1,
+            'angle_limit': [-48.0, 40.0],
+            'offset': 0.0
+        },
+        'm2': {
+            'orientation': 'direct',
+            'type': 'AX-12A', 'id': 2,
+            'angle_limit': [-77.0, -42.0],
+            'offset': 0.0
+        },
+        'm4': {
+            'orientation': 'direct',
+            'type': 'AX-12A', 'id': 4,
+            'angle_limit': [85.0, 149.0],
+            'offset': 0.0
+        }
+    }
+}
+import time
+import numpy
+from easing import *
+import math
+import copy
+import pypot
+import pypot.robot
+robot = pypot.robot.from_config(puppet_config)
+
+robot.m1.compliant = True
+robot.m1.torque_enable = False
+robot.m2.compliant = False
+robot.m4.compliant = False
+
+for m in robot.motors:
+    m.set_moving_speed = 200
+
+robot.m2.goto_position = robot.m1.present_position
+robot.m4.goto_position = robot.m1.present_position
+
+time.sleep(1)
+
+
+while True:
+    # # robot.m1.goal_position = 0
+    # robot.m2.goal_position = 0
+    # robot.m4.goal_position = 0
+    # print(robot.m1.present_position)
+    # print(robot.m2.present_position)
+    # print(robot.m4.present_position)
+    # time.sleep(1)
+    # # robot.m1.goal_position = 50
+    # robot.m2.goal_position = 50
+    # robot.m4.goal_position = 50
+    # print(robot.m1.present_position)
+    # time.sleep(1)
+
+    # robot.m2.goto_position(10, 1., wait=True)
+    robot.m2.goal_position = robot.m1.present_position
+    robot.m4.goal_position = robot.m1.present_position
+    time.sleep(.0001)
