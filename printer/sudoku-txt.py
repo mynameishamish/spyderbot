@@ -22,7 +22,7 @@ from __future__ import print_function
 import sys, os, random, getopt, re
 from Adafruit_Thermal import *
 
-printer = Adafruit_Thermal("/dev/serial0", 19200, timeout=5)
+printer = Adafruit_Thermal("/dev/USB0", 19200, timeout=5)
 
 def main():
   printer.setLineHeight(24) # So graphical chars fit together
@@ -157,7 +157,7 @@ def axismissing(board, x, axis):
     e = board[posfor(x, y, axis)]
     if e is not None: bits |= 1 << e
   return 511 ^ bits
-  
+
 def listbits(bits):
   return [y for y in xrange(9) if 0 != bits & 1 << y]
 
