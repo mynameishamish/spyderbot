@@ -23,7 +23,7 @@
 from __future__ import print_function
 from Adafruit_Thermal import *
 
-printer = Adafruit_Thermal("/dev/USB0", 19200, timeout=5)
+printer = Adafruit_Thermal("/dev/ttyUSB0", 19200, timeout=5)
 
 for i in range(0,256,15):
 	printer.begin(i)
