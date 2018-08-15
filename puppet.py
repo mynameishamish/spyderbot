@@ -90,7 +90,7 @@ puppet_config = {
             'angle_limit': [-180.0, 180.0],
             'offset': 0.0
         },
-        'm3': {
+        'm4': {
             'orientation': 'direct',
             'type': 'AX-18A', 'id': 4,
             'angle_limit': [-180.0, 180.0],
