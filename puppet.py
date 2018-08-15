@@ -69,7 +69,7 @@ puppet_config = {
     },
     'motorgroups': {
         'robot1': ['m1', 'm2', 'm3'],
-        'robot2': ['m4']
+        'robot2': ['m4', 'm5', 'm6']
     },
     'motors': {
         'm1': {
@@ -95,7 +95,19 @@ puppet_config = {
             'type': 'AX-18A', 'id': 4,
             'angle_limit': [-180.0, 180.0],
             'offset': 0.0
-        }
+        },
+        'm5': {
+            'orientation': 'direct',
+            'type': 'AX-18A', 'id': 5,
+            'angle_limit': [-180.0, 180.0],
+            'offset': 0.0
+        },
+        'm6': {
+            'orientation': 'direct',
+            'type': 'AX-18A', 'id': 6,
+            'angle_limit': [-180.0, 180.0],
+            'offset': 0.0
+        },
     }
 }
 import time
@@ -117,11 +129,15 @@ for m in robot.motors:
 
 # robot.m2.goto_position = robot.m1.present_position
 robot.m4.goto_position = robot.m1.present_position
+robot.m5.goal_position = robot.m2.present_position
+robot.m6.goal_position = robot.m3.present_position
 
 time.sleep(2)
 
 
 while True:
+    for m in robot.motors:
+        m.set_moving_speed = 200
     # # robot.m1.goal_position = 0
     # robot.m2.goal_position = 0
     # robot.m4.goal_position = 0
@@ -138,4 +154,6 @@ while True:
     # robot.m2.goto_position(10, 1., wait=True)
     # robot.m2.goal_position = robot.m1.present_position
     robot.m4.goal_position = robot.m1.present_position
+    robot.m5.goal_position = robot.m2.present_position
+    robot.m6.goal_position = robot.m3.present_position
     time.sleep(.0001)
