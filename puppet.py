@@ -123,6 +123,8 @@ robot.m1.compliant = True
 robot.m2.compliant = True
 robot.m3.compliant = True
 robot.m4.compliant = False
+robot.m5.compliant = False
+robot.m6.compliant = False
 
 for m in robot.motors:
     m.set_moving_speed = 20
