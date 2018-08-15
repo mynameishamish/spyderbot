@@ -68,26 +68,32 @@ puppet_config = {
         }
     },
     'motorgroups': {
-        'robot1': ['m1', 'm2'],
+        'robot1': ['m1', 'm2', 'm3'],
         'robot2': ['m4']
     },
     'motors': {
         'm1': {
             'orientation': 'direct',
             'type': 'AX-12A', 'id': 1,
-            'angle_limit': [-48.0, 40.0],
+            'angle_limit': [-180.0, 180.0],
             'offset': 0.0
         },
         'm2': {
             'orientation': 'direct',
             'type': 'AX-12A', 'id': 2,
-            'angle_limit': [-77.0, -42.0],
+            'angle_limit': [-180.0, 180.0],
             'offset': 0.0
         },
-        'm4': {
+        'm3': {
             'orientation': 'direct',
-            'type': 'AX-12A', 'id': 4,
-            'angle_limit': [85.0, 149.0],
+            'type': 'AX-12A', 'id': 3,
+            'angle_limit': [-180.0, 180.0],
+            'offset': 0.0
+        },
+        'm3': {
+            'orientation': 'direct',
+            'type': 'AX-18A', 'id': 4,
+            'angle_limit': [-180.0, 180.0],
             'offset': 0.0
         }
     }
@@ -102,17 +108,17 @@ import pypot.robot
 robot = pypot.robot.from_config(puppet_config)
 
 robot.m1.compliant = True
-robot.m1.torque_enable = False
-robot.m2.compliant = False
+robot.m2.compliant = True
+robot.m3.compliant = True
 robot.m4.compliant = False
 
 for m in robot.motors:
-    m.set_moving_speed = 200
+    m.set_moving_speed = 20
 
-robot.m2.goto_position = robot.m1.present_position
+# robot.m2.goto_position = robot.m1.present_position
 robot.m4.goto_position = robot.m1.present_position
 
-time.sleep(1)
+time.sleep(2)
 
 
 while True:
@@ -130,6 +136,6 @@ while True:
     # time.sleep(1)
 
     # robot.m2.goto_position(10, 1., wait=True)
-    robot.m2.goal_position = robot.m1.present_position
+    # robot.m2.goal_position = robot.m1.present_position
     robot.m4.goal_position = robot.m1.present_position
     time.sleep(.0001)
