@@ -337,34 +337,34 @@ def concur():
     easingMultiple(nodup, 1 )
 
 # def nod():
-motionNodup = [
-    [robot.m3 , linear, robot.m3.present_position, 120]]
-
-motionNoddown = [
-    [robot.m3 , linear, robot.m3.present_position, 100]]
-
-ParticipantRight= [
-    [robot.m1 , x, robot.m1.present_position, -45] ,
-    [robot.m2 , eie, robot.m2.present_position, -52] ,
-    [robot.m3 , eoq, robot.m3.present_position, 105]]
-ParticipantLeft= [
-    [robot.m1 , x, robot.m1.present_position, 37] ,
-    [robot.m2 , eie, robot.m2.present_position, -52] ,
-    [robot.m3 , eoq, robot.m3.present_position, 105]]
-
-ParticipantCenter= [
-    [robot.m1 , x, robot.m1.present_position, -4] ,
-    [robot.m2 , eie, robot.m2.present_position, -52] ,
-    [robot.m3 , eoq, robot.m3.present_position, 105]]
+# motionNodup = [
+#     [robot.m3 , linear, robot.m3.present_position, 120]]
+#
+# motionNoddown = [
+#     [robot.m3 , linear, robot.m3.present_position, 100]]
+#
+# ParticipantRight= [
+#     [robot.m1 , x, robot.m1.present_position, -45] ,
+#     [robot.m2 , eie, robot.m2.present_position, -52] ,
+#     [robot.m3 , eoq, robot.m3.present_position, 105]]
+# ParticipantLeft= [
+#     [robot.m1 , x, robot.m1.present_position, 37] ,
+#     [robot.m2 , eie, robot.m2.present_position, -52] ,
+#     [robot.m3 , eoq, robot.m3.present_position, 105]]
+#
+# ParticipantCenter= [
+#     [robot.m1 , x, robot.m1.present_position, -4] ,
+#     [robot.m2 , eie, robot.m2.present_position, -52] ,
+#     [robot.m3 , eoq, robot.m3.present_position, 105]]
 
 leftpos = [
-    [robot.m1 , x, robot.m1.present_position, 25] ,
+    [robot.m1 , x, robot.m1.present_position, -25] ,
 ]
 rightpos = [
-    [robot.m1 , x, robot.m1.present_position, -35] ,
+    [robot.m1 , x, robot.m1.present_position, 25] ,
 ]
 midpos = [
-    [robot.m1 , x, robot.m1.present_position, -4] ,
+    [robot.m1 , x, robot.m1.present_position, 0] ,
 ]
 
 def shake():
@@ -383,7 +383,7 @@ rightPosShort = [
 ]
 
 leftPosShort = [
-    [robot.m1 , x, robot.m1.present_position, 10] ,
+    [robot.m1 , x, robot.m1.present_position, 20] ,
 ]
 
 def subtleShake():
