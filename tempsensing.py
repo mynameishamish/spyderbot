@@ -74,3 +74,6 @@ def temp():
 
 t = threading.Timer(6.0, temp)
 t.start()
+print("Getting temp")
+time.sleep(7)
+print("Finsihing temp")
