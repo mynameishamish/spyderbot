@@ -27,7 +27,7 @@ from motions import *
 from Adafruit_IO import Client, Feed
 
 # Delay in-between sensor readings, in seconds.
-DHT_READ_TIMEOUT = 5
+DHT_READ_TIMEOUT = 6
 
 # Pin connected to DHT22 data pin
 
