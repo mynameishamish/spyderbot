@@ -52,8 +52,7 @@ m3temp_feed = aio.feeds('spyderbot.neck')
 # Set up DHT22 Sensor.
 # dht22_sensor = Adafruit_DHT.DHT22
 
-while True:
-    # humidity, temperature = Adafruit_DHT.read_retry(dht22_sensor, DHT_DATA_PIN)
+def temp():
     m1temp = robot.m1.present_temperature
     m2temp = robot.m2.present_temperature
     m3temp = robot.m3.present_temperature
@@ -71,3 +70,6 @@ while True:
         print('Failed to get DHT22 Reading, trying again in ', DHT_READ_TIMEOUT, 'seconds')
     # Timeout to avoid flooding Adafruit IO
     time.sleep(DHT_READ_TIMEOUT)
+
+while True:
+    temp()
