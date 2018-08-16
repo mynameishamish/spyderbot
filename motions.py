@@ -1,33 +1,52 @@
-spyder_config = {
+spyder = {
     'controllers': {
         'my_dxl_controller': {
             'sync_read': False,
-            'attached_motors': ['base'],
+            'attached_motors': ['robot1', 'robot2'],
             'port': 'auto'
         }
     },
     'motorgroups': {
-        'base': ['m1', 'm2', 'm3'],
+        'robot1': ['m1', 'm2', 'm3'],
+        'robot2': ['m4', 'm5', 'm6']
     },
     'motors': {
         'm1': {
             'orientation': 'direct',
             'type': 'AX-12A', 'id': 4,
-            'angle_limit': [-48.0, 40.0],
+            'angle_limit': [80.0, 80.0],
             'offset': 0.0
         },
         'm2': {
             'orientation': 'direct',
             'type': 'AX-18A', 'id': 5,
-            'angle_limit': [-77.0, -42.0],
+            'angle_limit': [-8.0, -75.0],
             'offset': 0.0
         },
         'm3': {
             'orientation': 'direct',
             'type': 'AX-18A', 'id': 6,
-            'angle_limit': [85.0, 149.0],
+            'angle_limit': [-50.0, 25.0],
             'offset': 0.0
-        }
+        },
+        'm4': {
+            'orientation': 'direct',
+            'type': 'AX-12A', 'id': 1,
+            'angle_limit': [-180.0, 180.0],
+            'offset': 0.0
+        },
+        'm5': {
+            'orientation': 'direct',
+            'type': 'AX-12A', 'id': 2,
+            'angle_limit': [-180.0, 180.0],
+            'offset': 0.0
+        },
+        'm6': {
+            'orientation': 'direct',
+            'type': 'AX-12A', 'id': 3,
+            'angle_limit': [-180.0, 180.0],
+            'offset': 0.0
+        },
     }
 }
 import time
@@ -60,127 +79,125 @@ eoe = easeOutExpo
 eie = easeInExpo
 
 motionrest= [
-    [robot.m1 , x, robot.m1.present_position, -4] ,
-    [robot.m2 , x, robot.m2.present_position, -77] ,
-    [robot.m3 , x, robot.m3.present_position, 73]]
+    [robot.m1 , x, robot.m1.present_position, 0] ,
+    [robot.m2 , x, robot.m2.present_position, -6] ,
+    [robot.m3 , x, robot.m3.present_position, 22]]
 
 motionalert= [
-    [robot.m1 , x, robot.m1.present_position, -4] ,
-    [robot.m2 , x, robot.m2.present_position, -65] ,
-    [robot.m3 , x, robot.m3.present_position, 135]]
+    [robot.m1 , x, robot.m1.present_position, 0] ,
+    [robot.m2 , x, robot.m2.present_position, -42] ,
+    [robot.m3 , x, robot.m3.present_position, -21]]
 
 motionforward= [
-    [robot.m1 , x, robot.m1.present_position, -4] ,
-    [robot.m2 , x, robot.m2.present_position, -45] ,
-    [robot.m3 , x, robot.m3.present_position, 149]]
+    [robot.m1 , x, robot.m1.present_position, 0] ,
+    [robot.m2 , x, robot.m2.present_position, -68] ,
+    [robot.m3 , x, robot.m3.present_position, 53]]
 
 motionoffer= [
-    [robot.m1 , x, robot.m1.present_position, -4] ,
-    [robot.m2 , x, robot.m2.present_position, -26] ,
-    [robot.m3 , x, robot.m3.present_position, 112]]
+    [robot.m1 , x, robot.m1.present_position, 0] ,
+    [robot.m2 , x, robot.m2.present_position, -71] ,
+    [robot.m3 , x, robot.m3.present_position, 4]]
 
 motionLookUp= [
-    [robot.m1 , x, robot.m1.present_position, -4] ,
-    [robot.m3 , x, robot.m3.present_position, 120]]
+    [robot.m1 , x, robot.m1.present_position, -36] ,
+    [robot.m3 , x, robot.m3.present_position, -6]]
 
 # motions
 
 motionofferNew= [
-    [robot.m1 , x, robot.m1.present_position, -4] ,
-    [robot.m2 , y, robot.m2.present_position, -45] ,
-    [robot.m3 , y, robot.m3.present_position, 110]]
+    [robot.m1 , x, robot.m1.present_position, 0] ,
+    [robot.m2 , y, robot.m2.present_position, -81] ,
+    [robot.m3 , y, robot.m3.present_position, 22]]
 
 motionNodup = [
-    [robot.m3 , linear, robot.m3.present_position, 120]]
+    [robot.m3 , linear, robot.m3.present_position, -31]]
 
 motionNoddown = [
-    [robot.m3 , linear, robot.m3.present_position, 100]]
+    [robot.m3 , linear, robot.m3.present_position, -11]]
 
 motionAfteroffer = [
     # [robot.m1 , x, robot.m1.present_position, robot.m1.present_position] ,
-    [robot.m2 , y, robot.m2.present_position, -60] ,
-    [robot.m3 , y, robot.m3.present_position, 130]]
+    [robot.m2 , y, robot.m2.present_position, -70] ,
+    [robot.m3 , y, robot.m3.present_position, -51]]
 
 midpos = [
-    [robot.m1 , x, robot.m1.present_position, -4] ,
-    [robot.m2 , x, robot.m2.present_position, -65] ,
-    [robot.m3 , x, robot.m3.present_position, 130]
-]
+    [robot.m1 , x, robot.m1.present_position, 0] ,
+    [robot.m2 , x, robot.m2.present_position, -42] ,
+    [robot.m3 , x, robot.m3.present_position, -21]]
 
 turnaway = [
-    [robot.m1 , x, robot.m1.present_position, 57.5] ,
-    [robot.m2 , x, robot.m2.present_position, -32.5] ,
-    [robot.m3 , x, robot.m3.present_position, 103.5]
-]
+    [robot.m1 , x, robot.m1.present_position, 25] ,
+    [robot.m2 , x, robot.m2.present_position, -32] ,
+    [robot.m3 , x, robot.m3.present_position, -14]]
 
 listen = [
     [robot.m1 , x, robot.m1.present_position, -4] ,
-    [robot.m2 , x, robot.m2.present_position, -75] ,
-    [robot.m3 , x, robot.m3.present_position, 107]
+    [robot.m2 , x, robot.m2.present_position, -50] ,
+    [robot.m3 , x, robot.m3.present_position, 0]
 ]
 
 strench  = [
     [robot.m1 , x, robot.m1.present_position, -4] ,
-    [robot.m2 , s, robot.m2.present_position, -57] ,
-    [robot.m3 , x, robot.m3.present_position, 140]
+    [robot.m2 , s, robot.m2.present_position, -25] ,
+    [robot.m3 , x, robot.m3.present_position, -61]
 ]
 
-look = [
-    [robot.m1 , x, robot.m1.present_position, -4] ,
-    [robot.m2 , eib, robot.m2.present_position, -53] ,
-    [robot.m3 , x, robot.m3.present_position, 143]
-]
+# look = [
+#     [robot.m1 , x, robot.m1.present_position, -4] ,
+#     [robot.m2 , eib, robot.m2.present_position, -53] ,
+#     [robot.m3 , x, robot.m3.present_position, 143]
+# ]
 
 read = [
-    [robot.m1 , x, robot.m1.present_position, -4] ,
-    [robot.m2 , x, robot.m2.present_position, -35] ,
-    [robot.m3 , x, robot.m3.present_position, 114]
+    [robot.m1 , x, robot.m1.present_position, 0] ,
+    [robot.m2 , x, robot.m2.present_position, -76] ,
+    [robot.m3 , x, robot.m3.present_position, -4]
 ]
 
-musicdown = [
-    [robot.m1 , x, robot.m1.present_position, -4] ,
-    [robot.m2 , eoc, robot.m2.present_position, -65] ,
-    [robot.m3 , x, robot.m3.present_position, 75]
-]
+# musicdown = [
+#     [robot.m1 , x, robot.m1.present_position, -4] ,
+#     [robot.m2 , eoc, robot.m2.present_position, -65] ,
+#     [robot.m3 , x, robot.m3.present_position, 75]
+# ]
+#
+# musicup = [
+#     [robot.m1 , x, robot.m1.present_position, -4] ,
+#     [robot.m2 , eoc, robot.m2.present_position, -55] ,
+#     [robot.m3 , x, robot.m3.present_position, 99]
+# ]
+#
+# # sigh, perform best when the speed is 45, 45, 45
+# turn1 = [
+#     [robot.m1 , x, robot.m1.present_position, -55] ,
+#     [robot.m2 , x, robot.m2.present_position, -45] ,
+#     [robot.m3 , x, robot.m3.present_position, 100]
+# ]
+#
+# turnup = [
+#     [robot.m1 , x, -55, -55] ,
+#     [robot.m2 , x, -45, -53] ,
+#     [robot.m3 , x, 100, 117]
+#
+# ]
 
-musicup = [
-    [robot.m1 , x, robot.m1.present_position, -4] ,
-    [robot.m2 , eoc, robot.m2.present_position, -55] ,
-    [robot.m3 , x, robot.m3.present_position, 99]
-]
-
-# sigh, perform best when the speed is 45, 45, 45
-turn1 = [
-    [robot.m1 , x, robot.m1.present_position, -55] ,
-    [robot.m2 , x, robot.m2.present_position, -45] ,
-    [robot.m3 , x, robot.m3.present_position, 100]
-]
-
-turnup = [
-    [robot.m1 , x, -55, -55] ,
-    [robot.m2 , x, -45, -53] ,
-    [robot.m3 , x, 100, 117]
-
-]
-
-turndown = [
-    [robot.m1 , x, -55, -55] ,
-    [robot.m2 , x, -53, -50] ,
-    [robot.m3 , x, 117, 98]
-]
+# turndown = [
+#     [robot.m1 , x, -55, -55] ,
+#     [robot.m2 , x, -53, -50] ,
+#     [robot.m3 , x, 117, 98]
+# ]
 
 #check from different angle, perform best when the speed is 45, 45, 45
 check1 = [
-    [robot.m1 , s, robot.m1.present_position, -46] ,
-    [robot.m2 , s, robot.m2.present_position, -67] ,
-    [robot.m3 , y, robot.m3.present_position, 83]
+    [robot.m1 , s, robot.m1.present_position, -50] ,
+    [robot.m2 , s, robot.m2.present_position, -36] ,
+    [robot.m3 , y, robot.m3.present_position, -7]
 
 ]
 
 check2 = [
-    [robot.m1 , s, robot.m1.present_position, 35] ,
-    [robot.m2 , s, robot.m2.present_position, -67] ,
-    [robot.m3 , s, robot.m3.present_position, 83]
+    [robot.m1 , s, robot.m1.present_position, 50] ,
+    [robot.m2 , s, robot.m2.present_position, -36] ,
+    [robot.m3 , s, robot.m3.present_position, -7]
 
 ]
 
@@ -255,9 +272,9 @@ def resting(z=30, x=30, c=30):
     robot.m1.moving_speed = z
     robot.m2.moving_speed = x
     robot.m3.moving_speed = c
-    robot.m1.goal_position = -4
-    robot.m2.goal_position = -77
-    robot.m3.goal_position = 73
+    robot.m1.goal_position = 0
+    robot.m2.goal_position = -6
+    robot.m3.goal_position = 22
     time.sleep(2)
     print("Rest")
     # printer.println("Rest")
@@ -267,9 +284,9 @@ def alert(z=30, x=30, c=30):
     robot.m1.moving_speed = z
     robot.m2.moving_speed = x
     robot.m3.moving_speed = c
-    robot.m1.goal_position = -4
-    robot.m2.goal_position = -65
-    robot.m3.goal_position = 135
+    robot.m1.goal_position = 0
+    robot.m2.goal_position = -42
+    robot.m3.goal_position = -21
     print("Alert")
     time.sleep(2)
 
@@ -277,9 +294,9 @@ def forward(z=30, x=30, c=30):
     robot.m1.moving_speed = z
     robot.m2.moving_speed = x
     robot.m3.moving_speed = c
-    robot.m1.goal_position = -4
-    robot.m2.goal_position = -45
-    robot.m3.goal_position = 149
+    robot.m1.goal_position = 0
+    robot.m2.goal_position = -68
+    robot.m3.goal_position = 53
     print("Forward")
     time.sleep(2)
 
@@ -287,9 +304,9 @@ def offer(z=30, x=30, c=30):
     robot.m1.moving_speed = z
     robot.m2.moving_speed = x
     robot.m3.moving_speed = c
-    robot.m1.goal_position = -4
-    robot.m2.goal_position = -26
-    robot.m3.goal_position = 112
+    robot.m1.goal_position = 0
+    robot.m2.goal_position = -71
+    robot.m3.goal_position = 4
     print("Offer")
     time.sleep(2)
 
