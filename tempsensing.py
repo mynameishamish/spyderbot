@@ -21,7 +21,7 @@ import time
 # import adafruit dht library.
 # import Adafruit_DHT
 
-import puppet
+import motions
 
 # import Adafruit IO REST client.
 from Adafruit_IO import Client, Feed

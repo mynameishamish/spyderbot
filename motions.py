@@ -12,19 +12,19 @@ spyder_config = {
     'motors': {
         'm1': {
             'orientation': 'direct',
-            'type': 'AX-12A', 'id': 3,
+            'type': 'AX-12A', 'id': 4,
             'angle_limit': [-48.0, 40.0],
             'offset': 0.0
         },
         'm2': {
             'orientation': 'direct',
-            'type': 'AX-12A', 'id': 5,
+            'type': 'AX-18A', 'id': 5,
             'angle_limit': [-77.0, -42.0],
             'offset': 0.0
         },
         'm3': {
             'orientation': 'direct',
-            'type': 'AX-12A', 'id': 6,
+            'type': 'AX-18A', 'id': 6,
             'angle_limit': [85.0, 149.0],
             'offset': 0.0
         }
