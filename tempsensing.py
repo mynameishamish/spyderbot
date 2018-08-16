@@ -19,7 +19,7 @@ Dependencies:
 import time
 
 # import adafruit dht library.
-import Adafruit_DHT
+# import Adafruit_DHT
 
 import puppet
 
@@ -48,7 +48,7 @@ temperature_feed = aio.feeds('temperature')
 humidity_feed = aio.feeds('humidity')
 
 # Set up DHT22 Sensor.
-dht22_sensor = Adafruit_DHT.DHT22
+# dht22_sensor = Adafruit_DHT.DHT22
 
 while True:
     # humidity, temperature = Adafruit_DHT.read_retry(dht22_sensor, DHT_DATA_PIN)
