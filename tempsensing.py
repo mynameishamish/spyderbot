@@ -16,7 +16,7 @@ m2temp_feed = aio.feeds('spyderbot.head')
 m3temp_feed = aio.feeds('spyderbot.neck')
 
 def temp():
-    while True:
+    # while True:
         m1temp = robot.m1.present_temperature
         m2temp = robot.m2.present_temperature
         m3temp = robot.m3.present_temperature
