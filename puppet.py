@@ -118,6 +118,7 @@ import copy
 import pypot
 import pypot.robot
 robot = pypot.robot.from_config(puppet_config)
+import tempsensing
 
 robot.m1.compliant = True
 robot.m2.compliant = True
