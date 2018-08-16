@@ -72,6 +72,5 @@ def temp():
     # Timeout to avoid flooding Adafruit IO
     # time.sleep(DHT_READ_TIMEOUT)
 
-while True:
-    t = threading.Timer(6.0, temp())
-    t.start()
+t = threading.Timer(6.0, temp())
+t.start()
