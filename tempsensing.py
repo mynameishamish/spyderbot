@@ -52,8 +52,8 @@ humidity_feed = aio.feeds('spyderbot.neck')
 
 while True:
     # humidity, temperature = Adafruit_DHT.read_retry(dht22_sensor, DHT_DATA_PIN)
-    humidity = robot.m5.present_temperature
-    temperature = robot.m6.present_temperature
+    humidity = robot.m2.present_temperature
+    temperature = robot.m3.present_temperature
     if humidity is not None and temperature is not None:
         print('Temp={0:0.1f}*C Humidity={1:0.1f}%'.format(temperature, humidity))
         # Send humidity and temperature feeds to Adafruit IO
