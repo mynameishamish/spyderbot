@@ -28,7 +28,7 @@ from motions import *
 from Adafruit_IO import Client, Feed
 
 # Delay in-between sensor readings, in seconds.
-DHT_READ_TIMEOUT = 6
+timeout = 6
 
 # Pin connected to DHT22 data pin
 
@@ -70,11 +70,10 @@ def temp():
     # else:
     #     print('Failed to get DHT22 Reading, trying again in ', DHT_READ_TIMEOUT, 'seconds')
     # Timeout to avoid flooding Adafruit IO
-    # time.sleep(DHT_READ_TIMEOUT)
+    time.sleep(timeout)
 
 while True:
     t = threading.Timer(6.0, temp)
     t.start()
-    print("Getting temp")
-    time.sleep(7)
-    print("Finsihing temp")
+
+    
