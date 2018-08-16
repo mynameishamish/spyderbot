@@ -57,7 +57,7 @@ while True:
     m1temp = robot.m1.present_temperature
     m2temp = robot.m2.present_temperature
     m3temp = robot.m3.present_temperature
-    if humidity is not None and temperature is not None:
+    if m1temp is not None and m2temp is not None:
         print('m1Temp={0:0.1f}*C m2Temp={1:0.1f}*C m3Temp={1:0.1f}*C'.format(m1temp, m2temp, m3temp))
         # Send humidity and temperature feeds to Adafruit IO
         m1temp = '%.2f'%(m1temp)
