@@ -63,34 +63,34 @@ puppet_config = {
     'controllers': {
         'my_dxl_controller': {
             'sync_read': False,
-            'attached_motors': ['robot2'],
-            # 'attached_motors': ['robot1', 'robot2'],
+            # 'attached_motors': ['robot2'],
+            'attached_motors': ['robot1', 'robot2'],
             'port': 'auto'
         }
     },
     'motorgroups': {
-        # 'robot1': ['m1', 'm2', 'm3'],
+        'robot1': ['m1', 'm2', 'm3'],
         'robot2': ['m4', 'm5', 'm6']
     },
     'motors': {
-        # 'm1': {
-        #     'orientation': 'direct',
-        #     'type': 'AX-12A', 'id': 1,
-        #     'angle_limit': [-180.0, 180.0],
-        #     'offset': 0.0
-        # },
-        # 'm2': {
-        #     'orientation': 'direct',
-        #     'type': 'AX-12A', 'id': 2,
-        #     'angle_limit': [-180.0, 180.0],
-        #     'offset': 0.0
-        # },
-        # 'm3': {
-        #     'orientation': 'direct',
-        #     'type': 'AX-12A', 'id': 3,
-        #     'angle_limit': [-180.0, 180.0],
-        #     'offset': 0.0
-        # },
+        'm1': {
+            'orientation': 'direct',
+            'type': 'AX-12A', 'id': 1,
+            'angle_limit': [-180.0, 180.0],
+            'offset': 0.0
+        },
+        'm2': {
+            'orientation': 'direct',
+            'type': 'AX-12A', 'id': 2,
+            'angle_limit': [-180.0, 180.0],
+            'offset': 0.0
+        },
+        'm3': {
+            'orientation': 'direct',
+            'type': 'AX-12A', 'id': 3,
+            'angle_limit': [-180.0, 180.0],
+            'offset': 0.0
+        },
         'm4': {
             'orientation': 'direct',
             'type': 'AX-18A', 'id': 1,
@@ -125,22 +125,22 @@ puppetrobot.m4.compliant = True
 puppetrobot.m5.compliant = True
 puppetrobot.m6.compliant = True
 
-robot.m1.compliant = False
-robot.m2.compliant = False
-robot.m3.compliant = False
+puppetrobot.m1.compliant = False
+puppetrobot.m2.compliant = False
+puppetrobot.m3.compliant = False
 
-for m in robot.motors:
+for m in puppetrobot.motors:
     m.set_moving_speed = 20
 
 # robot.m2.goto_position = robot.m1.present_position
-robot.m1.goal_position = puppetrobot.m4.present_position
-robot.m2.goal_position = puppetrobot.m5.present_position
-robot.m3.goal_position = puppetrobot.m6.present_position
+puppetrobot.m1.goal_position = puppetrobot.m4.present_position
+puppetrobot.m2.goal_position = puppetrobot.m5.present_position
+puppetrobot.m3.goal_position = puppetrobot.m6.present_position
 
 time.sleep(2)
 
 while True:
-    for m in robot.motors:
+    for m in puppetrobot.motors:
         m.set_moving_speed = 200
     # # robot.m1.goal_position = 0
     # robot.m2.goal_position = 0
@@ -157,7 +157,7 @@ while True:
 
     # robot.m2.goto_position(10, 1., wait=True)
     # robot.m2.goal_position = robot.m1.present_position
-    robot.m1.goal_position = puppetrobot.m4.present_position
-    robot.m2.goal_position = puppetrobot.m5.present_position
-    robot.m3.goal_position = puppetrobot.m6.present_position
+    puppetrobot.m1.goal_position = puppetrobot.m4.present_position
+    puppetrobot.m2.goal_position = puppetrobot.m5.present_position
+    puppetrobot.m3.goal_position = puppetrobot.m6.present_position
     time.sleep(.0001)
