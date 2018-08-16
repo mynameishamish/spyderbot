@@ -44,8 +44,8 @@ ADAFRUIT_IO_USERNAME = 'mynameishamish'
 aio = Client(ADAFRUIT_IO_USERNAME, ADAFRUIT_IO_KEY)
 
 # Set up Adafruit IO Feeds.
-temperature_feed = aio.feeds('head')
-humidity_feed = aio.feeds('neck')
+temperature_feed = aio.feeds('spyderbot.head')
+humidity_feed = aio.feeds('spyderbot.neck')
 
 # Set up DHT22 Sensor.
 # dht22_sensor = Adafruit_DHT.DHT22
