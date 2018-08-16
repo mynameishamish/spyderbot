@@ -70,7 +70,7 @@ def temp():
     # else:
     #     print('Failed to get DHT22 Reading, trying again in ', DHT_READ_TIMEOUT, 'seconds')
     # Timeout to avoid flooding Adafruit IO
-    time.sleep(DHT_READ_TIMEOUT)
+    # time.sleep(DHT_READ_TIMEOUT)
 
 while True:
     t = threading.Timer(6.0, temp())
