@@ -44,9 +44,9 @@ ADAFRUIT_IO_USERNAME = 'mynameishamish'
 aio = Client(ADAFRUIT_IO_USERNAME, ADAFRUIT_IO_KEY)
 
 # Set up Adafruit IO Feeds.
-m1temp = aio.feeds('spyderbot.base')
-m2temp = aio.feeds('spyderbot.head')
-m3temp = aio.feeds('spyderbot.neck')
+m1temp_feed = aio.feeds('spyderbot.base')
+m2temp_feed = aio.feeds('spyderbot.head')
+m3temp_feed = aio.feeds('spyderbot.neck')
 
 
 # Set up DHT22 Sensor.
@@ -64,9 +64,9 @@ while True:
         m2temp = '%.2f'%(m2temp)
         m3temp = '%.2f'%(m3temp)
 
-        aio.send(m1temp.key, str(m1temp))
-        aio.send(m2temp.key, str(m2temp))
-        aio.send(m3temp.key, str(m3temp))
+        aio.send(m1temp_feed.key, str(m1temp))
+        aio.send(m2temp_feed.key, str(m2temp))
+        aio.send(m3temp_feed.key, str(m3temp))
     else:
         print('Failed to get DHT22 Reading, trying again in ', DHT_READ_TIMEOUT, 'seconds')
     # Timeout to avoid flooding Adafruit IO
