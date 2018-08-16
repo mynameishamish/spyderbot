@@ -17,6 +17,7 @@ Dependencies:
 
 # import standard python modules.
 import time
+import threading
 
 # import adafruit dht library.
 # import Adafruit_DHT
@@ -66,10 +67,11 @@ def temp():
         aio.send(m1temp_feed.key, str(m1temp))
         aio.send(m2temp_feed.key, str(m2temp))
         aio.send(m3temp_feed.key, str(m3temp))
-    else:
-        print('Failed to get DHT22 Reading, trying again in ', DHT_READ_TIMEOUT, 'seconds')
+    # else:
+    #     print('Failed to get DHT22 Reading, trying again in ', DHT_READ_TIMEOUT, 'seconds')
     # Timeout to avoid flooding Adafruit IO
     time.sleep(DHT_READ_TIMEOUT)
 
 while True:
-    temp()
+    t = threading.Timer(6.0, temp())
+    t.start()
