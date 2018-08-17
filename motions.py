@@ -91,7 +91,7 @@ motionalert= [
 motionforward= [
     [robot.m1 , x, robot.m1.present_position, 0] ,
     [robot.m2 , x, robot.m2.present_position, -68] ,
-    [robot.m3 , x, robot.m3.present_position, 25]]
+    [robot.m3 , x, robot.m3.present_position, 18]]
 
 motionoffer= [
     [robot.m1 , x, robot.m1.present_position, 0] ,
@@ -181,7 +181,7 @@ turndown = [
     [robot.m1 , x, robot.m1.present_position, 0] ,
     [robot.m2 , x, robot.m2.present_position, -42] ,
     [robot.m3 , x, robot.m3.present_position, -35]]
-    
+
 
 #check from different angle, perform best when the speed is 45, 45, 45
 check1 = [
