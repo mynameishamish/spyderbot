@@ -14,7 +14,7 @@ spyder_config  = {
         'm1': {
             'orientation': 'direct',
             'type': 'AX-12A', 'id': 4,
-            'angle_limit': [80.0, 80.0],
+            'angle_limit': [-80.0, 80.0],
             'offset': 0.0
         },
         'm2': {
