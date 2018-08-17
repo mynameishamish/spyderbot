@@ -91,7 +91,7 @@ motionalert= [
 motionforward= [
     [robot.m1 , x, robot.m1.present_position, 0] ,
     [robot.m2 , x, robot.m2.present_position, -68] ,
-    [robot.m3 , x, robot.m3.present_position, 53]]
+    [robot.m3 , x, robot.m3.present_position, 25]]
 
 motionoffer= [
     [robot.m1 , x, robot.m1.present_position, 0] ,
@@ -142,11 +142,11 @@ strench  = [
     [robot.m3 , x, robot.m3.present_position, -61]
 ]
 
-# look = [
-#     [robot.m1 , x, robot.m1.present_position, -4] ,
-#     [robot.m2 , eib, robot.m2.present_position, -53] ,
-#     [robot.m3 , x, robot.m3.present_position, 143]
-# ]
+look = [
+    [robot.m1 , x, robot.m1.present_position, 0] ,
+    [robot.m2 , eib, robot.m2.present_position, -59] ,
+    [robot.m3 , x, robot.m3.present_position, -40]
+]
 
 read = [
     [robot.m1 , x, robot.m1.present_position, 0] ,
@@ -167,24 +167,21 @@ read = [
 # ]
 #
 # # sigh, perform best when the speed is 45, 45, 45
-# turn1 = [
-#     [robot.m1 , x, robot.m1.present_position, -55] ,
-#     [robot.m2 , x, robot.m2.present_position, -45] ,
-#     [robot.m3 , x, robot.m3.present_position, 100]
-# ]
-#
-# turnup = [
-#     [robot.m1 , x, -55, -55] ,
-#     [robot.m2 , x, -45, -53] ,
-#     [robot.m3 , x, 100, 117]
-#
-# ]
+turn1 = [
+    [robot.m1 , x, robot.m1.present_position, -40] ,
+    [robot.m2 , x, robot.m2.present_position, -38] ,
+    [robot.m3 , x, robot.m3.present_position, -25]]
 
-# turndown = [
-#     [robot.m1 , x, -55, -55] ,
-#     [robot.m2 , x, -53, -50] ,
-#     [robot.m3 , x, 117, 98]
-# ]
+turnup = [
+    [robot.m1 , x, robot.m1.present_position, 0] ,
+    [robot.m2 , x, robot.m2.present_position, -42] ,
+    [robot.m3 , x, robot.m3.present_position, -6]]
+
+turndown = [
+    [robot.m1 , x, robot.m1.present_position, 0] ,
+    [robot.m2 , x, robot.m2.present_position, -42] ,
+    [robot.m3 , x, robot.m3.present_position, -35]]
+    
 
 #check from different angle, perform best when the speed is 45, 45, 45
 check1 = [
@@ -423,6 +420,7 @@ def checkaround():
      time.sleep(1)
      easingMultiple(check2,1.5)
      time.sleep(2)
+     easingMultiple(alert)
 
 def home():
     print("returning home")
