@@ -1,7 +1,6 @@
 
 import time
 import threading
-import tempsensing
 # from motions import *
 from Adafruit_IO import Client, Feed
 
