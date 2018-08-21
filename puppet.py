@@ -117,6 +117,7 @@ from easing import *
 import math
 import copy
 import pypot
+import os
 import pypot.robot
 robot = pypot.robot.from_config(puppet_config)
 # from tempsensing import *

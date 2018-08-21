@@ -1,6 +1,7 @@
 
 import time
 import threading
+import os
 # from motions import *
 from Adafruit_IO import Client, Feed
 
