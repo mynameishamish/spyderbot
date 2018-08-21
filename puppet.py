@@ -112,13 +112,14 @@ puppet_config = {
 }
 import time
 import numpy
+import threading
 from easing import *
 import math
 import copy
 import pypot
 import pypot.robot
 robot = pypot.robot.from_config(puppet_config)
-# import tempsensing
+from tempsensing import *
 
 robot.m4.compliant = True
 robot.m5.compliant = True
@@ -129,15 +130,17 @@ robot.m2.compliant = False
 robot.m3.compliant = False
 
 for m in robot.motors:
-    m.set_moving_speed = 20
+    m.set_moving_speed = 5
 
 # robot.m2.goto_position = robot.m1.present_position
 robot.m1.goal_position = robot.m4.present_position
 robot.m2.goal_position = robot.m5.present_position
 robot.m3.goal_position = robot.m6.present_position
 
-time.sleep(2)
+time.sleep(1)
 
+t = threading.Timer(.5, temp)
+t.start()
 
 while True:
     for m in robot.motors:

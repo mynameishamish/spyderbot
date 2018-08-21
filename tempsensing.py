@@ -16,12 +16,13 @@ m2temp_feed = aio.feeds('spyderbot.head')
 m3temp_feed = aio.feeds('spyderbot.neck')
 
 def temp():
-    # while True:
+    while True:
+        # print("temp")
         m1temp = robot.m1.present_temperature
         m2temp = robot.m2.present_temperature
         m3temp = robot.m3.present_temperature
         if m1temp is not None and m2temp is not None:
-            print('m1Temp={0:0.1f}*C m2Temp={1:0.1f}*C m3Temp={1:0.1f}*C'.format(m1temp, m2temp, m3temp))
+            print('m1Temp={0:0.1f}*C m2Temp={1:0.1f}*C m3Temp={2:0.1f}*C'.format(m1temp, m2temp, m3temp))
             # Send humidity and temperature feeds to Adafruit IO
             m1temp = '%.2f'%(m1temp)
             m2temp = '%.2f'%(m2temp)
@@ -36,5 +37,9 @@ def temp():
         time.sleep(timeout)
 
 
-t = threading.Timer(6.0, temp)
-t.start()
+# t = threading.Timer(.5, temp)
+# t.start()
+#
+# while True:
+#     print("loop")
+#     time.sleep(1)
