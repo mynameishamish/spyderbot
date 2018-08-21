@@ -1,7 +1,8 @@
 
 import time
 import threading
-from motions import *
+import tempsensing
+# from motions import *
 from Adafruit_IO import Client, Feed
 
 timeout = 6
