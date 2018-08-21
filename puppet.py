@@ -127,7 +127,7 @@ from Adafruit_IO import Client, Feed
 
 timeout = 6
 
-ADAFRUIT_IO_KEY = '557c9dd075064cda8cb642a1c84399ec'
+ADAFRUIT_IO_KEY = os.environ.get('adafruit_io_key')
 ADAFRUIT_IO_USERNAME = 'mynameishamish'
 
 aio = Client(ADAFRUIT_IO_USERNAME, ADAFRUIT_IO_KEY)

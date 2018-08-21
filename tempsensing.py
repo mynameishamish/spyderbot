@@ -6,8 +6,10 @@ from Adafruit_IO import Client, Feed
 
 timeout = 6
 
-ADAFRUIT_IO_KEY = '557c9dd075064cda8cb642a1c84399ec'
+ADAFRUIT_IO_KEY = os.environ.get('adafruit_io_key')
 ADAFRUIT_IO_USERNAME = 'mynameishamish'
+
+# Dashboard URL: https://io.adafruit.com/mynameishamish/dashboards/spyderbot
 
 aio = Client(ADAFRUIT_IO_USERNAME, ADAFRUIT_IO_KEY)
 
