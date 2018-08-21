@@ -133,8 +133,8 @@ ADAFRUIT_IO_USERNAME = 'mynameishamish'
 aio = Client(ADAFRUIT_IO_USERNAME, ADAFRUIT_IO_KEY)
 
 m1temp_feed = aio.feeds('spyderbot.base')
-m2temp_feed = aio.feeds('spyderbot.head')
-m3temp_feed = aio.feeds('spyderbot.neck')
+m2temp_feed = aio.feeds('spyderbot.neck')
+m3temp_feed = aio.feeds('spyderbot.head')
 
 def temp():
     while True:
