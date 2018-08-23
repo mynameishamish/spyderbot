@@ -53,7 +53,7 @@ import time
 import numpy
 import threading
 import os
-from tempsensing import *
+import ..tempsensing
 
 import pypot.robot
 
