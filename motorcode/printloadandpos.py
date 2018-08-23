@@ -51,6 +51,8 @@ spyder_config = {
 }
 import time
 import numpy
+import threading
+import os
 
 import pypot.robot
 
@@ -62,6 +64,8 @@ robot = pypot.robot.from_config(spyder_config)
 
 # Wait for the robot to actually reach the base position.
 
+t = threading.Timer(.5, temp)
+t.start()
 
 while True:
 
@@ -76,7 +80,7 @@ while True:
 
 
     if m1pos is not None and m1load is not None:
-        print('m1Pos={0:0.1f} m2Pos={1:0.1f} m3Pos={2:0.1f}'.format(m1pos, m2pos, m3pos))
+        # print('m1Pos={0:0.1f} m2Pos={1:0.1f} m3Pos={2:0.1f}'.format(m1pos, m2pos, m3pos))
         print('m1Load={0:0.1f} m2Load={1:0.1f} m3Load={2:0.1f}'.format(m1load, m2load, m3load))
 
-    time.sleep(1)
+    time.sleep(.1)
