@@ -59,14 +59,6 @@ freq = 0.5
 
 robot = pypot.robot.from_config(spyder_config)
 
-robot.m1.compliant = True
-robot.m2.compliant = True
-robot.m3.compliant = True
-robot.m4.compliant = True
-robot.m5.compliant = True
-robot.m6.compliant = True
-
-
 
 # Wait for the robot to actually reach the base position.
 
