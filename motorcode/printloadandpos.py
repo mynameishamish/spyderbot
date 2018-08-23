@@ -80,7 +80,7 @@ while True:
     m2load = robot.m2.present_load
     m3load = robot.m3.present_load
 
-    print(robot.m1.present_load)
+    print(robot.m3.present_load)
 
 
     if m1pos is not None and m1load is not None:
