@@ -221,6 +221,6 @@ while True:
     # robot.m2.goto_position(10, 1., wait=True)
     # robot.m2.goal_position = robot.m1.present_position
     robot.m1.goal_position = robot.m4.present_position
-    robot.m2.goal_position = robot.m5.present_position - 10
-    robot.m3.goal_position = robot.m6.present_position - 10
+    robot.m2.goal_position = robot.m5.present_position + 40
+    robot.m3.goal_position = robot.m6.present_position + 40
     time.sleep(.01)
