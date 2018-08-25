@@ -167,7 +167,7 @@ def temp():
 #     time.sleep(1)
 
 for m in robot.motors:
-    m.set_moving_speed = 50
+    m.set_moving_speed = 15
     m.compliant = False
 
 robot.m1.goal_position = 0
