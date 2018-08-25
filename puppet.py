@@ -168,6 +168,7 @@ def temp():
 
 for m in robot.motors:
     m.set_moving_speed = 50
+    m.compliant = False
 
 robot.m1.goal_position = 0
 robot.m2.goal_position = -42
