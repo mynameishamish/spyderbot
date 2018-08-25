@@ -29,24 +29,24 @@ spyder_config  = {
             'angle_limit': [-50.0, 25.0],
             'offset': 0.0
         },
-        'm4': {
-            'orientation': 'direct',
-            'type': 'AX-12A', 'id': 1,
-            'angle_limit': [-180.0, 180.0],
-            'offset': 0.0
-        },
-        'm5': {
-            'orientation': 'direct',
-            'type': 'AX-12A', 'id': 2,
-            'angle_limit': [-180.0, 180.0],
-            'offset': 0.0
-        },
-        'm6': {
-            'orientation': 'direct',
-            'type': 'AX-12A', 'id': 3,
-            'angle_limit': [-180.0, 180.0],
-            'offset': 0.0
-        },
+        # 'm4': {
+        #     'orientation': 'direct',
+        #     'type': 'AX-12A', 'id': 1,
+        #     'angle_limit': [-180.0, 180.0],
+        #     'offset': 0.0
+        # },
+        # 'm5': {
+        #     'orientation': 'direct',
+        #     'type': 'AX-12A', 'id': 2,
+        #     'angle_limit': [-180.0, 180.0],
+        #     'offset': 0.0
+        # },
+        # 'm6': {
+        #     'orientation': 'direct',
+        #     'type': 'AX-12A', 'id': 3,
+        #     'angle_limit': [-180.0, 180.0],
+        #     'offset': 0.0
+        # },
     }
 }
 import time
