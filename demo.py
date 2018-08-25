@@ -12,6 +12,10 @@ print(robot.m1.present_position)
 print(robot.m2.present_position)
 print(robot.m3.present_position)
 
+for m in robot.motors: # Note that we always provide an alias for all motors.
+    m.compliant = False
+    m.set_moving_speed = 200
+
 easingMultiple(motionrest, 3)
 time.sleep(1)
 easingMultiple(motionalert, 2)
