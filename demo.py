@@ -17,16 +17,16 @@ for m in robot.motors: # Note that we always provide an alias for all motors.
     m.set_moving_speed = 200
 
 
-easingMultiple(motionrest, 2)
+easingMultiple(motionrest, 3)
 time.sleep(1)
 
-easingMultiple(motionalert, 2)
+easingMultiple(motionalert, 3)
 time.sleep(2)
 
-easingMultiple(motionforward, 2)
+easingMultiple(motionforward, 3)
 time.sleep(2)
 
-easingMultiple(motionoffer, 2)
+easingMultiple(motionoffer, 3)
 time.sleep(2)
 
-easingMultiple(motionrest, 2)
+easingMultiple(motionrest, 3)
