@@ -166,6 +166,22 @@ def temp():
 #     print("loop")
 #     time.sleep(1)
 
+for m in robot.motors:
+    m.set_moving_speed = 5
+
+robot.m1.goal_position = 0
+robot.m2.goal_position = -42
+robot.m3.goal_position = -21
+
+robot.m4.goal_position = 0
+robot.m5.goal_position = -42
+robot.m6.goal_position = -21
+
+time.sleep(1)
+
+for m in robot.motors:
+    m.set_moving_speed = 200
+
 
 robot.m4.compliant = True
 robot.m5.compliant = True

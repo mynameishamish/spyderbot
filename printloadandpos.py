@@ -77,9 +77,6 @@ while True:
     m2load = robot.m2.present_load
     m3load = robot.m3.present_load
 
-    print(robot.m3.present_load)
-
-
     if m1pos is not None and m1load is not None:
         # print('m1Pos={0:0.1f} m2Pos={1:0.1f} m3Pos={2:0.1f}'.format(m1pos, m2pos, m3pos))
         print('m1Load={0:0.1f} m2Load={1:0.1f} m3Load={2:0.1f}'.format(m1load, m2load, m3load))
