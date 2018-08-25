@@ -190,8 +190,8 @@ robot.m3.compliant = False
 
 # robot.m2.goto_position = robot.m1.present_position
 robot.m1.goal_position = robot.m4.present_position
-robot.m2.goal_position = robot.m5.present_position - 15
-robot.m3.goal_position = robot.m6.present_position - 15
+robot.m2.goal_position = robot.m5.present_position - 5
+robot.m3.goal_position = robot.m6.present_position - 5
 
 time.sleep(1)
 
@@ -217,6 +217,6 @@ while True:
     # robot.m2.goto_position(10, 1., wait=True)
     # robot.m2.goal_position = robot.m1.present_position
     robot.m1.goal_position = robot.m4.present_position
-    robot.m2.goal_position = robot.m5.present_position - 15
-    robot.m3.goal_position = robot.m6.present_position - 15
+    robot.m2.goal_position = robot.m5.present_position - 5
+    robot.m3.goal_position = robot.m6.present_position - 5
     time.sleep(.01)
