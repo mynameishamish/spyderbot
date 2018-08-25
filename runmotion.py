@@ -1,5 +1,9 @@
+# Don't use this file, has all positions for old motors/version - Needs to be updated
+
+
 
 # everything beside dance has been fix. Won't cause moter over heated right now. Dance will be updated soon.
+
 import time
 import math
 import numpy
