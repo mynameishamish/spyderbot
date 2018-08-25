@@ -14,7 +14,7 @@ printer = Adafruit_Thermal("/dev/ttyUSB0", 19200, timeout=5)
 
 for m in robot.motors: # Note that we always provide an alias for all motors.
     m.compliant = False
-    m.set_moving_speed = 200
+    m.set_moving_speed = 5
 
 
 easingMultiple(motionrest, 3)
