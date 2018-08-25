@@ -6,7 +6,7 @@ from easing import *
 from motions import *
 from Adafruit_Thermal import *
 
-rest()
+resting()
 time.sleep(1)
 alert()
 time.sleep(1)
@@ -18,5 +18,5 @@ offer()
 time.sleep(2)
 alert()
 time.sleep(4)
-rest()
+resting()
 time.sleep(.5)
