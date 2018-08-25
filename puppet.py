@@ -167,7 +167,7 @@ def temp():
 #     time.sleep(1)
 
 for m in robot.motors:
-    m.set_moving_speed = 15
+    m.set_moving_speed = 5
     m.compliant = False
 
 robot.m1.goal_position = 0
@@ -178,7 +178,7 @@ robot.m4.goal_position = 0
 robot.m5.goal_position = -42
 robot.m6.goal_position = -21
 
-time.sleep(1)
+time.sleep(3)
 
 for m in robot.motors:
     m.set_moving_speed = 200
@@ -191,9 +191,6 @@ robot.m6.compliant = True
 robot.m1.compliant = False
 robot.m2.compliant = False
 robot.m3.compliant = False
-
-for m in robot.motors:
-    m.set_moving_speed = 5
 
 # robot.m2.goto_position = robot.m1.present_position
 robot.m1.goal_position = robot.m4.present_position
