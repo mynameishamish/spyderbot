@@ -89,13 +89,13 @@ motionalert= [
 
 motionforward= [
     [robot.m1 , x, robot.m1.present_position, 0] ,
-    [robot.m2 , x, robot.m2.present_position, -68] ,
-    [robot.m3 , x, robot.m3.present_position, 18]]
+    [robot.m2 , x, robot.m2.present_position, -60] ,
+    [robot.m3 , x, robot.m3.present_position, -30]]
 
 motionoffer= [
     [robot.m1 , x, robot.m1.present_position, 0] ,
-    [robot.m2 , x, robot.m2.present_position, -71] ,
-    [robot.m3 , x, robot.m3.present_position, 4]]
+    [robot.m2 , x, robot.m2.present_position, -65] ,
+    [robot.m3 , x, robot.m3.present_position, 12]]
 
 motionLookUp= [
     [robot.m1 , x, robot.m1.present_position, -36] ,
