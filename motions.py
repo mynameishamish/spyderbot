@@ -2,13 +2,12 @@ spyder_config  = {
     'controllers': {
         'my_dxl_controller': {
             'sync_read': False,
-            'attached_motors': ['robot1', 'robot2'],
+            'attached_motors': ['robot1'],
             'port': 'auto'
         }
     },
     'motorgroups': {
-        'robot1': ['m1', 'm2', 'm3'],
-        'robot2': ['m4', 'm5', 'm6']
+        'robot1': ['m1', 'm2', 'm3']
     },
     'motors': {
         'm1': {
