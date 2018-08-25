@@ -180,10 +180,6 @@ robot.m6.goal_position = -21
 
 time.sleep(3)
 
-for m in robot.motors:
-    m.set_moving_speed = 200
-
-
 robot.m4.compliant = True
 robot.m5.compliant = True
 robot.m6.compliant = True
@@ -194,8 +190,8 @@ robot.m3.compliant = False
 
 # robot.m2.goto_position = robot.m1.present_position
 robot.m1.goal_position = robot.m4.present_position
-robot.m2.goal_position = robot.m5.present_position
-robot.m3.goal_position = robot.m6.present_position
+robot.m2.goal_position = robot.m5.present_position + 20
+robot.m3.goal_position = robot.m6.present_position + 20
 
 time.sleep(1)
 
@@ -221,6 +217,6 @@ while True:
     # robot.m2.goto_position(10, 1., wait=True)
     # robot.m2.goal_position = robot.m1.present_position
     robot.m1.goal_position = robot.m4.present_position
-    robot.m2.goal_position = robot.m5.present_position + 40
-    robot.m3.goal_position = robot.m6.present_position + 40
+    robot.m2.goal_position = robot.m5.present_position + 20
+    robot.m3.goal_position = robot.m6.present_position + 20
     time.sleep(.01)
