@@ -2,13 +2,12 @@ spyder_config = {
     'controllers': {
         'my_dxl_controller': {
             'sync_read': False,
-            'attached_motors': ['robot1', 'robot2'],
+            'attached_motors': ['robot1'],
             'port': 'auto'
         }
     },
     'motorgroups': {
-        'robot1': ['m1', 'm2', 'm3'],
-        'robot2': ['m4', 'm5', 'm6']
+        'robot1': ['m1', 'm2', 'm3']
     },
     'motors': {
         'm1': {
@@ -28,25 +27,7 @@ spyder_config = {
             'type': 'AX-18A', 'id': 6,
             'angle_limit': [-180.0, 180.0],
             'offset': 0.0
-        },
-        'm4': {
-            'orientation': 'direct',
-            'type': 'AX-12A', 'id': 1,
-            'angle_limit': [-180.0, 180.0],
-            'offset': 0.0
-        },
-        'm5': {
-            'orientation': 'direct',
-            'type': 'AX-12A', 'id': 2,
-            'angle_limit': [-180.0, 180.0],
-            'offset': 0.0
-        },
-        'm6': {
-            'orientation': 'direct',
-            'type': 'AX-12A', 'id': 3,
-            'angle_limit': [-180.0, 180.0],
-            'offset': 0.0
-        },
+        }
     }
 }
 import time
@@ -62,9 +43,6 @@ robot = pypot.robot.from_config(spyder_config)
 robot.m1.compliant = True
 robot.m2.compliant = True
 robot.m3.compliant = True
-robot.m4.compliant = True
-robot.m5.compliant = True
-robot.m6.compliant = True
 
 
 
