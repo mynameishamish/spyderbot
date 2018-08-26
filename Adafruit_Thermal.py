@@ -36,6 +36,7 @@
 from __future__ import print_function
 from serial import Serial
 import time
+import math
 
 class Adafruit_Thermal(Serial):
 
@@ -50,7 +51,7 @@ class Adafruit_Thermal(Serial):
 	lineSpacing     =  8
 	barcodeHeight   = 50
 	printMode       =  0
-	defaultHeatTime = 120
+	defaultHeatTime = 60
 
 	def __init__(self, *args, **kwargs):
 		# If no parameters given, use default port & baud rate.
@@ -58,7 +59,7 @@ class Adafruit_Thermal(Serial):
 		# If both passed, use those values.
 		baudrate = 19200
 		if len(args) == 0:
-			args = [ "/dev/serial0", baudrate ]
+			args = [ "/dev/ttyS0", baudrate ]
 		elif len(args) == 1:
 			args = [ args[0], baudrate ]
 		else:
@@ -70,7 +71,6 @@ class Adafruit_Thermal(Serial):
 		# caution here.
 		self.byteTime = 11.0 / float(baudrate)
 
-		print(args);
 		Serial.__init__(self, *args, **kwargs)
 
 		# Remainder of this method was previously in begin()
@@ -101,10 +101,10 @@ class Adafruit_Thermal(Serial):
 		heatTime = kwargs.get('heattime', self.defaultHeatTime)
 		self.writeBytes(
 		  27,       # Esc
-		  7,       # 7 (print settings)
-		  10,       # Heat dots (20 = balance darkness w/no jams)
-		  45, # Lib default = 45
-		  2)      # Heat interval (500 uS = slower but darker)
+		  55,       # 7 (print settings)
+		  20,       # Heat dots (20 = balance darkness w/no jams)
+		  heatTime, # Lib default = 45
+		  250)      # Heat interval (500 uS = slower but darker)
 
 		# Description of print density from page 23 of the manual:
 		# DC2 # n Set printing density
@@ -168,19 +168,19 @@ class Adafruit_Thermal(Serial):
 
 	# 'Raw' byte-writing method
 	def writeBytes(self, *args):
-		self.timeoutWait()
-		self.timeoutSet(len(args) * self.byteTime)
 		for arg in args:
-			super(Adafruit_Thermal, self).write(chr(arg))
+			self.timeoutWait()
+			self.timeoutSet(self.byteTime)
+			super(Adafruit_Thermal, self).write(bytes([arg]))
 
 
 	# Override write() method to keep track of paper feed.
 	def write(self, *data):
-		for i in range(len(data)):
-			c = data[i]
-			if c != 0x13:
+		for i in range(len(data[0])):
+			c = data[0][i]
+			if ord(c) != 0x13:
 				self.timeoutWait()
-				super(Adafruit_Thermal, self).write(c)
+				super(Adafruit_Thermal, self).write(c.encode('cp437','ignore'))
 				d = self.byteTime
 				if ((c == '\n') or
 				    (self.column == self.maxColumn)):
@@ -213,7 +213,7 @@ class Adafruit_Thermal(Serial):
 		self.writeBytes(
 		  27,       # Esc
 		  55,       # 7 (print settings)
-		  10,       # Heat dots (20 = balance darkness w/no jams)
+		  20,       # Heat dots (20 = balance darkness w/no jams)
 		  heatTime, # Lib default = 45
 		  250)      # Heat interval (500 uS = slower but darker)
 
@@ -268,7 +268,7 @@ class Adafruit_Thermal(Serial):
 		# Print string
 		self.timeoutWait()
 		self.timeoutSet((self.barcodeHeight + 40) * self.dotPrintTime)
-		super(Adafruit_Thermal, self).write(text)
+		super(Adafruit_Thermal, self).write(text.encode('utf-8', 'ignore'))
 		self.prevByte = '\n'
 		self.feed(2)
 
@@ -418,7 +418,7 @@ class Adafruit_Thermal(Serial):
 
 
 	def printBitmap(self, w, h, bitmap, LaaT=False):
-		rowBytes = (w + 7) / 8  # Round up to next byte boundary
+		rowBytes = math.floor((w + 7) / 8)  # Round up to next byte boundary
 		if rowBytes >= 48:
 			rowBytesClipped = 48  # 384 pixels max width
 		else:
@@ -431,7 +431,7 @@ class Adafruit_Thermal(Serial):
 		# opposite effect on small images that would fit
 		# in a single 'chunk', so use carefully!
 		if LaaT: maxChunkHeight = 1
-		else:    maxChunkHeight = 128
+		else:    maxChunkHeight = 255
 
 		i = 0
 		for rowStart in range(0, h, maxChunkHeight):
@@ -445,10 +445,10 @@ class Adafruit_Thermal(Serial):
 			for y in range(chunkHeight):
 				for x in range(rowBytesClipped):
 					super(Adafruit_Thermal, self).write(
-					  chr(bitmap[i]))
+					  bytes([bitmap[i]]))
 					i += 1
 				i += rowBytes - rowBytesClipped
-			self.timeoutSet(chunkHeight * self.dotPrintTime * 0.5)
+			self.timeoutSet(chunkHeight * self.dotPrintTime)
 
 		self.prevByte = '\n'
 
@@ -460,7 +460,7 @@ class Adafruit_Thermal(Serial):
 	# the Imaging Library to perform such operations before
 	# passing the result to this function.
 	def printImage(self, image, LaaT=False):
-		from PIL import Image
+		import Image
 
 		if image.mode != '1':
 			image = image.convert('1')
@@ -469,12 +469,9 @@ class Adafruit_Thermal(Serial):
 		height = image.size[1]
 		if width > 384:
 			width = 384
-		#print(width, height)
 		rowBytes = (width + 7) / 8
 		bitmap   = bytearray(rowBytes * height)
 		pixels   = image.load()
-
-                #print(pixels)
 
 		for y in range(height):
 			n = y * rowBytes
@@ -517,7 +514,7 @@ class Adafruit_Thermal(Serial):
 
 	def wake(self):
 		self.timeoutSet(0);
-		self.writeBytes(255);
+		self.writeBytes(255)
 		for i in range(10):
 			self.writeBytes(27)
 			self.timeoutSet(0.1)
@@ -574,4 +571,3 @@ class Adafruit_Thermal(Serial):
 		for arg in args:
 			self.write(str(arg))
 		self.write('\n')
-
