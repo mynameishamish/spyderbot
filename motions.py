@@ -84,7 +84,7 @@ motionrest= [
 
 motionalert= [
     [robot.m1 , x, robot.m1.present_position, 0] ,
-    [robot.m2 , x, robot.m2.present_position, -42] ,
+    [robot.m2 , x, robot.m2.present_position, -20] ,
     [robot.m3 , x, robot.m3.present_position, -21]]
 
 motionforward= [

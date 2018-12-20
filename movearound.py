@@ -44,13 +44,13 @@ print("forward")
 easingMultiple(motionalert, 3)
 time.sleep(1)
 
-print("returning home")
-easingMultiple(motionrest, 3)
-time.sleep(2)
-
-print("forward")
-easingMultiple(motionforward, 3)
-time.sleep(2)
+# print("returning home")
+# easingMultiple(motionrest, 3)
+# time.sleep(2)
+#
+# print("forward")
+# easingMultiple(motionforward, 3)
+# time.sleep(2)
 
 print("returning home")
 easingMultiple(motionrest, 3)
