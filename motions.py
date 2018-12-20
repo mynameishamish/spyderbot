@@ -449,4 +449,4 @@ def offer():
     easingMultiple(motionoffer, 1.5)
 
 def alertmotion():
-    easingMultiple(motionalert, 1.5)
+    easingMultiple(motionalert, 3)
